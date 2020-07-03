@@ -17,6 +17,14 @@ public class Dish {
 
     private EnumMap<Ingredient, Integer> ingredients;
 
+    /**
+     * Constructor for {@code Dish}.
+     * 
+     * @param name
+     * @param price
+     * @param servings
+     * @param ingredients
+     */
     public Dish(String name, double price, int servings, EnumMap<Ingredient, Integer> ingredients) {
         this.name = name;
         this.price = Math.abs(price);
@@ -24,10 +32,24 @@ public class Dish {
         this.ingredients = ingredients;
     }
 
+    /**
+     * Serve the dish. Reduces {@code servings} by one if availabe.
+     * 
+     * @return success of serving.
+     */
     public boolean serve() {
-        return servings-- > 0;
+        if (isAvailable()) {
+            servings--;
+            return true;
+        }
+        return false;
     }
 
+    /**
+     * Returns if more than zero servings are available.
+     * 
+     * @return
+     */
     public boolean isAvailable() {
         return servings > 0;
     }

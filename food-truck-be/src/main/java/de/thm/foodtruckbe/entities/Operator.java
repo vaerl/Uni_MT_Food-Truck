@@ -37,8 +37,7 @@ public class Operator {
     }
 
     // TODO check whether removing/adding works correctly - maybe i need to
-    // implement the
-    // respective equals-methods
+    // TODO implement the respective equals-methods
 
     // methods for adding/removing dishes from menu
     public boolean addDishToMenu(Dish dish) {
@@ -119,9 +118,8 @@ public class Operator {
         return super.equals(obj);
     }
 
-    // TODO implement toString
     @Override
     public String toString() {
-        return name + "";
+        return "Operator " + name + ": \n-> currently at: " + currentLocation;
     }
 }

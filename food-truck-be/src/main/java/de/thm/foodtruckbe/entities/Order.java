@@ -13,23 +13,31 @@ public class Order {
     private int amount;
     private double price;
     private Status status;
+    private int rating;
 
     public Order(Dish dish, int amount) {
         this.dish = dish;
         if (Math.abs(amount) > dish.getServings()) {
-            // TODO check if defining own exception works better with Rest-Error-Handling
+            // TODO defining a special exception might be better Rest-Error-Handling
             throw new IllegalArgumentException("The amount " + amount + "is too high for dish " + dish.toString());
         }
         this.amount = Math.abs(amount);
         this.price = dish.getPrice() * this.amount;
     }
 
+    public void setRating(int rating) {
+        if (rating > 5) {
+            rating = 5;
+        }
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
-        return "[" + dish + "]: " + amount + " times for " + price + "€";
+        return "Order of " + dish.getName() + ": " + amount + " times for " + price + "€";
     }
 
     private enum Status {
-        ACCEPTED, NOT_POSSIBLE, DONE
+        ACCEPTED, CONFIRMED, NOT_POSSIBLE, STARTED, DONE
     }
 }
