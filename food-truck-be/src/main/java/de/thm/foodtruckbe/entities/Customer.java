@@ -40,9 +40,12 @@ public class Customer {
     }
 
     public List<Location> getNearestLocations(Operator operator) {
+        if (location == null) {
+            return new ArrayList<>();
+        }
         return operator.getRoute().stream()
-                .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(this.location).getLength()))
-                .entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList()).stream()
+                .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(this.location))).entrySet()
+                .stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList()).stream()
                 .map(Map.Entry::getKey).limit(3).collect(Collectors.toList());
     }
 

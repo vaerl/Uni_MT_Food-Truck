@@ -3,6 +3,7 @@ package de.thm.foodtruckbe.entities.order;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import de.thm.foodtruckbe.entities.Customer;
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
 import lombok.Getter;
@@ -15,11 +16,13 @@ import lombok.Setter;
 public abstract class Order {
 
     protected Map<Dish, Integer> items;
+    protected Customer customer;
     protected Location location;
     protected double price;
     protected Status status;
 
-    public Order(Location location, Map<Dish, Integer> items) {
+    public Order(Customer customer, Location location, Map<Dish, Integer> items) {
+        this.customer = customer;
         this.items = items;
         this.location = location;
         this.price = items.entrySet().stream().collect(Collectors.toList()).stream()
