@@ -9,33 +9,30 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
 
-    @Autowired
-    CustomerService customerService;
-
-    @RequestMapping(path = "/getCustomers", method = RequestMethod.POST)
-    public void getCustomers(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public void getCustomers(){
 
     }
 
-    @RequestMapping(path = "/getNearestLocations", method = RequestMethod.GET)
-    public List<Location> getNearestLocationsById(@RequestParam(value = "id") String id){
-        return customerService.getNearestLocationsById(id);
+    @RequestMapping(path = "/{id}/locations", method = RequestMethod.GET)
+    public List<Location> getNearestLocationsByCustomerIdAndOperatorId(
+            @PathVariable(value = "id") String id,
+            @RequestParam(value = "operatorId") String operatorId){
     }
 
-    @RequestMapping(path = "/getCustomerById", method = RequestMethod.GET)
-    public Customer getCustomerById(@RequestParam(value = "id") String id){
-        return customerService.getCustomerById(id);
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Customer getCustomerById(@PathVariable(value = "id") String id){
     }
 
-    @RequestMapping(path = "/createCustomer", method = RequestMethod.POST)
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
     public void createCustomer(@RequestBody Customer customer){
-        customerService.createCustomer(customer);
     }
 
 }
