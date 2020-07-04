@@ -14,6 +14,7 @@ public class Dish {
     private String name;
     private double price;
     private int servings;
+    private double rating;
 
     private EnumMap<Ingredient, Integer> ingredients;
 
@@ -46,12 +47,23 @@ public class Dish {
     }
 
     /**
-     * Returns if more than zero servings are available.
+     * Returns true if more than zero servings are available.
      * 
      * @return
      */
     public boolean isAvailable() {
         return servings > 0;
+    }
+
+    /**
+     * Adds a given rating by calculating its average.
+     * 
+     * @param rating the given rating
+     * @return
+     */
+    public boolean addRating(int rating) {
+        this.rating = (this.rating * rating) / 2;
+        return true;
     }
 
     @Override

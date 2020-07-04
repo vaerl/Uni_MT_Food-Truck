@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import de.thm.foodtruckbe.entities.order.PreOrder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Customer {
 
     private String name;
     private Location location;
-    private ArrayList<Order> orders;
+    private ArrayList<PreOrder> orders;
 
     public Customer(String name) {
         this.name = name;
@@ -29,11 +30,11 @@ public class Customer {
     }
 
     // methods for adding/removing dishes from the order
-    public boolean addDish(Order order) {
+    public boolean addDish(PreOrder order) {
         return orders.add(order);
     }
 
-    public boolean removeDish(Order order) {
+    public boolean removeDish(PreOrder order) {
         // TODO check if this works
         return orders.remove(order);
     }

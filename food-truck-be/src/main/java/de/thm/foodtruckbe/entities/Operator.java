@@ -1,5 +1,7 @@
 package de.thm.foodtruckbe.entities;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -10,6 +12,10 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
+import de.thm.foodtruckbe.entities.Location.Status;
+import de.thm.foodtruckbe.entities.order.Order;
+import de.thm.foodtruckbe.entities.order.PreOrder;
+import de.thm.foodtruckbe.entities.order.Reservation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,16 +25,21 @@ public class Operator {
 
     private String name;
     private ArrayList<Dish> menu;
+    private ArrayList<Dish> preorderMenu;
     private ArrayList<Location> route;
 
     private Location currentLocation;
+    private Map<Ingredient, Integer> stock;
 
-    private HashMap<Location, ArrayList<Dish>> orders;
+    private HashMap<Location, ArrayList<PreOrder>> preorders;
+    private HashMap<Location, ArrayList<Reservation>> reservations;
 
     public Operator() {
         this.menu = new ArrayList<>();
+        this.preorderMenu = new ArrayList<>();
         this.route = new ArrayList<>();
-        this.orders = new HashMap<>();
+        this.preorders = new HashMap<>();
+        this.reservations = new HashMap<>();
     }
 
     public Operator(String name, Location startLocation) {
@@ -50,7 +61,7 @@ public class Operator {
 
     // methods for adding/removing locations from route
     public boolean addLocation(Location location) {
-        orders.put(location, new ArrayList<>());
+        preorders.put(location, new ArrayList<>());
         return route.add(location);
     }
 
@@ -60,31 +71,78 @@ public class Operator {
     }
 
     public boolean removeLocation(Location location) {
-        orders.remove(location);
+        preorders.remove(location);
         return route.remove(location);
     }
 
-    // methods for ordering
-    public boolean addOrderForLocation(Location location, Dish dish) {
-        return orders.get(location).add(dish);
+    // preorders
+    public boolean addPreOrderForLocation(Location location, PreOrder preOrder) {
+        if (isBeforeNextDay(location)) {
+            return false;
+        }
+        return preorders.get(location).add(preOrder);
     }
 
-    public boolean addAllOrderForLocation(Location location, List<Dish> dish) {
-        return orders.get(location).addAll(dish);
+    public boolean addAllPreOrdersForLocation(Location location, List<PreOrder> preOrders) {
+        if (isBeforeNextDay(location)) {
+            return false;
+        }
+        return this.preorders.get(location).addAll(preOrders);
     }
 
-    // methods for accessing orders
-    public List<Dish> getAllOrders() {
-        return orders.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+    public boolean removePreOrderFromLocation(Location location, PreOrder preOrder) {
+        if (isBeforeNextDay(location)) {
+            return false;
+        }
+        return preorders.get(location).remove(preOrder);
     }
 
-    public List<Dish> getOrdersForLocation(Location location) {
-        return orders.get(location);
+    // get preorders
+    public List<PreOrder> getAllOrders() {
+        return preorders.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
     }
 
+    public List<PreOrder> getOrdersForLocation(Location location) {
+        return preorders.get(location);
+    }
+
+    // reservations
+    public boolean addReservationForLocation(Location location, Reservation reservation) {
+        if (!isPossible(reservation)) {
+            return false;
+        }
+        return this.reservations.get(location).add(reservation);
+    }
+
+    public boolean addAllReservationsForLocation(Location location, List<Reservation> reservations) {
+        for (Reservation reservation : reservations) {
+            if (!isPossible(reservation)) {
+                return false;
+            }
+        }
+        return this.reservations.get(location).addAll(reservations);
+    }
+
+    // TODO remove reservation
+    public boolean removeReservationFromLocation(Location location, Reservation reservation) {
+        // remove reservation
+        if (this.reservations.get(location).remove(reservation)) {
+            // update stock
+            addToStock(reservation.getItems());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // TODO get reservations
+
+    // shopping
     public Map<Ingredient, Integer> getShoppingList() {
+        // TODO include only preorders - and allow setting extra portions
         EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
-        for (ArrayList<Dish> dishes : orders.values()) {
+        // TODO fix using stream
+        for (ArrayList<Dish> dishes : preorders.values()) {
             for (Dish dish : dishes) {
                 for (Entry<Ingredient, Integer> entry : dish.getIngredients().entrySet()) {
                     if (results.containsKey(entry.getKey())) {
@@ -98,10 +156,66 @@ public class Operator {
         return results;
     }
 
+    public void goShopping(Map<Ingredient, Integer> ingredients) {
+        // get available ingredients
+        stock = Market.buyIngredients(ingredients);
+        // check possible orders and adjust each status
+        preorders.values().stream().forEach(list -> {
+            list.stream().forEach(order -> {
+                if (isPossible(order)) {
+                    order.setStatus(Order.Status.CONFIRMED);
+                } else {
+                    order.setStatus(Order.Status.NOT_POSSIBLE);
+                }
+            });
+        });
+        // update reservationMenu
+        // TODO
+    }
+
+    // check orders
+
+    private boolean isPossible(Order order) {
+        for (Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
+            for (Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients().entrySet()) {
+                if (dishEntry.getValue() * ingredientEntry.getValue() > stock.get(ingredientEntry.getKey())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isBeforeNextDay(Location location) {
+        return LocalDateTime.now()
+                .isBefore(LocalDateTime.of(location.getArrival().toLocalDate().plusDays(1), LocalTime.of(7, 0, 0)));
+    }
+
+    // interact with stock
+    public boolean addToStock(Ingredient ingredient, int amount) {
+        if(){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addToStock(Map<Dish, Integer> items) {
+        for (Map.Entry<Dish, Integer> dishEntry : items.entrySet()) {
+            for (Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients().entrySet()) {
+                return addToStock(ingredientEntry.getKey() , dishEntry.getValue() * ingredientEntry.getValue())
+            }
+        }
+        return false;
+    }
+
+    public boolean removeFromStock(Map<Dish, Integer> items) {
+        return false;
+    }
+
     // methods for changing locations
     public boolean moveToNextLocation() {
-        if (orders.isEmpty()) {
-            orders.remove(currentLocation);
+        if (preorders.isEmpty()) {
+            preorders.remove(currentLocation);
             this.currentLocation = route.get(0);
             route.remove(0);
             return true;
