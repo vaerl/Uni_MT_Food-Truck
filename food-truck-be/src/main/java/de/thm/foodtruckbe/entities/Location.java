@@ -19,7 +19,6 @@ public class Location {
     // Values in kilometers
     private double x;
     private double y;
-    private double length;
 
     private LocalDateTime arrival;
     private LocalDateTime departure;
@@ -35,7 +34,6 @@ public class Location {
         this.name = name;
         this.x = x;
         this.y = y;
-        this.length = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
     }
 
     /**
@@ -123,11 +121,10 @@ public class Location {
      * Calculates the Distance from a to b.
      * 
      * @param b destination-coordinates
-     * @return Coordinates representing the distance between coordinates a and
-     *         b(basically a vector).
+     * @return length of the distance between a and b
      */
-    public Location calculateDistance(Location b) {
-        return new Location("VECTOR", b.x - this.x, b.y - this.y);
+    public double calculateDistance(Location b) {
+        return Math.sqrt(Math.pow(b.x - this.x, 2) + Math.pow(b.y - this.y, 2));
     }
 
     /**
@@ -137,7 +134,7 @@ public class Location {
      * @return a Duration based on the assumed velocity {@code KILOMETERS_PER_HOUR}
      */
     public Duration calculateTravelTime(Location b) {
-        return Duration.ofSeconds((long) (calculateDistance(b).length / (KILOMETERS_PER_HOUR / 3600)));
+        return Duration.ofSeconds((long) (calculateDistance(b) / (KILOMETERS_PER_HOUR / 3600)));
     }
 
     /**
@@ -148,7 +145,7 @@ public class Location {
      * @return a Duration based on the given velocity {@code kilometersPerHour}
      */
     public Duration calculateTravelTime(Location b, double kilometersPerHour) {
-        return Duration.ofSeconds((long) (this.calculateDistance(b).length / (kilometersPerHour / 3600)));
+        return Duration.ofSeconds((long) (calculateDistance(b) / (kilometersPerHour / 3600)));
     }
 
     @Override
