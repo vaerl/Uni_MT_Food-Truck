@@ -2,11 +2,28 @@ package de.thm.foodtruckbe.entities;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import de.thm.foodtruckbe.entities.Dish.Ingredient;
+import de.thm.foodtruckbe.entities.order.Order;
+import de.thm.foodtruckbe.entities.order.PreOrder;
+import de.thm.foodtruckbe.entities.order.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,13 +32,27 @@ public class Location {
     // Time per unit in seconds - I assumed a velocity of 50 km/h.
     private static final double KILOMETERS_PER_HOUR = 50;
 
+    @Id
+    @GeneratedValue
+    @Column(name = "location_id")
+    private Long id;
+
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "operator_id", nullable = false)
+    private Operator operator;
     // Values in kilometers
     private double x;
     private double y;
-
     private LocalDateTime arrival;
     private LocalDateTime departure;
+
+    @OneToMany(mappedBy = "location")
+    private List<PreOrder> preOrders;
+
+    @OneToMany(mappedBy = "location")
+    private List<Reservation> reservations;
 
     /**
      * Minimal constructor - for internal use only.
@@ -30,14 +61,18 @@ public class Location {
      * @param x
      * @param y
      */
-    private Location(String name, double x, double y) {
+    private Location(String name, Operator operator, double x, double y) {
         this.name = name;
+        this.operator = operator;
         this.x = x;
         this.y = y;
+        this.preOrders = new ArrayList<>();
+        this.reservations = new ArrayList<>();
     }
 
     /**
      * Constructor for initial {@code Location}. Needs an intial arrival-time.
+     * {@code Operator} uses a {@code Market} as its first location.
      * 
      * @param name     the location's name
      * @param x
@@ -45,8 +80,9 @@ public class Location {
      * @param arrival  the arrival-time of the food-truck
      * @param duration the duration the food-truck stays
      */
-    public Location(String name, double x, double y, final LocalDateTime arrival, final Duration duration) {
-        this(name, x, y);
+    public Location(String name, Operator operator, double x, double y, final LocalDateTime arrival,
+            final Duration duration) {
+        this(name, operator, x, y);
         this.arrival = arrival;
         this.departure = arrival.plus(duration);
     }
@@ -62,8 +98,8 @@ public class Location {
      * @param y
      * @param duration the duration the food-truck stays
      */
-    public Location(String name, double x, double y, Location previous, final Duration duration) {
-        this(name, x, y);
+    public Location(String name, Operator operator, double x, double y, Location previous, final Duration duration) {
+        this(name, operator, x, y);
         this.arrival = previous.getDeparture().plus(previous.calculateTravelTime(this));
         this.departure = arrival.plus(duration);
     }
@@ -146,6 +182,86 @@ public class Location {
      */
     public Duration calculateTravelTime(Location b, double kilometersPerHour) {
         return Duration.ofSeconds((long) (calculateDistance(b) / (kilometersPerHour / 3600)));
+    }
+
+    // preOrders
+    public boolean addPreOrder(PreOrder preOrder) {
+        if (isBeforeNextDay()) {
+            return false;
+        }
+        return preOrders.add(preOrder);
+    }
+
+    public boolean addAllPreOrders(List<PreOrder> preOrders) {
+        for (PreOrder preOrder : preOrders) {
+            if (!addPreOrder(preOrder)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean removePreOrder(PreOrder preOrder) {
+        if (isBeforeNextDay()) {
+            return false;
+        }
+        return preOrders.remove(preOrder);
+    }
+
+    // reservations
+    public boolean addReservation(Reservation reservation) {
+        if (!isPossible(reservation)) {
+            return false;
+        }
+        return this.reservations.add(reservation);
+    }
+
+    public boolean addAllReservations(List<Reservation> reservations) {
+        for (Reservation reservation : reservations) {
+            if (!addReservation(reservation)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // remove reservation
+    public boolean removeReservation(Reservation reservation) {
+        // remove reservation
+        if (this.reservations.remove(reservation)) {
+            // update stock
+            operator.addToStock(reservation.getItems());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // check orders
+    private boolean isPossible(Order order) {
+        for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
+            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
+                    .entrySet()) {
+                if (dishEntry.getValue() * ingredientEntry.getValue() > operator.getStock()
+                        .get(ingredientEntry.getKey())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isPossible(final Dish dish) {
+        for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
+            if (ingredient.getValue() > operator.getStock().get(ingredient.getKey())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isBeforeNextDay() {
+        return LocalDateTime.now().isBefore(LocalDateTime.of(arrival.toLocalDate().plusDays(1), LocalTime.of(7, 0, 0)));
     }
 
     @Override

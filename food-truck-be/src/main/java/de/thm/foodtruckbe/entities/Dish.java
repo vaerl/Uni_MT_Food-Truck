@@ -1,58 +1,62 @@
 package de.thm.foodtruckbe.entities;
 
-import java.util.EnumMap;
+import java.util.Map;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyClass;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyEnumerated;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Dish {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private double price;
-    private int servings;
     private double rating;
 
-    private EnumMap<Ingredient, Integer> ingredients;
+    @ManyToOne
+    @JoinColumn(name = "operator_id", nullable = false)
+    private Operator operator;
+
+    @ElementCollection
+    @CollectionTable(name = "ingredient_amount_mapping_dish")
+    @MapKeyEnumerated(EnumType.STRING)
+    @MapKeyClass(Ingredient.class)
+    @MapKeyColumn(name = "ingredient", nullable = false)
+    @Column(name = "amount")
+    private Map<Ingredient, Integer> ingredients;
 
     /**
      * Constructor for {@code Dish}.
      * 
      * @param name
      * @param price
-     * @param servings
      * @param ingredients
      */
-    public Dish(String name, double price, int servings, EnumMap<Ingredient, Integer> ingredients) {
+    public Dish(String name, Operator operator, double price, Map<Ingredient, Integer> ingredients) {
         this.name = name;
+        this.operator = operator;
         this.price = Math.abs(price);
-        this.servings = Math.abs(servings);
         this.ingredients = ingredients;
-    }
-
-    /**
-     * Serve the dish. Reduces {@code servings} by one if availabe.
-     * 
-     * @return success of serving.
-     */
-    public boolean serve() {
-        if (isAvailable()) {
-            servings--;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if more than zero servings are available.
-     * 
-     * @return
-     */
-    public boolean isAvailable() {
-        return servings > 0;
     }
 
     /**
@@ -68,7 +72,8 @@ public class Dish {
 
     @Override
     public String toString() {
-        return name + ": " + price + " - " + servings + " available";
+        // TODO add ingredients
+        return name + ": " + price;
     }
 
     public enum Ingredient {

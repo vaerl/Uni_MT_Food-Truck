@@ -1,8 +1,8 @@
-package de.thm.foodtruckbe.controller;
+package de.thm.foodtruckbe.controllers;
 
 import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.Order;
-import de.thm.foodtruckbe.services.OrderService;
+import de.thm.foodtruckbe.entities.order.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,36 +16,36 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/api/order")
 public class OrderController {
 
-    @Autowired
-    OrderService orderService;
-
     @RequestMapping(path = "/getOrders", method = RequestMethod.POST)
-    public void getOrdersByLocation(HttpServletRequest request, HttpServletResponse response){
-
+    public void getOrdersByLocation(HttpServletRequest request, HttpServletResponse response) {
+        // TODO implement
     }
 
     @RequestMapping(path = "/getOrder", method = RequestMethod.GET)
-    public Order getOrder(@RequestParam(value = "id") String id){
-        return orderService.getOrderById(id);
+    public Order getOrder(@RequestParam(value = "id") String id) {
+        // TODO implement
+        return null;
     }
 
     @RequestMapping(path = "/getStatus", method = RequestMethod.GET)
-    public Location.Status getOrderStatus(@RequestParam(value = "id") String id){
-        return orderService.getOrderStatusById(id);
+    public Location.Status getOrderStatus(@RequestParam(value = "id") String id) {
+        // TODO implement
+        return null;
     }
 
     @RequestMapping(path = "/getPrice", method = RequestMethod.GET)
-    public double getOrderPrice(@RequestParam(value = "id") String id){
-        return orderService.getOrderPriceById(id);
+    public double getOrderPrice(@RequestParam(value = "id") String id) {
+        // TODO implement
+        return 0.0;
     }
 
     @RequestMapping(path = "/setStatus", method = RequestMethod.POST)
-    public void setOrderStatus(@RequestParam(value = "id") String id){
-        orderService.setOrderStatusById(id);
+    public void setOrderStatus(@RequestParam(value = "id") String id) {
+        // TODO implement
     }
 
     @RequestMapping(path = "/createOrder", method = RequestMethod.GET)
-    public void createOrder(@RequestParam(value = "id") String id){
-        orderService.setOrderStatusById(id);
+    public void createOrder(@RequestParam(value = "id") String id) {
+        // TODO implement
     }
 }
