@@ -55,13 +55,13 @@ public class Location {
     private List<Reservation> reservations;
 
     /**
-     * Minimal constructor - for internal use only.
+     * Minimal constructor - for internal use or Customer-Location.
      * 
      * @param name the location's name
      * @param x
      * @param y
      */
-    private Location(String name, Operator operator, double x, double y) {
+    public Location(String name, Operator operator, double x, double y) {
         this.name = name;
         this.operator = operator;
         this.x = x;

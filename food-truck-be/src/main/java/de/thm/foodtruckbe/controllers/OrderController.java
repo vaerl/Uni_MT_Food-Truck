@@ -1,4 +1,4 @@
-package de.thm.foodtruckbe.controller;
+package de.thm.foodtruckbe.controllers;
 
 import de.thm.foodtruckbe.entities.Customer;
 import de.thm.foodtruckbe.entities.Location;
@@ -15,27 +15,29 @@ import java.util.List;
 @RequestMapping("/api/order")
 public class OrderController {
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public List<Order> getAllOrdersByOperatorId(@RequestParam(value = "operatorId") String operatorId){
-    }
+    // @RequestMapping(path = "/all", method = RequestMethod.GET)
+    // public List<Order> getAllOrdersByOperatorId(@RequestParam(value =
+    // "operatorId") String operatorId) {
+    // }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Order getOrderById(@PathVariable(value = "id") String id){
-    }
+    // @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    // public Order getOrderById(@PathVariable(value = "id") String id) {
+    // }
 
-    @RequestMapping(path = "/{id}/status", method = RequestMethod.GET)
-    public Order.Status getOrderStatusById(@PathVariable(value = "id") String id){
-    }
+    // @RequestMapping(path = "/{id}/status", method = RequestMethod.GET)
+    // public Order.Status getOrderStatusById(@PathVariable(value = "id") String id)
+    // {
+    // }
 
-    @RequestMapping(path = "/{id}/price", method = RequestMethod.GET)
-    public double getOrderPriceById(@PathVariable(value = "id") String id){
-    }
+    // @RequestMapping(path = "/{id}/price", method = RequestMethod.GET)
+    // public double getOrderPriceById(@PathVariable(value = "id") String id) {
+    // }
 
-    @RequestMapping(path = "/{id}/status", method = RequestMethod.POST)
-    public void setOrderStatusById(@PathVariable(value = "id") String id){
-    }
+    // @RequestMapping(path = "/{id}/status", method = RequestMethod.POST)
+    // public void setOrderStatusById(@PathVariable(value = "id") String id) {
+    // }
 
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public void createOrder(@RequestBody Order order){
-    }
+    // @RequestMapping(path = "/create", method = RequestMethod.POST)
+    // public void createOrder(@RequestBody Order order) {
+    // }
 }

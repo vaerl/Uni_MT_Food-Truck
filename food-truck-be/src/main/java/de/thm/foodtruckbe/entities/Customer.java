@@ -41,21 +41,11 @@ public class Customer {
     }
 
     public Customer(String name, Location location) {
-        this(name);
+        this.name = name;
         this.location = location;
     }
 
     public List<Location> getNearestLocations(Operator operator) {
-        if (location == null) {
-            return new ArrayList<>();
-        }
-        return operator.getRoute().stream()
-                .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(this.location))).entrySet()
-                .stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toList()).stream()
-                .map(Map.Entry::getKey).limit(3).collect(Collectors.toList());
-    }
-
-    public List<Location> getNearestLocations(Location location, Operator operator) {
         return operator.getRoute().stream()
                 .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(location))).entrySet().stream()
                 .sorted(Map.Entry.comparingByValue()).collect(Collectors.toList()).stream().map(Map.Entry::getKey)
@@ -65,5 +55,11 @@ public class Customer {
     @Override
     public String toString() {
         return name;
+    }
+
+    public Customer merge(Customer customer) {
+        this.name = customer.name;
+        this.location = customer.location;
+        return this;
     }
 }
