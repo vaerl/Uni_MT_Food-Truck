@@ -1,7 +1,9 @@
 package de.thm.foodtruckbe.controller;
 
+import de.thm.foodtruckbe.entities.Customer;
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.Operator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +64,29 @@ public class OperatorController {
     @RequestMapping(path = "/{id}/menu/remove", method = RequestMethod.POST)
     public void removeDishFromMenuByOperatorId(@RequestBody Dish dish,
                                                @PathVariable(value = "id") String id){
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public void createOperator(@RequestBody Operator operator){
+    }
+
+    @RequestMapping(path = "/{id}/dishes/{dishId}/rating", method = RequestMethod.GET)
+    public List<Location> getDishRatingByDishId(@PathVariable(value = "id") String id,
+                                                @PathVariable(value = "dishId") String dishId){
+    }
+
+    @RequestMapping(path = "/{id}/dishes/{dishId}/rating", method = RequestMethod.POST)
+    public void setDishRatingByDishId(@PathVariable(value = "id") String id,
+                                      @PathVariable(value = "dishId") String dishId,
+                                      @RequestParam(value = "rating") String rating){
+    }
+
+    @RequestMapping(path = "/{id}/dishes/{dishId}/delete", method = RequestMethod.POST)
+    public void deleteDish(@PathVariable(value = "id") String id,
+                           @PathVariable(value = "dishId") String dishId){
+    }
+
+    @RequestMapping(path = "/{id}/dishes/create", method = RequestMethod.POST)
+    public void createDish(@RequestBody Dish dish){
     }
 }
