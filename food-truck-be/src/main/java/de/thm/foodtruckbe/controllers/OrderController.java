@@ -1,51 +1,41 @@
-package de.thm.foodtruckbe.controllers;
+package de.thm.foodtruckbe.controller;
 
+import de.thm.foodtruckbe.entities.Customer;
 import de.thm.foodtruckbe.entities.Location;
 import de.thm.foodtruckbe.entities.order.Order;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
 
-    @RequestMapping(path = "/getOrders", method = RequestMethod.POST)
-    public void getOrdersByLocation(HttpServletRequest request, HttpServletResponse response) {
-        // TODO implement
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<Order> getAllOrdersByOperatorId(@RequestParam(value = "operatorId") String operatorId){
     }
 
-    @RequestMapping(path = "/getOrder", method = RequestMethod.GET)
-    public Order getOrder(@RequestParam(value = "id") String id) {
-        // TODO implement
-        return null;
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Order getOrderById(@PathVariable(value = "id") String id){
     }
 
-    @RequestMapping(path = "/getStatus", method = RequestMethod.GET)
-    public Location.Status getOrderStatus(@RequestParam(value = "id") String id) {
-        // TODO implement
-        return null;
+    @RequestMapping(path = "/{id}/status", method = RequestMethod.GET)
+    public Order.Status getOrderStatusById(@PathVariable(value = "id") String id){
     }
 
-    @RequestMapping(path = "/getPrice", method = RequestMethod.GET)
-    public double getOrderPrice(@RequestParam(value = "id") String id) {
-        // TODO implement
-        return 0.0;
+    @RequestMapping(path = "/{id}/price", method = RequestMethod.GET)
+    public double getOrderPriceById(@PathVariable(value = "id") String id){
     }
 
-    @RequestMapping(path = "/setStatus", method = RequestMethod.POST)
-    public void setOrderStatus(@RequestParam(value = "id") String id) {
-        // TODO implement
+    @RequestMapping(path = "/{id}/status", method = RequestMethod.POST)
+    public void setOrderStatusById(@PathVariable(value = "id") String id){
     }
 
-    @RequestMapping(path = "/createOrder", method = RequestMethod.GET)
-    public void createOrder(@RequestParam(value = "id") String id) {
-        // TODO implement
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public void createOrder(@RequestBody Order order){
     }
 }
