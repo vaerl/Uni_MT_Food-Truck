@@ -27,6 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+// TODO add status
 public class Location {
 
     // Time per unit in seconds - I assumed a velocity of 50 km/h.
@@ -184,6 +185,15 @@ public class Location {
         return Duration.ofSeconds((long) (calculateDistance(b) / (kilometersPerHour / 3600)));
     }
 
+    // orders
+
+    public List<Order> getAllOrders() {
+        ArrayList<Order> result = new ArrayList<>();
+        result.addAll(preOrders);
+        result.addAll(reservations);
+        return result;
+    }
+
     // preOrders
     public boolean addPreOrder(PreOrder preOrder) {
         if (isBeforeNextDay()) {
@@ -267,6 +277,14 @@ public class Location {
     @Override
     public String toString() {
         return name + "(" + x + ", " + y + "): from " + arrival + " until " + departure;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Location) {
+            return this.getName().equals(((Location) o).getName());
+        }
+        return false;
     }
 
     public enum Status {

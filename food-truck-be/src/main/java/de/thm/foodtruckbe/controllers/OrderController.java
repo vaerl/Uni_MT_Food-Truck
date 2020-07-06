@@ -1,43 +1,55 @@
 package de.thm.foodtruckbe.controllers;
 
-import de.thm.foodtruckbe.entities.Customer;
-import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
-import java.util.List;
+import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.entities.order.Order;
+import de.thm.foodtruckbe.entities.order.Order.Status;
+import de.thm.foodtruckbe.repos.OrderRepository;
 
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
 
-    // @RequestMapping(path = "/all", method = RequestMethod.GET)
-    // public List<Order> getAllOrdersByOperatorId(@RequestParam(value =
-    // "operatorId") String operatorId) {
-    // }
+    private OrderRepository orderRepository;
 
-    // @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    // public Order getOrderById(@PathVariable(value = "id") String id) {
-    // }
+    @Autowired
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
-    // @RequestMapping(path = "/{id}/status", method = RequestMethod.GET)
-    // public Order.Status getOrderStatusById(@PathVariable(value = "id") String id)
-    // {
-    // }
+    public Order getOrder(Long id) {
+        var order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            return order.get();
+        } else {
+            throw new EntityNotFoundException("Order", id);
+        }
+    }
 
-    // @RequestMapping(path = "/{id}/price", method = RequestMethod.GET)
-    // public double getOrderPriceById(@PathVariable(value = "id") String id) {
-    // }
+    @GetMapping(path = "/{id}")
+    public Order getOrderById(@PathVariable(value = "id") Long id) {
+        return getOrder(id);
+    }
 
-    // @RequestMapping(path = "/{id}/status", method = RequestMethod.POST)
-    // public void setOrderStatusById(@PathVariable(value = "id") String id) {
-    // }
+    @GetMapping(path = "/{id}/status")
+    public Order.Status getOrderStatusById(@PathVariable(value = "id") Long id) {
+        return getOrder(id).getStatus();
+    }
 
-    // @RequestMapping(path = "/create", method = RequestMethod.POST)
-    // public void createOrder(@RequestBody Order order) {
-    // }
+    @GetMapping(path = "/{id}/price")
+    public double getOrderPriceById(@PathVariable(value = "id") Long id) {
+        return getOrder(id).getPrice();
+    }
+
+    @PostMapping(path = "/{id}/status")
+    public void setOrderStatusById(@PathVariable(value = "id") Long id, @RequestBody Status status) {
+        getOrder(id).setStatus(status);
+    }
 }
