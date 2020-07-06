@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -55,6 +57,10 @@ public class Location {
     private LocalDateTime arrival;
     private LocalDateTime departure;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    private Duration duration;
+
     @OneToMany(mappedBy = "location")
     @JsonBackReference
     private List<PreOrder> preOrders;
@@ -77,6 +83,7 @@ public class Location {
         this.y = y;
         this.preOrders = new ArrayList<>();
         this.reservations = new ArrayList<>();
+        this.status = Status.OPEN;
     }
 
     /**
@@ -296,7 +303,21 @@ public class Location {
         return false;
     }
 
+    // status
+
+    public boolean setArriving(Duration duration) {
+        this.status = Status.ARRIVING;
+        this.duration = duration;
+        return true;
+    }
+
+    public boolean setLeaving(Duration duration) {
+        this.status = Status.LEAVING;
+        this.duration = duration;
+        return true;
+    }
+
     public enum Status {
-        FLOUR, BUTTER, BREAD, PORK, OIL, FRIES, SALT, PEPPER, WHEAT, TOMATO, EGGS
+        LEAVING, ARRIVING, CURRENT, CLOSED, OPEN
     }
 }

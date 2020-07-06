@@ -30,9 +30,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.webjars.NotFoundException;
 
 import de.thm.foodtruckbe.entities.Dish;
+import de.thm.foodtruckbe.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.entities.Location;
 import de.thm.foodtruckbe.entities.Market;
-import de.thm.foodtruckbe.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;
 import lombok.Getter;
@@ -163,9 +163,12 @@ public class Operator extends User {
         return false;
     }
 
-    // TODO get all order-types
+    public boolean leaveIn(Duration duration) {
+        var nextLocation = route.get(0);
+        return nextLocation.setArriving(duration.plus(currentLocation.calculateTravelTime(nextLocation)))
+                && currentLocation.setLeaving(duration);
+    }
 
-    // TODO implement somwthing for easy adjustment of the shopping-list
     // shopping
     public Map<Ingredient, Integer> getShoppingList() {
         final EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
