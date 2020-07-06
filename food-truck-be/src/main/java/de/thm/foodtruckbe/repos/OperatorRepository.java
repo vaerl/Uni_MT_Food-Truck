@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import de.thm.foodtruckbe.entities.Operator;
+import de.thm.foodtruckbe.entities.user.Operator;
 
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 

@@ -13,11 +13,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import de.thm.foodtruckbe.entities.Customer;
+import de.thm.foodtruckbe.entities.user.Customer;
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.Operator;
+import de.thm.foodtruckbe.entities.user.Operator;
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
+import de.thm.foodtruckbe.entities.order.PreOrder;
 import de.thm.foodtruckbe.entities.order.Reservation;
 import de.thm.foodtruckbe.repos.CustomerRepository;
 import de.thm.foodtruckbe.repos.DishRepository;
@@ -44,25 +45,68 @@ public class Application {
 			DishRepository dishRepository, OrderRepository orderRepository, OperatorRepository operatorRepository) {
 		return args -> {
 
-			Operator operator = new Operator("Truck-Food");
+			Operator operator = new Operator("Truck-Food", "1234");
 
-			Location location = new Location("Ikea", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofDays(2));
+			Location thm = new Location("THM", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofHours(1));
+			Location tor = new Location("Frankenberger Tor", operator, 5.0, 7.0, thm, Duration.ofHours(1));
+			Location lasertag = new Location("Lasertag-Halle", operator, 5.0, 7.0, tor, Duration.ofHours(1));
+			operator.addLocation(thm);
+			operator.addLocation(tor);
+			operator.addLocation(lasertag);
 
-			Customer customer = new Customer("Lukas", location);
+			Customer manuel = new Customer("Manuel", "leunam");
+			Customer alex = new Customer("Alex", "xlea");
+			Customer lukas = new Customer("Lukas", "sakul");
 
-			EnumMap<Ingredient, Integer> ingredients = new EnumMap<>(Ingredient.class);
-			ingredients.put(Ingredient.BREAD, 3);
-			Dish dish = new Dish("Lasagne", operator, 5.50, ingredients);
+			EnumMap<Ingredient, Integer> lasagnaIngredients = new EnumMap<>(Ingredient.class);
+			lasagnaIngredients.put(Ingredient.NUDELN, 3);
+			lasagnaIngredients.put(Ingredient.TOMATEN, 2);
+			lasagnaIngredients.put(Ingredient.METT, 3);
+			lasagnaIngredients.put(Ingredient.KAESE, 2);
+			Dish lasagna = new Dish("Lasagne", operator, 5.50, lasagnaIngredients);
 
-			HashMap<Dish, Integer> items = new HashMap<>();
-			items.put(dish, 4);
-			Reservation reservation = new Reservation(customer, location, items);
+			EnumMap<Ingredient, Integer> burgerIngredients = new EnumMap<>(Ingredient.class);
+			burgerIngredients.put(Ingredient.BROETCHEN, 1);
+			burgerIngredients.put(Ingredient.TOMATEN, 2);
+			burgerIngredients.put(Ingredient.GURKE, 3);
+			burgerIngredients.put(Ingredient.SALAT, 2);
+			burgerIngredients.put(Ingredient.BOULETTE, 2);
+			burgerIngredients.put(Ingredient.POMMES, 1);
+			burgerIngredients.put(Ingredient.KETCHUP, 1);
+			Dish burger = new Dish("Burger", operator, 7d, burgerIngredients);
+
+			EnumMap<Ingredient, Integer> pancakeIngredients = new EnumMap<>(Ingredient.class);
+			pancakeIngredients.put(Ingredient.EI, 3);
+			pancakeIngredients.put(Ingredient.MEHL, 2);
+			pancakeIngredients.put(Ingredient.SALZ, 1);
+			pancakeIngredients.put(Ingredient.ZUCKER, 2);
+			Dish pancakes = new Dish("Pancakes", operator, 4d, pancakeIngredients);
+
+			HashMap<Dish, Integer> itemsManuel = new HashMap<>();
+			itemsManuel.put(burger, 1);
+			itemsManuel.put(lasagna, 1);
+			Reservation reservationManuel = new Reservation(manuel, tor, itemsManuel);
+			HashMap<Dish, Integer> itemsAlex = new HashMap<>();
+			itemsAlex.put(lasagna, 2);
+			Reservation reservationAlex = new Reservation(alex, tor, itemsAlex);
+			HashMap<Dish, Integer> itemsLukas = new HashMap<>();
+			itemsLukas.put(pancakes, 4);
+			PreOrder preOrderLukas = new PreOrder(lukas, thm, itemsLukas);
 
 			operatorRepository.save(operator);
-			locationRepository.save(location);
-			customerRepository.save(customer);
-			dishRepository.save(dish);
-			orderRepository.save(reservation);
+			locationRepository.save(thm);
+			locationRepository.save(tor);
+			locationRepository.save(lasertag);
+			customerRepository.save(manuel);
+			customerRepository.save(alex);
+			customerRepository.save(lukas);
+
+			dishRepository.save(lasagna);
+			dishRepository.save(burger);
+			dishRepository.save(pancakes);
+			orderRepository.save(reservationManuel);
+			orderRepository.save(reservationAlex);
+			orderRepository.save(preOrderLukas);
 			log.info("Saved exemplary data.");
 		};
 	}

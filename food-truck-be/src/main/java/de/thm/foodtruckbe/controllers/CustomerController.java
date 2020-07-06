@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.thm.foodtruckbe.entities.Customer;
+import de.thm.foodtruckbe.entities.user.Customer;
 import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.Operator;
+import de.thm.foodtruckbe.entities.user.Operator;
 import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
 import de.thm.foodtruckbe.repos.CustomerRepository;
 import de.thm.foodtruckbe.repos.OperatorRepository;
@@ -55,7 +55,7 @@ public class CustomerController {
         return customerRespository.findAll();
     }
 
-    @GetMapping(path = "/{id}/locations")
+    @PostMapping(path = "/{id}/locations")
     public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
             @RequestParam(value = "operatorId") Long operatorId) {
         return getCustomer(customerId).getNearestLocations(getOperator(operatorId));

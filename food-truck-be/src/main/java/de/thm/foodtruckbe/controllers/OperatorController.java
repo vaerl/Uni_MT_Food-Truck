@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.Operator;
+import de.thm.foodtruckbe.entities.user.Operator;
 import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;

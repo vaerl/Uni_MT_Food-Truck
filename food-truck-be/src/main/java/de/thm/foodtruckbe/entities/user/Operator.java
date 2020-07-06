@@ -1,4 +1,4 @@
-package de.thm.foodtruckbe.entities;
+package de.thm.foodtruckbe.entities.user;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -24,36 +24,47 @@ import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.webjars.NotFoundException;
 
+import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
+import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.Market;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Operator {
+@NoArgsConstructor
+public class Operator extends User {
 
     @Id
     @GeneratedValue
     @Column(name = "operator_id")
     private Long id;
-    private String name;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Location> route;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @JsonIgnore
     private Location currentLocation;
 
     @ElementCollection
@@ -64,20 +75,17 @@ public class Operator {
     @Column(name = "amount")
     private Map<Ingredient, Integer> stock;
 
-    public Operator() {
-        this.preOrderMenu = new ArrayList<>();
-        this.reservationMenu = new ArrayList<>();
-        this.route = new ArrayList<>();
-    }
-
     /**
      * Constructor for inital use. Sets the {@code Market} as the operators initial
      * location with its start at 7AM and a duration of 30 minutes.
      * 
      * @param name
      */
-    public Operator(final String name) {
-        this.name = name;
+    public Operator(String name, String password) {
+        super(name, password);
+        this.preOrderMenu = new ArrayList<>();
+        this.reservationMenu = new ArrayList<>();
+        this.route = new ArrayList<>();
         double[] coordinates = Market.getCoordinates();
         this.currentLocation = new Location("Market", this, coordinates[0], coordinates[1],
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 0, 0)), Duration.ofMinutes(30));
@@ -155,9 +163,12 @@ public class Operator {
         return false;
     }
 
-    // TODO get all order-types
+    public boolean leaveIn(Duration duration) {
+        var nextLocation = route.get(0);
+        return nextLocation.setArriving(duration.plus(currentLocation.calculateTravelTime(nextLocation)))
+                && currentLocation.setLeaving(duration);
+    }
 
-    // TODO implement somwthing for easy adjustment of the shopping-list
     // shopping
     public Map<Ingredient, Integer> getShoppingList() {
         final EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
@@ -267,6 +278,7 @@ public class Operator {
     }
 
     // orders
+    @JsonIgnore
     public List<Order> getAllOrders() {
         ArrayList<Order> result = new ArrayList<>();
         route.forEach(location -> result.addAll(location.getAllOrders()));

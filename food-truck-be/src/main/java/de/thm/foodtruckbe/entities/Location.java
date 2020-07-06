@@ -9,16 +9,23 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;
 import de.thm.foodtruckbe.entities.order.Reservation;
+import de.thm.foodtruckbe.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,6 +49,7 @@ public class Location {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
+    @JsonManagedReference
     private Operator operator;
     // Values in kilometers
     private double x;
@@ -49,10 +57,16 @@ public class Location {
     private LocalDateTime arrival;
     private LocalDateTime departure;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    private Duration duration;
+
     @OneToMany(mappedBy = "location")
+    @JsonBackReference
     private List<PreOrder> preOrders;
 
     @OneToMany(mappedBy = "location")
+    @JsonBackReference
     private List<Reservation> reservations;
 
     /**
@@ -62,13 +76,14 @@ public class Location {
      * @param x
      * @param y
      */
-    public Location(String name, Operator operator, double x, double y) {
+    public Location(final String name, final Operator operator, final double x, final double y) {
         this.name = name;
         this.operator = operator;
         this.x = x;
         this.y = y;
         this.preOrders = new ArrayList<>();
         this.reservations = new ArrayList<>();
+        this.status = Status.OPEN;
     }
 
     /**
@@ -81,8 +96,8 @@ public class Location {
      * @param arrival  the arrival-time of the food-truck
      * @param duration the duration the food-truck stays
      */
-    public Location(String name, Operator operator, double x, double y, final LocalDateTime arrival,
-            final Duration duration) {
+    public Location(final String name, final Operator operator, final double x, final double y,
+            final LocalDateTime arrival, final Duration duration) {
         this(name, operator, x, y);
         this.arrival = arrival;
         this.departure = arrival.plus(duration);
@@ -99,7 +114,8 @@ public class Location {
      * @param y
      * @param duration the duration the food-truck stays
      */
-    public Location(String name, Operator operator, double x, double y, Location previous, final Duration duration) {
+    public Location(final String name, final Operator operator, final double x, final double y, final Location previous,
+            final Duration duration) {
         this(name, operator, x, y);
         this.arrival = previous.getDeparture().plus(previous.calculateTravelTime(this));
         this.departure = arrival.plus(duration);
@@ -113,7 +129,7 @@ public class Location {
      * @param duration delay for the arrival time
      * @return success of operation
      */
-    public boolean setArrivalDelay(Duration duration) {
+    public boolean setArrivalDelay(final Duration duration) {
         arrival = arrival.plus(duration);
         setDepartureDelay(duration);
         return true;
@@ -125,7 +141,7 @@ public class Location {
      * @param duration delay for the arrival time
      * @return success of operation
      */
-    public boolean setDepartureDelay(Duration duration) {
+    public boolean setDepartureDelay(final Duration duration) {
         departure = departure.plus(duration);
         return true;
     }
@@ -136,7 +152,7 @@ public class Location {
      * @param duration lead for the arrival time
      * @return
      */
-    public boolean setArrivalLead(Duration duration) {
+    public boolean setArrivalLead(final Duration duration) {
         arrival = arrival.minus(duration);
         setDepartureLead(duration);
         return true;
@@ -148,7 +164,7 @@ public class Location {
      * @param duration lead for the arrival time
      * @return
      */
-    public boolean setDepartureLead(Duration duration) {
+    public boolean setDepartureLead(final Duration duration) {
         departure = departure.minus(duration);
         return true;
     }
@@ -160,7 +176,7 @@ public class Location {
      * @param b destination-coordinates
      * @return length of the distance between a and b
      */
-    public double calculateDistance(Location b) {
+    public double calculateDistance(final Location b) {
         return Math.sqrt(Math.pow(b.x - this.x, 2) + Math.pow(b.y - this.y, 2));
     }
 
@@ -170,7 +186,7 @@ public class Location {
      * @param b destination-location
      * @return a Duration based on the assumed velocity {@code KILOMETERS_PER_HOUR}
      */
-    public Duration calculateTravelTime(Location b) {
+    public Duration calculateTravelTime(final Location b) {
         return Duration.ofSeconds((long) (calculateDistance(b) / (KILOMETERS_PER_HOUR / 3600)));
     }
 
@@ -181,29 +197,29 @@ public class Location {
      * @param kilometersPerHour the food-trucks average verlocity
      * @return a Duration based on the given velocity {@code kilometersPerHour}
      */
-    public Duration calculateTravelTime(Location b, double kilometersPerHour) {
+    public Duration calculateTravelTime(final Location b, final double kilometersPerHour) {
         return Duration.ofSeconds((long) (calculateDistance(b) / (kilometersPerHour / 3600)));
     }
 
     // orders
-
+    @JsonIgnore
     public List<Order> getAllOrders() {
-        ArrayList<Order> result = new ArrayList<>();
+        final ArrayList<Order> result = new ArrayList<>();
         result.addAll(preOrders);
         result.addAll(reservations);
         return result;
     }
 
     // preOrders
-    public boolean addPreOrder(PreOrder preOrder) {
+    public boolean addPreOrder(final PreOrder preOrder) {
         if (isBeforeNextDay()) {
             return false;
         }
         return preOrders.add(preOrder);
     }
 
-    public boolean addAllPreOrders(List<PreOrder> preOrders) {
-        for (PreOrder preOrder : preOrders) {
+    public boolean addAllPreOrders(final List<PreOrder> preOrders) {
+        for (final PreOrder preOrder : preOrders) {
             if (!addPreOrder(preOrder)) {
                 return false;
             }
@@ -211,7 +227,7 @@ public class Location {
         return true;
     }
 
-    public boolean removePreOrder(PreOrder preOrder) {
+    public boolean removePreOrder(final PreOrder preOrder) {
         if (isBeforeNextDay()) {
             return false;
         }
@@ -219,15 +235,15 @@ public class Location {
     }
 
     // reservations
-    public boolean addReservation(Reservation reservation) {
+    public boolean addReservation(final Reservation reservation) {
         if (!isPossible(reservation)) {
             return false;
         }
         return this.reservations.add(reservation);
     }
 
-    public boolean addAllReservations(List<Reservation> reservations) {
-        for (Reservation reservation : reservations) {
+    public boolean addAllReservations(final List<Reservation> reservations) {
+        for (final Reservation reservation : reservations) {
             if (!addReservation(reservation)) {
                 return false;
             }
@@ -236,7 +252,7 @@ public class Location {
     }
 
     // remove reservation
-    public boolean removeReservation(Reservation reservation) {
+    public boolean removeReservation(final Reservation reservation) {
         // remove reservation
         if (this.reservations.remove(reservation)) {
             // update stock
@@ -248,7 +264,7 @@ public class Location {
     }
 
     // check orders
-    private boolean isPossible(Order order) {
+    private boolean isPossible(final Order order) {
         for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
             for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
                     .entrySet()) {
@@ -280,14 +296,28 @@ public class Location {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o instanceof Location) {
             return this.getName().equals(((Location) o).getName());
         }
         return false;
     }
 
+    // status
+
+    public boolean setArriving(Duration duration) {
+        this.status = Status.ARRIVING;
+        this.duration = duration;
+        return true;
+    }
+
+    public boolean setLeaving(Duration duration) {
+        this.status = Status.LEAVING;
+        this.duration = duration;
+        return true;
+    }
+
     public enum Status {
-        FLOUR, BUTTER, BREAD, PORK, OIL, FRIES, SALT, PEPPER, WHEAT, TOMATO, EGGS
+        LEAVING, ARRIVING, CURRENT, CLOSED, OPEN
     }
 }
