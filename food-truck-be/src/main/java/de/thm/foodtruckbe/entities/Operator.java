@@ -24,6 +24,8 @@ import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.webjars.NotFoundException;
+
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;
@@ -86,25 +88,71 @@ public class Operator {
 
     // methods for adding/removing dishes from menu
     public boolean addDishToMenu(final Dish dish) {
+        if (isPossible(dish)) {
+            reservationMenu.add(dish);
+        }
         return preOrderMenu.add(dish);
     }
 
     public boolean removeDishFromMenu(final Dish dish) {
-        return preOrderMenu.remove(dish);
+        return preOrderMenu.remove(dish) && reservationMenu.remove(dish);
     }
 
+    public Dish getDishFromMenu(Dish dish) {
+        for (Dish d : preOrderMenu) {
+            if (d.equals(dish)) {
+                return d;
+            }
+        }
+        throw new NotFoundException("Dish " + dish.getName() + "does not belong to this operator.");
+    }
+
+    // locations
     // methods for adding/removing locations from route
     public boolean addLocation(final Location location) {
         return route.add(location);
     }
 
     public boolean addLocations(final List<Location> locations) {
-        locations.forEach(this::addLocation);
+        for (Location location : locations) {
+            if (addLocation(location)) {
+                return false;
+            }
+        }
         return true;
     }
 
     public boolean removeLocation(final Location location) {
         return route.remove(location);
+    }
+
+    public boolean removeLocations(final List<Location> locations) {
+        for (Location location : locations) {
+            if (removeLocation(location)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // get location
+    public Location getLocation(Location location) {
+        for (Location l : route) {
+            if (l.equals(location)) {
+                return l;
+            }
+        }
+        throw new NotFoundException("Location " + location.getName() + "does not belong to this operator.");
+    }
+
+    // methods for changing locations
+    public boolean moveToNextLocation() {
+        if (currentLocation.getPreOrders().isEmpty() && currentLocation.getReservations().isEmpty()) {
+            this.currentLocation = route.get(0);
+            route.remove(0);
+            return true;
+        }
+        return false;
     }
 
     // TODO get all order-types
@@ -218,14 +266,11 @@ public class Operator {
         return true;
     }
 
-    // methods for changing locations
-    public boolean moveToNextLocation() {
-        if (currentLocation.getPreOrders().isEmpty() && currentLocation.getReservations().isEmpty()) {
-            this.currentLocation = route.get(0);
-            route.remove(0);
-            return true;
-        }
-        return false;
+    // orders
+    public List<Order> getAllOrders() {
+        ArrayList<Order> result = new ArrayList<>();
+        route.forEach(location -> result.addAll(location.getAllOrders()));
+        return result;
     }
 
     // TODO check whether doing this here is appropriate!

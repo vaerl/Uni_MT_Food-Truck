@@ -3,7 +3,10 @@ package de.thm.foodtruckbe.controllers;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,52 +22,42 @@ public class LocationController {
 
     private LocationRepository locationRepository;
 
+    @Autowired
     public LocationController(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    public Location createNewLocation(@RequestBody Location location) {
-        return locationRepository.save(location);
-    }
-
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Location getLocationById(@PathVariable(value = "id") Long id) {
+    public Location getLocation(Long id) {
         var location = locationRepository.findById(id);
         if (location.isPresent()) {
             return location.get();
         } else {
-            throw new EntityNotFoundException("Customer", id);
+            throw new EntityNotFoundException("Location", id);
         }
     }
 
-    @RequestMapping(path = "/{id}/arrival", method = RequestMethod.GET)
+    @PostMapping(path = "/")
+    public Location createNewLocation(@RequestBody Location location) {
+        return locationRepository.save(location);
+    }
+
+    @GetMapping(path = "/{id}")
+    public Location getLocationById(@PathVariable(value = "id") Long id) {
+        return getLocation(id);
+    }
+
+    @GetMapping(path = "/{id}/arrival")
     public LocalDateTime getArrivalTimeByLocationId(@PathVariable(value = "id") Long id) {
-        var location = locationRepository.findById(id);
-        if (location.isPresent()) {
-            return location.get().getArrival();
-        } else {
-            throw new EntityNotFoundException("Customer", id);
-        }
+        return getLocation(id).getArrival();
     }
 
-    @RequestMapping(path = "/{id}/departure", method = RequestMethod.GET)
+    @GetMapping(path = "/{id}/departure")
     public LocalDateTime getDepartureTimeByLocationId(@PathVariable(value = "id") Long id) {
-        var location = locationRepository.findById(id);
-        if (location.isPresent()) {
-            return location.get().getDeparture();
-        } else {
-            throw new EntityNotFoundException("Customer", id);
-        }
+        return getLocation(id).getDeparture();
     }
 
-    @RequestMapping(path = "/{id}/delay", method = RequestMethod.POST)
+    @PostMapping(path = "/{id}/delay")
     public boolean setLocationDelayByLocationId(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
-        var location = locationRepository.findById(id);
-        if (location.isPresent()) {
-            return location.get().setArrivalDelay(duration);
-        } else {
-            throw new EntityNotFoundException("Customer", id);
-        }
+        return getLocation(id).setArrivalDelay(duration);
     }
 }
