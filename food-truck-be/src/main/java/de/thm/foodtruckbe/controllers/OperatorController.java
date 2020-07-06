@@ -13,6 +13,13 @@ import java.util.Map;
 @RequestMapping("/api/operator")
 public class OperatorController {
 
+    // TODO
+    // @RequestMapping(path = "/all", method = RequestMethod.GET)
+    // public void getLocationsByOperatorId(@RequestParam(value = "operatorId")
+    // String locationName) {
+
+    // }
+
     // @RequestMapping(path = "/{id}/menu", method = RequestMethod.GET)
     // public List<Dish> getMenuByOperatorId(@PathVariable(value = "id") String id)
     // {

@@ -15,7 +15,6 @@ import de.thm.foodtruckbe.entities.Location;
 import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
 import de.thm.foodtruckbe.repos.CustomerRepository;
 import de.thm.foodtruckbe.repos.OperatorRepository;
-import javassist.NotFoundException;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -37,11 +36,12 @@ public class CustomerController {
 
     @RequestMapping(path = "/{id}/locations", method = RequestMethod.GET)
     public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
-            @RequestParam(value = "operatorId") Long operatorId) throws NotFoundException {
-        if (operatorRepository.findById(customerId).isPresent()) {
-            if (customerRespository.findById(customerId).isPresent()) {
-                return customerRespository.findById(customerId).get()
-                        .getNearestLocations(operatorRepository.findById(operatorId).get());
+            @RequestParam(value = "operatorId") Long operatorId) {
+        var operator = operatorRepository.findById(operatorId);
+        var customer = customerRespository.findById(customerId);
+        if (operator.isPresent()) {
+            if (customer.isPresent()) {
+                return customer.get().getNearestLocations(operator.get());
             } else {
                 throw new EntityNotFoundException("Customer", customerId);
             }
@@ -51,9 +51,10 @@ public class CustomerController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable(value = "id") Long id) throws NotFoundException {
-        if (customerRespository.findById(id).isPresent()) {
-            return customerRespository.findById(id).get();
+    public Customer getCustomerById(@PathVariable(value = "id") Long id) {
+        var customer = customerRespository.findById(id);
+        if (customer.isPresent()) {
+            return customer.get();
         } else {
             throw new EntityNotFoundException("Customer", id);
         }
@@ -66,10 +67,10 @@ public class CustomerController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer)
-            throws NotFoundException {
-        if (customerRespository.findById(id).isPresent()) {
-            return customerRespository.findById(id).get().merge(customer);
+    public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
+        var savedCustomer = customerRespository.findById(id);
+        if (savedCustomer.isPresent()) {
+            return savedCustomer.get().merge(customer);
         } else {
             throw new EntityNotFoundException("Customer", id);
         }

@@ -27,6 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+// TODO add status
 public class Location {
 
     // Time per unit in seconds - I assumed a velocity of 50 km/h.

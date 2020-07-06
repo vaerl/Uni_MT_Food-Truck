@@ -1,21 +1,17 @@
 package de.thm.foodtruckbe.entities;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-import de.thm.foodtruckbe.entities.order.PreOrder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
