@@ -212,7 +212,7 @@ public class Location {
 
     // preOrders
     public boolean addPreOrder(final PreOrder preOrder) {
-        if (isBeforeNextDay()) {
+        if (isBeforeNextDay() || status == Status.CLOSED || status == Status.LEAVING) {
             return false;
         }
         return preOrders.add(preOrder);
@@ -236,7 +236,7 @@ public class Location {
 
     // reservations
     public boolean addReservation(final Reservation reservation) {
-        if (!isPossible(reservation)) {
+        if (!isPossible(reservation) || status == Status.CLOSED || status == Status.LEAVING) {
             return false;
         }
         return this.reservations.add(reservation);
