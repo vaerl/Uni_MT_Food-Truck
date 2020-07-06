@@ -55,7 +55,7 @@ public class CustomerController {
         return customerRespository.findAll();
     }
 
-    @GetMapping(path = "/{id}/locations")
+    @PostMapping(path = "/{id}/locations")
     public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
             @RequestParam(value = "operatorId") Long operatorId) {
         return getCustomer(customerId).getNearestLocations(getOperator(operatorId));

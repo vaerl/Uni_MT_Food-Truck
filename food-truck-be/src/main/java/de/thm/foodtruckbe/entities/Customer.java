@@ -1,5 +1,6 @@
 package de.thm.foodtruckbe.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -42,6 +43,10 @@ public class Customer {
     }
 
     public List<Location> getNearestLocations(Operator operator) {
+        if (location == null) {
+            // TODO return List or throw exception?
+            return new ArrayList<>();
+        }
         return operator.getRoute().stream()
                 .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(location))).entrySet().stream()
                 .sorted(Map.Entry.comparingByValue()).collect(Collectors.toList()).stream().map(Map.Entry::getKey)
@@ -55,7 +60,6 @@ public class Customer {
 
     public Customer merge(Customer customer) {
         this.name = customer.name;
-        this.location = customer.location;
         return this;
     }
 }

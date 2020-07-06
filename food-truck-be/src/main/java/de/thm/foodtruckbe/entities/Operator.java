@@ -24,6 +24,9 @@ import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.webjars.NotFoundException;
 
 import de.thm.foodtruckbe.entities.Dish.Ingredient;
@@ -41,19 +44,24 @@ public class Operator {
     @GeneratedValue
     @Column(name = "operator_id")
     private Long id;
+
     private String name;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
+    @JsonBackReference
     private List<Location> route;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
+    @JsonIgnore
     private Location currentLocation;
 
     @ElementCollection
@@ -267,6 +275,7 @@ public class Operator {
     }
 
     // orders
+    @JsonIgnore
     public List<Order> getAllOrders() {
         ArrayList<Order> result = new ArrayList<>();
         route.forEach(location -> result.addAll(location.getAllOrders()));

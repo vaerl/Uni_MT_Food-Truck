@@ -15,6 +15,8 @@ import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.MapKeyEnumerated;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,6 +37,7 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
+    @JsonManagedReference
     private Operator operator;
 
     @ElementCollection

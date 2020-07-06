@@ -48,7 +48,7 @@ public class Application {
 
 			Location location = new Location("Ikea", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofDays(2));
 
-			Customer customer = new Customer("Lukas", location);
+			Customer customer = new Customer("Lukas");
 
 			EnumMap<Ingredient, Integer> ingredients = new EnumMap<>(Ingredient.class);
 			ingredients.put(Ingredient.BREAD, 3);
