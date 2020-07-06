@@ -4,7 +4,7 @@ import java.util.Map;
 
 import javax.persistence.Entity;
 
-import de.thm.foodtruckbe.entities.Customer;
+import de.thm.foodtruckbe.entities.user.Customer;
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package de.thm.foodtruckbe.entities;
+package de.thm.foodtruckbe.entities.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,10 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import de.thm.foodtruckbe.entities.Location;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,24 +20,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    private String name;
+public class Customer extends User {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "location_id", referencedColumnName = "location_id")
     private Location location;
 
-    public Customer(String name) {
-        this.name = name;
+    public Customer(String name, String password) {
+        super(name, password);
     }
 
-    public Customer(String name, Location location) {
-        this.name = name;
+    public Customer(String name, String password, Location location) {
+        this(name, password);
         this.location = location;
     }
 
@@ -55,7 +48,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return name;
+        return super.name;
     }
 
     public Customer merge(Customer customer) {

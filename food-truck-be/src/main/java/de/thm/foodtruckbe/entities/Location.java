@@ -23,6 +23,7 @@ import de.thm.foodtruckbe.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.entities.order.Order;
 import de.thm.foodtruckbe.entities.order.PreOrder;
 import de.thm.foodtruckbe.entities.order.Reservation;
+import de.thm.foodtruckbe.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

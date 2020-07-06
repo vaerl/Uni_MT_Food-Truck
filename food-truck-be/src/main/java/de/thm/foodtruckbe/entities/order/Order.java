@@ -21,9 +21,9 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import de.thm.foodtruckbe.entities.Customer;
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.user.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
