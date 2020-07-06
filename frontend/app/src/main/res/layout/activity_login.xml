@@ -17,13 +17,13 @@
         android:background="#00FFFFFF"
         android:cropToPadding="false"
         android:scaleType="fitCenter"
-        android:src="@android:drawable/btn_star_big_on"
+        android:src="@drawable/peters_foodtruck_v2"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck"
-        tools:srcCompat="@drawable/peters_foodtruck" />
+        app:srcCompat="@drawable/peters_foodtruck_v2"
+        tools:srcCompat="@drawable/peters_foodtruck_v2" />
 
     <EditText
         android:id="@+id/email_editText"
