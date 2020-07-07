@@ -52,7 +52,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/email_editText"
+                android:id="@+id/name_editText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:ems="10"
@@ -78,7 +78,7 @@
                 android:text="Nachname" />
 
             <EditText
-                android:id="@+id/passwort1_editText"
+                android:id="@+id/passwort_editText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"

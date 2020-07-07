@@ -1,9 +1,7 @@
-package com.example.helloworld;
+package com.example.foodtruck;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 public class CustomerMenuActivity extends AppCompatActivity {
 

@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/dish_,order_menu_amount_c"
+        android:id="@+id/dish_order_menu_amount_c"
         android:layout_width="86dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
