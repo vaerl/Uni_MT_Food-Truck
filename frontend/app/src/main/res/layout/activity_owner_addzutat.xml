@@ -2,12 +2,11 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/logo_imageButton8"
+        android:id="@+id/logo_imageButton3"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -24,7 +23,7 @@
         app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <ImageButton
-        android:id="@+id/back_imageButton8"
+        android:id="@+id/back_imageButton3"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -34,90 +33,54 @@
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@id/divider19"
-        app:layout_constraintEnd_toStartOf="@id/logo_imageButton8"
+        app:layout_constraintBottom_toTopOf="@id/divider14"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <View
-        android:id="@+id/divider19"
+        android:id="@+id/divider14"
         tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton8" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton3" />
 
     <Button
-        android:id="@+id/bearb_addzutat_button2"
+        android:id="@+id/zutat_addzutat_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="16dp"
-        android:text="Standort hinzufügen"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Zutat hinzufügen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menge_editTextNumber2" />
 
     <EditText
-        android:id="@+id/standortname_editText9"
+        android:id="@+id/zutatname_editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:ems="10"
-        android:hint="Standort (Name)"
+        android:hint="Zutat (Name)"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider19" />
+        app:layout_constraintTop_toTopOf="@id/divider14" />
 
     <EditText
-        android:id="@+id/breitengradx_editTextNumberDecimal2"
+        android:id="@+id/menge_editTextNumber2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Breitengrad (X)"
-        android:inputType="numberDecimal"
+        android:hint="Menge"
+        android:inputType="number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/standortname_editText9" />
-
-    <EditText
-        android:id="@+id/laengengrady_editTextNumberDecimal2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Längengrad (Y)"
-        android:inputType="numberDecimal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/breitengradx_editTextNumberDecimal2" />
-
-    <EditText
-        android:id="@+id/ankunft_editTextTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Ankunftszeit"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/laengengrady_editTextNumberDecimal2" />
-
-    <EditText
-        android:id="@+id/abreise_editTextTime2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Abreisezeit"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ankunft_editTextTime2" />
+        app:layout_constraintTop_toBottomOf="@id/zutatname_editText2" />
 </android.support.constraint.ConstraintLayout>
