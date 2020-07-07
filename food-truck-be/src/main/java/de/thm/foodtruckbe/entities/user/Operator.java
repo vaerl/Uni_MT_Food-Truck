@@ -164,7 +164,7 @@ public class Operator extends User {
     }
 
     public boolean leaveIn(Duration duration) {
-        var nextLocation = route.get(0);
+        Location nextLocation = route.get(0);
         return nextLocation.setArriving(duration.plus(currentLocation.calculateTravelTime(nextLocation)))
                 && currentLocation.setLeaving(duration);
     }

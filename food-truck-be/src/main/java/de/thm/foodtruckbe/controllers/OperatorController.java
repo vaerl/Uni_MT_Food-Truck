@@ -2,6 +2,7 @@ package de.thm.foodtruckbe.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,7 @@ public class OperatorController {
     }
 
     public Operator getOperator(Long id) {
-        var operator = operatorRepository.findById(id);
+        Optional<Operator> operator = operatorRepository.findById(id);
         if (operator.isPresent()) {
             return operator.get();
         } else {
@@ -53,7 +54,7 @@ public class OperatorController {
     }
 
     public Location getLocation(Long id) {
-        var location = locationRepository.findById(id);
+        Optional<Location> location = locationRepository.findById(id);
         if (location.isPresent()) {
             return location.get();
         } else {
@@ -62,7 +63,7 @@ public class OperatorController {
     }
 
     public Dish getDish(Long id) {
-        var dish = dishRepository.findById(id);
+        Optional<Dish> dish = dishRepository.findById(id);
         if (dish.isPresent()) {
             return dish.get();
         } else {
@@ -169,14 +170,14 @@ public class OperatorController {
     public boolean deleteDishAndOperatorId(@PathVariable(value = "id") Long operatorId,
             @PathVariable(value = "dishId") Long dishId) {
 
-        var dish = getDish(dishId);
+        Dish dish = getDish(dishId);
         dishRepository.delete(dish);
         return getOperator(operatorId).removeDishFromMenu(dish);
     }
 
     @PostMapping(path = "/{id}/dishes/")
     public Dish createDishAndOperatorId(@PathVariable(value = "id") Long operatorId, @RequestBody Dish dish) {
-        var savedDish = dishRepository.save(dish);
+        Dish savedDish = dishRepository.save(dish);
         getOperator(operatorId).addDishToMenu(savedDish);
         return savedDish;
     }

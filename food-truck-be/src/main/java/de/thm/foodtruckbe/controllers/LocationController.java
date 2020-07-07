@@ -2,6 +2,7 @@ package de.thm.foodtruckbe.controllers;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class LocationController {
     }
 
     public Location getLocation(Long id) {
-        var location = locationRepository.findById(id);
+        Optional<Location> location = locationRepository.findById(id);
         if (location.isPresent()) {
             return location.get();
         } else {

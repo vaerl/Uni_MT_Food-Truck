@@ -1,5 +1,7 @@
 package de.thm.foodtruckbe.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +27,7 @@ public class OrderController {
     }
 
     public Order getOrder(Long id) {
-        var order = orderRepository.findById(id);
+        Optional<Order> order = orderRepository.findById(id);
         if (order.isPresent()) {
             return order.get();
         } else {
