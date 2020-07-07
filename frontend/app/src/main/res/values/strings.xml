@@ -1,4 +1,3 @@
 <resources>
-    <string name="app_name">HelloWorld</string>
-    <string name="name">Name</string>
+    <string name="app_name">FoodTruck</string>
 </resources>

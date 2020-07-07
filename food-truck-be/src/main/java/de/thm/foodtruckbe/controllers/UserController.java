@@ -2,6 +2,8 @@ package de.thm.foodtruckbe.controllers;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +17,8 @@ import de.thm.foodtruckbe.repos.UserRepository;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     private UserRepository userRepository;
 
@@ -34,6 +38,7 @@ public class UserController {
 
     @PostMapping(path = "/login")
     public User login(@RequestBody User user) {
+        log.info(user.toString());
         Optional<User> savedUser = userRepository.findUserByNameIgnoreCase(user.getName());
         if (savedUser.isPresent()) {
             return savedUser.get();
@@ -41,5 +46,4 @@ public class UserController {
             throw new EntityNotFoundException("Operator", user.getName());
         }
     }
-
 }
