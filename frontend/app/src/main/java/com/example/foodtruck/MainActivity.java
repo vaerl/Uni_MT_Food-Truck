@@ -1,6 +1,7 @@
 package com.example.foodtruck;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.example.foodtruck.model.user.Customer;
 
+import java.security.acl.Owner;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +25,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.type_chooser_layout);
+        VolleyLog.DEBUG = true;
 
         findViewById(R.id.type_customer_button).setOnClickListener(view -> {
             Log.d(TAG, "onCreate: user is customer, saving.");
@@ -48,9 +52,9 @@ public class MainActivity extends Activity {
         GsonRequest<Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/user/login", new Customer(name, password), Customer.class, params, response -> {
             if (response.getName().equalsIgnoreCase(name)) {
                 if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
-                    setContentView(R.layout.activity_customer_menu);
+                    startActivity(new Intent(this, CustomerMenuActivity.class));
                 } else {
-                    setContentView(R.layout.activity_owner_menu);
+                    startActivity(new Intent(this, OwnerMenuActivity.class));
                 }
             } else {
                 showLoginError();

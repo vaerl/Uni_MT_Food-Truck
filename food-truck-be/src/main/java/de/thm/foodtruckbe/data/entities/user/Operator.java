@@ -94,7 +94,7 @@ public class Operator extends User {
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 0, 0)), Duration.ofMinutes(30));
     }
 
-    // TODO check whether removing/adding works correctly - maybe i need to
+    // TODO check whether removing/adding works correctly - maybe i need Log.d(TAG, "parseNetworkResponse: response: " + response.toString());orkwokto
     // TODO implement the respective equals-methods
 
     // methods for adding/removing dishes from menu
@@ -178,6 +178,7 @@ public class Operator extends User {
     }
 
     // shopping
+    @JsonIgnore
     public Map<Ingredient, Integer> getShoppingList() {
         final EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
         for (Location location : route) {
