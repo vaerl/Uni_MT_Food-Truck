@@ -46,11 +46,10 @@ public class CustomerShowRouteActivity extends AppCompatActivity {
                 lv.setAdapter(advancedToDoAdapter);
             }
         }, error -> {
-            Log.e(TAG, "Could not get current location!", error);
+            Log.e(TAG, "Could not get locations!", error);
         });
         queue.add(request);
 
-        String[] test = {"123", "456"};
     }
 
 }
