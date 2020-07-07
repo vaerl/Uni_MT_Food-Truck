@@ -19,4 +19,8 @@ public class DtoUser {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return name + " " + password;
+    }
 }

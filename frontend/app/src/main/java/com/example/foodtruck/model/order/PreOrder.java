@@ -16,14 +16,4 @@ public class PreOrder extends Order {
     public PreOrder(Customer customer, Map<Dish, Integer> items) {
         super(customer, items);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
 }

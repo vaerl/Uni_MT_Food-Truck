@@ -15,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Operator extends User {
 
-    private Long id;
     private List<Dish> preOrderMenu;
     private List<Dish> reservationMenu;
     private List<Location> route;
