@@ -5,8 +5,6 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00FFFFFF"
-    android:backgroundTint="#00FFFFFF"
     android:clickable="true">
 
     <ImageButton
@@ -55,6 +53,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:onClick="speisekarte"
         android:text="Speisekarte"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
