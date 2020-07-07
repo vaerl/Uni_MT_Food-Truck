@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.entities.user.User;
-import de.thm.foodtruckbe.repos.UserRepository;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.data.entities.user.User;
+import de.thm.foodtruckbe.data.repos.UserRepository;
 
 @RestController
 @RequestMapping("/api/user")
