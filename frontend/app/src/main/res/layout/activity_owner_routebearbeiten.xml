@@ -6,8 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/addstandort_button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="80dp"
+        android:text="Standort hinzufügen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider21" />
+
     <ImageButton
-        android:id="@+id/back_imageButton5"
+        android:id="@+id/back_imageButton10"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -17,14 +29,14 @@
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@id/divider16"
-        app:layout_constraintEnd_toStartOf="@id/logo_imageButton5"
+        app:layout_constraintBottom_toTopOf="@id/divider21"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageButton
-        android:id="@+id/logo_imageButton5"
+        android:id="@+id/logo_imageButton10"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -41,69 +53,36 @@
         app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <View
-        android:id="@+id/divider16"
+        android:id="@+id/divider21"
         tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton5" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton10" />
 
     <Button
-        android:id="@+id/zutaten_button3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="Zeige alle Zutaten"
-        app:layout_constraintBottom_toTopOf="@id/speiseanlegen_button3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/speiseanlegen_button3"
+        android:id="@+id/routebearbeiten_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Lebensmittel bestellen"
+        android:text="Bearbeitung abschliessen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="Zuschlag"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider16" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:text="Bestellungen"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/divider16" />
-
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/routebearbeiten_RecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/zutaten_button3"
+        app:layout_constraintBottom_toTopOf="@+id/routebearbeiten_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintTop_toBottomOf="@+id/addstandort_button3" />
 </android.support.constraint.ConstraintLayout>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/logo_imageButton"
+        android:id="@+id/logo_imageButton8"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -24,7 +24,7 @@
         app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <ImageButton
-        android:id="@+id/back_imageButton"
+        android:id="@+id/back_imageButton8"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -34,23 +34,23 @@
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/logo_imageButton"
+        app:layout_constraintBottom_toTopOf="@id/divider19"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider19"
         tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton8" />
 
     <Button
-        android:id="@+id/addstandort_button"
+        android:id="@+id/bearb_addzutat_button2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
@@ -62,52 +62,62 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/standortname_editText9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Standort (Name)"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="131dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider19" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal"
+        android:id="@+id/breitengradx_editTextNumberDecimal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Breitengrad (X)"
         android:inputType="numberDecimal"
-        tools:layout_editor_absoluteX="18dp"
-        tools:layout_editor_absoluteY="193dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/standortname_editText9" />
 
     <EditText
-        android:id="@+id/editTextNumberDecimal2"
+        android:id="@+id/laengengrady_editTextNumberDecimal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Längengrad (Y)"
         android:inputType="numberDecimal"
-        tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="255dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breitengradx_editTextNumberDecimal2" />
 
     <EditText
-        android:id="@+id/editTextTime"
+        android:id="@+id/ankunft_editTextTime2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Ankunftszeit"
         android:inputType="time"
-        tools:layout_editor_absoluteX="19dp"
-        tools:layout_editor_absoluteY="314dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/laengengrady_editTextNumberDecimal2" />
 
     <EditText
-        android:id="@+id/editTextTime2"
+        android:id="@+id/abreise_editTextTime2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Abreisezeit"
         android:inputType="time"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="377dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ankunft_editTextTime2" />
 </android.support.constraint.ConstraintLayout>
