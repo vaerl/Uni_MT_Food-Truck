@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Location;
 
+import java.util.Objects;
+
 public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
 
     public AdvancedCustomerShowRouteAdapter(Context context, int textviewResourceId, Location[] objects){
@@ -29,9 +31,11 @@ public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
         TextView locationArrival = element.findViewById(R.id.location_route_arrival_c_text);
         TextView locationDeparture = element.findViewById(R.id.location_route_departure_c_text);
 
-        locationName.setText(getItem(position).getName());
-        locationArrival.setText(getItem(position).getArrival().toString());
-        locationDeparture.setText(getItem(position).getDeparture().toString());
+        locationName.setText(Objects.requireNonNull(getItem(position)).getName());
+        String arrivalTime = Objects.requireNonNull(getItem(position)).getArrival().getHour() + ":" + Objects.requireNonNull(getItem(position)).getArrival().getMinute();
+        locationArrival.setText(arrivalTime);
+        String departureTime = Objects.requireNonNull(getItem(position)).getDeparture().getHour() + ":" + Objects.requireNonNull(getItem(position)).getDeparture().getMinute();
+        locationDeparture.setText(departureTime);
         return element;
     }
 }
