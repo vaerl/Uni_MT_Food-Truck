@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/back_imageButton"
+        android:id="@+id/back_imageButton5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -17,14 +17,14 @@
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/logo_imageButton"
+        app:layout_constraintBottom_toTopOf="@id/divider16"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageButton
-        android:id="@+id/logo_imageButton"
+        android:id="@+id/logo_imageButton5"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -41,89 +41,69 @@
         app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider16"
         tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton" />
-
-    <EditText
-        android:id="@+id/name_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="140dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    <EditText
-        android:id="@+id/preis_input"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="250dp"
-        android:ems="10"
-        android:hint="Preis"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_input" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton5" />
 
     <Button
-        android:id="@+id/zutat_button"
+        android:id="@+id/zutaten_button3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="140dp"
-        android:text="Zutat hinzufügen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preis_input" />
-
-    <ListView
-        android:id="@+id/zutatenListe"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/bearbeitung_button"
+        android:text="Zeige alle Zutaten"
+        app:layout_constraintBottom_toTopOf="@id/speiseanlegen_button3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zutat_button" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bearbeitung_button"
+        android:id="@+id/speiseanlegen_button3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Speise anlegen"
-        android:textSize="18sp"
+        android:text="Lebensmittel bestellen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/eur"
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="27dp"
-        android:text="EUR"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Zuschlag"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/preis_input"
-        app:layout_constraintTop_toBottomOf="@+id/name_input" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider16" />
 
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:text="Bestellungen"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toBottomOf="@+id/divider16" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/zutaten_button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 </android.support.constraint.ConstraintLayout>
