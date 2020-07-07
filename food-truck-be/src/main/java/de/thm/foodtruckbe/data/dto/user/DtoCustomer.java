@@ -11,14 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DtoCustomer extends DtoUser {
 
-    private DtoLocation location;
-
     public DtoCustomer(String name, String password) {
         super(name, password);
     }
 
-    public DtoCustomer(String name, String password, DtoLocation location) {
-        this(name, password);
-        this.location = location;
-    }
 }

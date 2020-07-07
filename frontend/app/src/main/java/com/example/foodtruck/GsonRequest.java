@@ -29,12 +29,9 @@ public class GsonRequest<T> extends Request<T> {
 
     private String TAG = getClass().getSimpleName();
 
-    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-        @Override
-        public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-            Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
-            return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
-        }
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
+        Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
+        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
     }).create();
     private final Class<T> clazz;
     private final Map<String, String> headers;

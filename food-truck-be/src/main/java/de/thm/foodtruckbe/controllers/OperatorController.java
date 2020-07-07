@@ -15,6 +15,7 @@ import de.thm.foodtruckbe.data.repos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -167,7 +168,8 @@ public class OperatorController {
         return getOperator(id).removeDishFromMenu(dish);
     }
 
-    @PostMapping(path = "/")
+    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Operator createOperator(@RequestBody DtoOperator dtoOperator) {
         return operatorRepository.save(Operator.create(dtoOperator));
     }

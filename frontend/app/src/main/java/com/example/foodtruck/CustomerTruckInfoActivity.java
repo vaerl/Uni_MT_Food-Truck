@@ -48,12 +48,12 @@ public class CustomerTruckInfoActivity extends AppCompatActivity {
     }
 
     public void showRoute(View v){
-        Intent in = new Intent(this, CustomerNewOrderActivityOne.class);
+        Intent in = new Intent(this, CustomerShowRouteActivity.class);
         startActivity(in);
     }
 
     public void showMenu(View v){
-        Intent in = new Intent(this, CustomerShowOrdersActivity.class);
+        Intent in = new Intent(this, CustomerShowMenuActivity.class);
         startActivity(in);
     }
 }

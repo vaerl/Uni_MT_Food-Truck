@@ -15,7 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DtoOperator extends DtoUser {
 
-    private Long id;
     private List<DtoDish> preOrderMenu;
     private List<DtoDish> reservationMenu;
     private List<DtoLocation> route;

@@ -20,22 +20,24 @@ import java.util.Map;
 public class CustomerShowMenuActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
-    Dish[] dishesReservation;
-    Dish[] dishesPreorder;
+    Dish[] dishesReservation = {};
+    Dish[] dishesPreorder = {};
 
     ListView lv;
 
-    AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation);
-    AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder);
+    AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation;
+    AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_show_menu);
 
+        advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation);
+        advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder);
         lv = findViewById(R.id.customer_show_menu_list);
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("Content-Type", "application/json");
         RequestQueue queue = Volley.newRequestQueue(this);
         String operatorId = "1";
@@ -46,8 +48,10 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         GsonRequest<Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Dish[].class, params, response -> {
             if (response != null) {
                 dishesReservation = response;
-                View v = null;
-                setMenuToReservation(v);
+                advancedToDoAdapterReservation.notifyDataSetChanged();
+//                View v = null;
+//                setMenuToReservation(v);
+                lv.setAdapter(advancedToDoAdapterReservation);
             }
         }, error -> {
             Log.e(TAG, "Could not get reservation menu!", error);
@@ -60,10 +64,9 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         GsonRequest<Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
             if (response != null) {
                 dishesPreorder = response;
+                advancedToDoAdapterPreorder.notifyDataSetChanged();
             }
-        }, error -> {
-            Log.e(TAG, "Could not get preorder menu!", error);
-        });
+        }, error -> Log.e(TAG, "Could not get preorder menu!", error));
         queue.add(requestPreorder);
 
     }
