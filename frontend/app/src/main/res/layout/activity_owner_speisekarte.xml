@@ -6,26 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/back_imageButton"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+    <View
+        android:id="@+id/divider26"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#00FFFFFF"
-        android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/logo_imageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_revert" />
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton15"
+        tools:layout_editor_absoluteX="28dp" />
 
     <ImageButton
-        android:id="@+id/logo_imageButton"
-        tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
+        android:id="@+id/logo_imageButton15"
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:layout_marginStart="100dp"
@@ -38,16 +29,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
+        app:srcCompat="@drawable/peters_foodtruck_owner_edition"
+        tools:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
-    <View
-        android:id="@+id/divider"
-        tools:layout_editor_absoluteX="28dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+    <ImageButton
+        android:id="@+id/back_imageButton15"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#00FFFFFF"
+        android:tint="#000000"
+        app:layout_constraintBottom_toTopOf="@id/divider26"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <Button
         android:id="@+id/speiseanlegen_button"
@@ -72,6 +72,6 @@
         app:layout_constraintBottom_toTopOf="@+id/speiseanlegen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@id/divider26" />
 
 </android.support.constraint.ConstraintLayout>
