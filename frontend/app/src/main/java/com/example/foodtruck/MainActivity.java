@@ -11,15 +11,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
-<<<<<<< Updated upstream
-import com.example.foodtruck.model.user.Customer;
 
-import java.security.acl.Owner;
-import java.util.HashMap;
-import java.util.Map;
-=======
 import com.example.foodtruck.model.user.User;
->>>>>>> Stashed changes
 
 public class MainActivity extends Activity {
 
@@ -28,12 +21,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< Updated upstream
-        setContentView(R.layout.type_chooser_layout);
-        VolleyLog.DEBUG = true;
-=======
         setContentView(R.layout.activity_type_chooser_layout);
->>>>>>> Stashed changes
+        VolleyLog.DEBUG = true;
 
         findViewById(R.id.type_customer_button).setOnClickListener(view -> {
             Log.d(TAG, "onCreate: user is customer, saving.");
