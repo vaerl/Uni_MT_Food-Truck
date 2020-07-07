@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toTopOf="@+id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck" />
+        app:srcCompat="@drawable/peters_foodtruck_v2" />
 
     <View
         android:id="@+id/divider2"
