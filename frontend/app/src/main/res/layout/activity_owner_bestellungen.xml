@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
@@ -18,13 +17,13 @@
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
         app:layout_constraintBottom_toTopOf="@id/divider18"
-        app:layout_constraintEnd_toStartOf="@id/logo_imageButton7"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton72"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageButton
-        android:id="@+id/logo_imageButton7"
+        android:id="@+id/logo_imageButton72"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -47,7 +46,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton7" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton72" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/bestellungen_RecyclerView"
