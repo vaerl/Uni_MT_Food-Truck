@@ -25,7 +25,6 @@
 
     <ImageButton
         android:id="@+id/logo_imageButton"
-        tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:layout_marginStart="100dp"
@@ -38,16 +37,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
+        app:srcCompat="@drawable/peters_foodtruck_owner_edition"
+        tools:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <View
         android:id="@+id/divider"
-        tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton"
+        tools:layout_editor_absoluteX="28dp" />
 
     <EditText
         android:id="@+id/name_input"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name_input" />
 
     <Button
-        android:id="@+id/zutat_button"
+        android:id="@+id/addstandort_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -90,26 +90,26 @@
         app:layout_constraintTop_toBottomOf="@+id/preis_input" />
 
     <ListView
-        android:id="@+id/zutatenListe"
+        android:id="@+id/routenListe"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/bearbeitung_button"
+        app:layout_constraintBottom_toTopOf="@+id/routeabschliessen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zutat_button" />
+        app:layout_constraintTop_toBottomOf="@+id/addstandort_button" />
 
     <Button
-        android:id="@+id/bearbeitung_button"
+        android:id="@+id/routeabschliessen_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Speise anlegen"
+        android:text="Bearbeitung abschließen"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
