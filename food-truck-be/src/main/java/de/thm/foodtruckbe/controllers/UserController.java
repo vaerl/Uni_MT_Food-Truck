@@ -2,6 +2,8 @@ package de.thm.foodtruckbe.controllers;
 
 import java.util.Optional;
 
+import de.thm.foodtruckbe.data.dto.user.DtoUser;
+import de.thm.foodtruckbe.exceptions.BadCredentialsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +39,17 @@ public class UserController {
     }
 
     @PostMapping(path = "/login")
-    public User login(@RequestBody User user) {
-        log.info(user.toString());
-        Optional<User> savedUser = userRepository.findUserByNameIgnoreCase(user.getName());
+    public User login(@RequestBody DtoUser dtoUser) {
+        log.info(dtoUser.toString());
+        Optional<User> savedUser = userRepository.findUserByNameIgnoreCase(dtoUser.getName());
         if (savedUser.isPresent()) {
-            return savedUser.get();
+            if(savedUser.get().getPassword().equals(dtoUser.getPassword())){
+                return savedUser.get();
+            } else {
+                throw new BadCredentialsException();
+            }
         } else {
-            throw new EntityNotFoundException("Operator", user.getName());
+            throw new BadCredentialsException();
         }
     }
 }

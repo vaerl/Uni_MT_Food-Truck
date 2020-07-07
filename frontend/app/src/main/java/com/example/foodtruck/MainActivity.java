@@ -11,11 +11,15 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
+<<<<<<< Updated upstream
 import com.example.foodtruck.model.user.Customer;
 
 import java.security.acl.Owner;
 import java.util.HashMap;
 import java.util.Map;
+=======
+import com.example.foodtruck.model.user.User;
+>>>>>>> Stashed changes
 
 public class MainActivity extends Activity {
 
@@ -24,8 +28,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< Updated upstream
         setContentView(R.layout.type_chooser_layout);
         VolleyLog.DEBUG = true;
+=======
+        setContentView(R.layout.activity_type_chooser_layout);
+>>>>>>> Stashed changes
 
         findViewById(R.id.type_customer_button).setOnClickListener(view -> {
             Log.d(TAG, "onCreate: user is customer, saving.");
@@ -42,14 +50,11 @@ public class MainActivity extends Activity {
 
     public void login(View v) {
         Log.d(TAG, "login: trying to find user.");
-
-        Map<String, String> params = new HashMap<>();
-        params.put("Content-Type", "application/json");
         // check user_type make request
         RequestQueue queue = Volley.newRequestQueue(this);
         String name = ((EditText) findViewById(R.id.name_editText)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwort_editText)).getText().toString();
-        GsonRequest<Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/user/login", new Customer(name, password), Customer.class, params, response -> {
+        GsonRequest<User> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/user/login", new User(name, password), User.class, DataService.getStandardHeader(), response -> {
             if (response.getName().equalsIgnoreCase(name)) {
                 if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
                     startActivity(new Intent(this, CustomerMenuActivity.class));
@@ -67,17 +72,24 @@ public class MainActivity extends Activity {
     }
 
     public void showLoginError() {
-        ((EditText) findViewById(R.id.name_editText)).setError("");
-        ((EditText) findViewById(R.id.passwort_editText)).setError("");
+        ((EditText) findViewById(R.id.name_editText)).setError("Falscher Benutzername");
+        ((EditText) findViewById(R.id.passwort_editText)).setError("Falsches Passwort");
     }
 
-//    public void registrieren(View v) {
-//        setContentView(R.layout.activity_registrieren);
-//    }
-//
-//    public void reg_abbrechen(View v) {
-//        setContentView(R.layout.activity_login);
-//    }
+    public void registrieren(View v) {
+        setContentView(R.layout.activity_registrieren);
+
+        findViewById(R.id.registrieren_button).setOnClickListener(view -> {
+
+        });
+    }
+
+    public void reg_abbrechen(View v) {
+        setContentView(R.layout.activity_login);
+
+        //clear fields
+
+    }
 //
 //    public void ownerHome(View v) {
 //        setContentView(R.layout.activity_owner_menu);
