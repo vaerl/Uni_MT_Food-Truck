@@ -4,6 +4,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import de.thm.foodtruckbe.data.dto.DtoDish;
+import de.thm.foodtruckbe.data.dto.DtoLocation;
+import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
+import de.thm.foodtruckbe.data.dto.order.DtoReservation;
+import de.thm.foodtruckbe.data.dto.user.DtoOperator;
+import de.thm.foodtruckbe.data.entities.user.Customer;
+import de.thm.foodtruckbe.data.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,22 +21,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.thm.foodtruckbe.entities.Dish;
-import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.user.Operator;
-import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.entities.order.Order;
-import de.thm.foodtruckbe.entities.order.PreOrder;
-import de.thm.foodtruckbe.entities.order.Reservation;
-import de.thm.foodtruckbe.repos.DishRepository;
-import de.thm.foodtruckbe.repos.LocationRepository;
-import de.thm.foodtruckbe.repos.OperatorRepository;
-import de.thm.foodtruckbe.repos.OrderRepository;
+import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.data.entities.order.Order;
+import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.entities.order.Reservation;
 
 @RestController
 @RequestMapping("/api/operator")
 public class OperatorController {
 
+    private CustomerRepository customerRespository;
     private OperatorRepository operatorRepository;
     private LocationRepository locationRepository;
     private DishRepository dishRepository;
@@ -37,11 +41,12 @@ public class OperatorController {
 
     @Autowired
     public OperatorController(OperatorRepository operatorRepository, LocationRepository locationRepository,
-            DishRepository dishRepository, OrderRepository orderRepository) {
+            DishRepository dishRepository, OrderRepository orderRepository, CustomerRepository customerRespository) {
         this.operatorRepository = operatorRepository;
         this.locationRepository = locationRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
+        this.customerRespository = customerRespository;
     }
 
     public Operator getOperator(Long id) {
@@ -68,6 +73,15 @@ public class OperatorController {
             return dish.get();
         } else {
             throw new EntityNotFoundException("Dish", id);
+        }
+    }
+
+    public Customer getCustomer(Long id) {
+        Optional<Customer> customer = customerRespository.findById(id);
+        if (customer.isPresent()) {
+            return customer.get();
+        } else {
+            throw new EntityNotFoundException("Customer", id);
         }
     }
 
@@ -108,34 +122,37 @@ public class OperatorController {
     }
 
     @PostMapping(path = "/{id}/orders/{locationId}/preorders")
-    public boolean addPreOrderForLocationByOperatorIdAndLocationid(@RequestBody List<PreOrder> preOrders,
-            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId) {
-        orderRepository.saveAll(preOrders);
-        return getOperator(operatorId).getLocation(getLocation(locationId)).addAllPreOrders(preOrders);
+    public boolean addPreOrderForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoPreOrder> dtoPreOrders,
+            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
+        for (DtoPreOrder dtoPreOrder: dtoPreOrders) {
+            PreOrder preOrder = PreOrder.create(dtoPreOrder, getCustomer(customerId), getLocation(locationId));
+            getOperator(operatorId).getLocation(getLocation(locationId)).addPreOrder(preOrder);
+            orderRepository.save(preOrder);
+        }
+        return true;
     }
 
-    @PostMapping(path = "/{id}/orders/{locationId}/reservations")
-    public boolean addReservationsForLocationByOperatorIdAndLocationid(@RequestBody List<Reservation> reservations,
-            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId) {
-        orderRepository.saveAll(reservations);
-        return getOperator(operatorId).getLocation(getLocation(locationId)).addAllReservations(reservations);
+    @PostMapping(path = "/{id}/orders/{locationId}/dtoReservations")
+    public boolean addReservationsForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoReservation> dtoReservations,
+            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
+        for (DtoReservation dtoReservation: dtoReservations) {
+            Reservation reservation = Reservation.create(dtoReservation, getCustomer(customerId), getLocation(locationId));
+            getOperator(operatorId).getLocation(getLocation(locationId)).addReservation(reservation);
+            orderRepository.save(reservation);
+        }
+        return true;
     }
 
     @PostMapping(path = "/{id}/route")
-    public boolean addLocationsToRouteByOperatorId(@RequestBody List<Location> locations,
+    public boolean addLocationsToRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
             @PathVariable(value = "id") Long id) {
-        return getOperator(id).addLocations(locations);
+        return getOperator(id).addLocations(dtoLocations);
     }
 
     @DeleteMapping(path = "/{id}/route")
-    public boolean removeLocationsFromRouteByOperatorId(@RequestBody List<Location> locations,
+    public boolean removeLocationsFromRouteByOperatorId(@RequestBody  List<DtoLocation> dtoLocations,
             @PathVariable(value = "id") Long id) {
-        return getOperator(id).removeLocations(locations);
-    }
-
-    @PostMapping(path = "/{id}/menu")
-    public boolean addDishToMenuByOperatorId(@RequestBody Dish dish, @PathVariable(value = "id") Long id) {
-        return getOperator(id).addDishToMenu(dish);
+        return getOperator(id).removeLocations(dtoLocations);
     }
 
     @DeleteMapping(path = "/{id}/menu")
@@ -144,8 +161,8 @@ public class OperatorController {
     }
 
     @PostMapping(path = "/")
-    public Operator createOperator(@RequestBody Operator operator) {
-        return operatorRepository.save(operator);
+    public Operator createOperator(@RequestBody DtoOperator dtoOperator) {
+        return operatorRepository.save(Operator.create(dtoOperator));
     }
 
     @GetMapping(path = "/{id}/dishes/{dishId}/rating")
@@ -176,9 +193,10 @@ public class OperatorController {
     }
 
     @PostMapping(path = "/{id}/dishes")
-    public Dish createDishAndOperatorId(@PathVariable(value = "id") Long operatorId, @RequestBody Dish dish) {
-        Dish savedDish = dishRepository.save(dish);
-        getOperator(operatorId).addDishToMenu(savedDish);
+    public Dish createDishByOperatorId(@PathVariable(value = "id") Long operatorId, @RequestBody DtoDish dtoDish) {
+        Operator operator = getOperator(operatorId);
+        Dish savedDish = dishRepository.save(Dish.create(dtoDish, operator));
+        operator.addDishToMenu(savedDish);
         return savedDish;
     }
 }

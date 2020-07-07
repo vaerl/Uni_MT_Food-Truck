@@ -9,7 +9,7 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.foodtruck.model.Customer;
+import com.example.foodtruck.model.user.Customer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     public void login(View v) {
         Log.d(TAG, "login: trying to find user.");
 
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("Content-Type", "application/json");
         // check user_type make request
         RequestQueue queue = Volley.newRequestQueue(this);
