@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import de.thm.foodtruckbe.data.dto.DtoLocation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.repos.LocationRepository;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.data.repos.LocationRepository;
 
 @RestController
 @RequestMapping("/api/location")
@@ -34,11 +35,6 @@ public class LocationController {
         } else {
             throw new EntityNotFoundException("Location", id);
         }
-    }
-
-    @PostMapping(path = "/")
-    public Location createNewLocation(@RequestBody Location location) {
-        return locationRepository.save(location);
     }
 
     @GetMapping(path = "/{id}")

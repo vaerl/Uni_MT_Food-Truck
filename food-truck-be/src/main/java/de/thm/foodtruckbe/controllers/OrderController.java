@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.entities.order.Order;
-import de.thm.foodtruckbe.entities.order.Order.Status;
-import de.thm.foodtruckbe.repos.OrderRepository;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.data.entities.order.Order;
+import de.thm.foodtruckbe.data.entities.order.Order.Status;
+import de.thm.foodtruckbe.data.repos.OrderRepository;
 
 @RestController
 @RequestMapping("/api/order")

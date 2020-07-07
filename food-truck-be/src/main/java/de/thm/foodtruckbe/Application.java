@@ -13,18 +13,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import de.thm.foodtruckbe.entities.user.Customer;
-import de.thm.foodtruckbe.entities.Dish;
-import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.entities.user.Operator;
-import de.thm.foodtruckbe.entities.Dish.Ingredient;
-import de.thm.foodtruckbe.entities.order.PreOrder;
-import de.thm.foodtruckbe.entities.order.Reservation;
-import de.thm.foodtruckbe.repos.CustomerRepository;
-import de.thm.foodtruckbe.repos.DishRepository;
-import de.thm.foodtruckbe.repos.LocationRepository;
-import de.thm.foodtruckbe.repos.OperatorRepository;
-import de.thm.foodtruckbe.repos.OrderRepository;
+import de.thm.foodtruckbe.data.entities.user.Customer;
+import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.entities.Dish.Ingredient;
+import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.entities.order.Reservation;
+import de.thm.foodtruckbe.data.repos.CustomerRepository;
+import de.thm.foodtruckbe.data.repos.DishRepository;
+import de.thm.foodtruckbe.data.repos.LocationRepository;
+import de.thm.foodtruckbe.data.repos.OperatorRepository;
+import de.thm.foodtruckbe.data.repos.OrderRepository;
 
 @SpringBootApplication
 public class Application {
@@ -48,8 +48,8 @@ public class Application {
 			Operator operator = new Operator("Truck-Food", "1234");
 
 			Location thm = new Location("THM", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofHours(1));
-			Location tor = new Location("Frankenberger Tor", operator, 5.0, 7.0, thm, Duration.ofHours(1));
-			Location lasertag = new Location("Lasertag-Halle", operator, 5.0, 7.0, tor, Duration.ofHours(1));
+			Location tor = new Location("Frankenberger Tor", operator, 25.0, 17.0, thm, Duration.ofHours(1));
+			Location lasertag = new Location("Lasertag-Halle", operator, 30.0, 35.0, tor, Duration.ofHours(1));
 			operator.addLocation(thm);
 			operator.addLocation(tor);
 			operator.addLocation(lasertag);
