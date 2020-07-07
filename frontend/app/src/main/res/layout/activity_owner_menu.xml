@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/logo_imageButton"
@@ -15,14 +14,12 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="100dp"
         android:background="#00FFFFFF"
-        android:onClick="ownerHome"
         android:scaleType="centerInside"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck_owner_edition"
-        tools:srcCompat="@drawable/peters_foodtruck_owner_edition" />
+        app:srcCompat="@drawable/peters_foodtruck_owner_edition_v2" />
 
     <View
         android:id="@+id/divider"
@@ -40,6 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:onClick="openRoutenplanung"
         android:text="Routenplanung"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +51,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:onClick="speisekarte"
+        android:onClick="openSpeisekarte"
         android:text="Speisekarte"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +65,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:onClick="openBestellungen"
         android:text="Bestellungen ansehen"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +79,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:onClick="openLebensmittelbestellung"
         android:text="Lebensmittelbestellung"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +93,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:onClick="openAktuellerstandort"
         android:text="aktueller Standort"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

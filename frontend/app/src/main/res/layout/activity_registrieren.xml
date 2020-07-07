@@ -56,26 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="E-Mail" />
-
-            <EditText
-                android:id="@+id/vorname_editText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Vorname" />
-
-            <EditText
-                android:id="@+id/nachname_editText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Nachname" />
+                android:hint="Benutzername"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/passwort_editText"
@@ -83,8 +65,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Passwort" />
+                android:hint="Passwort"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/passwort2_editText"
@@ -92,8 +74,8 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Passwort wdh." />
+                android:hint="Passwort wiederholen"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/registrieren_button"

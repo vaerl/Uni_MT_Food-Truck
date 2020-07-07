@@ -9,9 +9,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class User implements Serializable {
+public class User implements Serializable {
 
     private Long id;
+
     protected String name;
     protected String password;
 
@@ -20,5 +21,21 @@ public abstract class User implements Serializable {
         this.name = name;
         this.password = password;
     }
+//
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
 }

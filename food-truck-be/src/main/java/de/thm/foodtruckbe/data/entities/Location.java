@@ -291,6 +291,7 @@ public class Location {
         return true;
     }
 
+    @JsonIgnore
     public boolean isBeforeNextDay() {
         return LocalDateTime.now().isBefore(LocalDateTime.of(arrival.toLocalDate().plusDays(1), LocalTime.of(7, 0, 0)));
     }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
@@ -11,6 +12,8 @@ import de.thm.foodtruckbe.data.dto.order.DtoReservation;
 import de.thm.foodtruckbe.data.dto.user.DtoOperator;
 import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.repos.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,8 @@ import de.thm.foodtruckbe.data.entities.order.Reservation;
 @RestController
 @RequestMapping("/api/operator")
 public class OperatorController {
+
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     private CustomerRepository customerRespository;
     private OperatorRepository operatorRepository;
@@ -102,6 +107,8 @@ public class OperatorController {
 
     @GetMapping(path = "/{id}/location")
     public Location getCurrentLocationByOperatorId(@PathVariable(value = "id") Long id) {
+        log.info("OperatorController: /" + id+"/location");
+        log.info("OperatorController: Result:" + getOperator(id).getCurrentLocation());
         return getOperator(id).getCurrentLocation();
     }
 

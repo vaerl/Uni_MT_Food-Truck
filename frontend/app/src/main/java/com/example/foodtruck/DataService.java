@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DataService {
 
     private static DataService dataService = new DataService();
@@ -11,7 +14,7 @@ public class DataService {
     private static SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    public static String BACKEND_URL = "http://192.168.0.115:8080/api";
+    public static String BACKEND_URL = "http://192.168.54.225:8080/api";
     public static String USER_TYPE = "user_type";
 
     private DataService() {
@@ -20,6 +23,12 @@ public class DataService {
     public static DataService getInstance(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return dataService;
+    }
+
+    public static Map<String, String> getStandardHeader() {
+        Map<String, String> params = new HashMap<>();
+        params.put("Content-Type", "application/json");
+        return params;
     }
 
     public boolean setEntry(String tag, String value) {

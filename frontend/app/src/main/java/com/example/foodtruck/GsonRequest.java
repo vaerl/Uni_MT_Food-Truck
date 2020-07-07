@@ -9,16 +9,33 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Map;
 
 public class GsonRequest<T> extends Request<T> {
 
     private String TAG = getClass().getSimpleName();
 
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
+        @Override
+        public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
+            return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
+        }
+    }).create();
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
@@ -27,8 +44,8 @@ public class GsonRequest<T> extends Request<T> {
     /**
      * Make a GET request and return a parsed object from JSON.
      *
-     * @param url URL of the request to make
-     * @param clazz Relevant class object, for Gson's reflection
+     * @param url     URL of the request to make
+     * @param clazz   Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
     public GsonRequest(int method, String url, T dataIn, Class<T> clazz, Map<String, String> headers,
@@ -70,6 +87,7 @@ public class GsonRequest<T> extends Request<T> {
             String json = new String(
                     response.data,
                     HttpHeaderParser.parseCharset(response.headers));
+            Log.d(TAG, "parseNetworkResponse: response-data: " + json);
             return Response.success(
                     gson.fromJson(json, clazz),
                     HttpHeaderParser.parseCacheHeaders(response));
