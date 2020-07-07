@@ -2,12 +2,11 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/back_imageButton"
+        android:id="@+id/back_imageButton5"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -17,14 +16,14 @@
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
         android:tint="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toStartOf="@+id/logo_imageButton"
+        app:layout_constraintBottom_toTopOf="@id/divider16"
+        app:layout_constraintEnd_toStartOf="@id/logo_imageButton5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageButton
-        android:id="@+id/logo_imageButton"
+        android:id="@+id/logo_imageButton5"
         tools:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:layout_width="0dp"
         android:layout_height="90dp"
@@ -41,13 +40,13 @@
         app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider16"
         tools:layout_editor_absoluteX="28dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@id/logo_imageButton" />
+        app:layout_constraintTop_toBottomOf="@id/logo_imageButton5" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -56,10 +55,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/zutaten_button"
+        app:layout_constraintBottom_toTopOf="@id/zutaten_button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/divider">
+        app:layout_constraintTop_toTopOf="@id/divider16">
 
         <TableRow
             android:layout_width="match_parent"
@@ -151,19 +150,19 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/zutaten_button"
+        android:id="@+id/zutaten_button3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:text="Zeige alle Zutaten"
-        app:layout_constraintBottom_toTopOf="@+id/bestellen_button"
+        app:layout_constraintBottom_toTopOf="@id/speiseanlegen_button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bestellen_button"
+        android:id="@+id/speiseanlegen_button3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
