@@ -18,6 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CustomerMenuActivity"/>
+        <activity android:name=".CustomerTruckInfoActivity"/>
+        <activity android:name=".CustomerShowRouteActivity"/>
+        <activity android:name=".CustomerShowMenuActivity"/>
+        <activity android:name=".CustomerShowOrdersActivity"/>
+        <activity android:name=".CustomerNewOrderActivityOne"/>
     </application>
 
 </manifest>

@@ -23,7 +23,7 @@ public class GsonRequest<T> extends Request<T> {
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
-    private final Object dataIn;
+    private Object dataIn;
 
     /**
      * Make a GET request and return a parsed object from JSON.
@@ -36,6 +36,14 @@ public class GsonRequest<T> extends Request<T> {
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.dataIn = dataIn;
+        this.clazz = clazz;
+        this.headers = headers;
+        this.listener = listener;
+    }
+
+    public GsonRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
+                       Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
