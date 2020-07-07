@@ -116,10 +116,10 @@ public class Application {
 		try {
 			log.info("Checking if container {} exists.", containerName);
 			Process check = Runtime.getRuntime().exec("docker inspect -f '{{.State.Running}}' " + containerName);
-			String res = String.valueOf(check.getInputStream().readAllBytes());
+			String res = String.valueOf(check.getInputStream());
 			log.info("Container exists: {}", res);
 			check.getOutputStream().close();
-			if (!res.contains("'true'")) {
+			if (!res.contains("true")) {
 				log.info("Creating container {}.", containerName);
 				Process run = Runtime.getRuntime()
 						.exec("docker run -p 3306:3306 --name " + containerName + " -e MYSQL_ROOT_PASSWORD="

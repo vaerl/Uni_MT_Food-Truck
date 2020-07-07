@@ -8,4 +8,8 @@ public class EntityNotFoundException extends RuntimeException {
         super("Entity " + entity + " with id " + id + " does not exist.");
     }
 
+    public EntityNotFoundException(String entity, String name) {
+        super("Entity " + entity + " with id " + name + " does not exist.");
+    }
+
 }

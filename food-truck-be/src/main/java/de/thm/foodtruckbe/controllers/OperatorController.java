@@ -102,7 +102,7 @@ public class OperatorController {
         return getOperator(operatorId).getLocation(getLocation(locationId)).getAllOrders();
     }
 
-    @GetMapping(path = "/{id}/orders}")
+    @GetMapping(path = "/{id}/orders")
     public List<Order> getAllOrdersByOperatorId(@PathVariable(value = "id") Long id) {
         return getOperator(id).getAllOrders();
     }
@@ -121,13 +121,13 @@ public class OperatorController {
         return getOperator(operatorId).getLocation(getLocation(locationId)).addAllReservations(reservations);
     }
 
-    @PostMapping(path = "/{id}/route/")
+    @PostMapping(path = "/{id}/route")
     public boolean addLocationsToRouteByOperatorId(@RequestBody List<Location> locations,
             @PathVariable(value = "id") Long id) {
         return getOperator(id).addLocations(locations);
     }
 
-    @DeleteMapping(path = "/{id}/route/")
+    @DeleteMapping(path = "/{id}/route")
     public boolean removeLocationsFromRouteByOperatorId(@RequestBody List<Location> locations,
             @PathVariable(value = "id") Long id) {
         return getOperator(id).removeLocations(locations);
@@ -138,7 +138,7 @@ public class OperatorController {
         return getOperator(id).addDishToMenu(dish);
     }
 
-    @DeleteMapping(path = "/{id}/menu/")
+    @DeleteMapping(path = "/{id}/menu")
     public boolean removeDishFromMenuByOperatorId(@RequestBody Dish dish, @PathVariable(value = "id") Long id) {
         return getOperator(id).removeDishFromMenu(dish);
     }
@@ -166,7 +166,7 @@ public class OperatorController {
         getOperator(operatorId).getDishFromMenu(getDish(dishId)).addRating(rating);
     }
 
-    @DeleteMapping(path = "/{id}/dishes/{dishId}/")
+    @DeleteMapping(path = "/{id}/dishes/{dishId}")
     public boolean deleteDishAndOperatorId(@PathVariable(value = "id") Long operatorId,
             @PathVariable(value = "dishId") Long dishId) {
 
@@ -175,7 +175,7 @@ public class OperatorController {
         return getOperator(operatorId).removeDishFromMenu(dish);
     }
 
-    @PostMapping(path = "/{id}/dishes/")
+    @PostMapping(path = "/{id}/dishes")
     public Dish createDishAndOperatorId(@PathVariable(value = "id") Long operatorId, @RequestBody Dish dish) {
         Dish savedDish = dishRepository.save(dish);
         getOperator(operatorId).addDishToMenu(savedDish);
