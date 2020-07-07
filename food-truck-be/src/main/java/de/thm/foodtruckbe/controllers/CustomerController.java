@@ -1,38 +1,80 @@
-package de.thm.foodtruckbe.controller;
+package de.thm.foodtruckbe.controllers;
 
-import de.thm.foodtruckbe.entities.Customer;
-import de.thm.foodtruckbe.entities.Dish;
-import de.thm.foodtruckbe.entities.Location;
-import de.thm.foodtruckbe.services.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import de.thm.foodtruckbe.entities.user.Customer;
+import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.user.Operator;
+import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.repos.CustomerRepository;
+import de.thm.foodtruckbe.repos.OperatorRepository;
 
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public void getCustomers(){
+    private CustomerRepository customerRespository;
+    private OperatorRepository operatorRepository;
+
+    @Autowired
+    public CustomerController(CustomerRepository customerRepository, OperatorRepository operatorRepository) {
+        this.customerRespository = customerRepository;
+        this.operatorRepository = operatorRepository;
+    }
+
+    public Operator getOperator(Long id) {
+        var operator = operatorRepository.findById(id);
+        if (operator.isPresent()) {
+            return operator.get();
+        } else {
+            throw new EntityNotFoundException("Operator", id);
+        }
+    }
+
+    public Customer getCustomer(Long id) {
+        var customer = customerRespository.findById(id);
+        if (customer.isPresent()) {
+            return customer.get();
+        } else {
+            throw new EntityNotFoundException("Customer", id);
+        }
+    }
+
+    @GetMapping(path = "/all")
+    public List<Customer> getCustomers() {
+        return customerRespository.findAll();
+    }
+
+    @PostMapping(path = "/{id}/locations")
+    public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
+            @RequestParam(value = "operatorId") Long operatorId) {
+        return getCustomer(customerId).getNearestLocations(getOperator(operatorId));
+    }
+
+    @GetMapping(path = "/{id}")
+    public Customer getCustomerById(@PathVariable(value = "id") Long id) {
+        return getCustomer(id);
 
     }
 
-    @RequestMapping(path = "/{id}/locations", method = RequestMethod.GET)
-    public List<Location> getNearestLocationsByCustomerIdAndOperatorId(
-            @PathVariable(value = "id") String id,
-            @RequestParam(value = "operatorId") String operatorId){
+    @PostMapping(path = "/")
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerRespository.save(customer);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Customer getCustomerById(@PathVariable(value = "id") String id){
-    }
-
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public void createCustomer(@RequestBody Customer customer){
+    @PutMapping(path = "/{id}")
+    public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
+        return getCustomer(id).merge(customer);
     }
 
 }

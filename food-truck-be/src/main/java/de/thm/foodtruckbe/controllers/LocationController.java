@@ -1,48 +1,63 @@
-package de.thm.foodtruckbe.controller;
+package de.thm.foodtruckbe.controllers;
 
-import de.thm.foodtruckbe.entities.Location;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.exceptions.EntityNotFoundException;
+import de.thm.foodtruckbe.repos.LocationRepository;
 
 @RestController
 @RequestMapping("/api/location")
 public class LocationController {
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public void getLocationsByOperatorId(@RequestParam(value = "operatorId") String locationName){
+    private LocationRepository locationRepository;
+
+    @Autowired
+    public LocationController(LocationRepository locationRepository) {
+        this.locationRepository = locationRepository;
     }
 
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
-    public void createNewLocation(@RequestBody Location location){
+    public Location getLocation(Long id) {
+        var location = locationRepository.findById(id);
+        if (location.isPresent()) {
+            return location.get();
+        } else {
+            throw new EntityNotFoundException("Location", id);
+        }
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Location getLocationById(@PathVariable(value = "id") String id){
+    @PostMapping(path = "/")
+    public Location createNewLocation(@RequestBody Location location) {
+        return locationRepository.save(location);
     }
 
-    @RequestMapping(path = "/{id}/arrival", method = RequestMethod.GET)
-    public LocalDateTime getArrivalTimeByLocationId(@PathVariable(value = "id") String id){
+    @GetMapping(path = "/{id}")
+    public Location getLocationById(@PathVariable(value = "id") Long id) {
+        return getLocation(id);
     }
 
-    @RequestMapping(path = "/{id}/departure", method = RequestMethod.GET)
-    public LocalDateTime getDepartureTimeByLocationId(@PathVariable(value = "id") String id){
+    @GetMapping(path = "/{id}/arrival")
+    public LocalDateTime getArrivalTimeByLocationId(@PathVariable(value = "id") Long id) {
+        return getLocation(id).getArrival();
     }
 
-    @RequestMapping(path = "/{id}/delay", method = RequestMethod.POST)
-    public void setLocationDelayByLocationId(@RequestBody Duration duration,
-                                             @PathVariable(value = "id") String id){
+    @GetMapping(path = "/{id}/departure")
+    public LocalDateTime getDepartureTimeByLocationId(@PathVariable(value = "id") Long id) {
+        return getLocation(id).getDeparture();
     }
 
-    // Die Art der Parameter bei disem Endpunkt muss/kann angepasst werden...
-    @RequestMapping(path = "/{id}/distance", method = RequestMethod.GET)
-    public double getDistanceByLocationIdAndLocation(@PathVariable(value = "id") String id,
-                                                     @RequestBody Location location){
+    @PostMapping(path = "/{id}/delay")
+    public boolean setLocationDelayByLocationId(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
+        return getLocation(id).setArrivalDelay(duration);
     }
-
 }

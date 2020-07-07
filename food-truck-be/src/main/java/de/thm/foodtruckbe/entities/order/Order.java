@@ -19,9 +19,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToOne;
 
-import de.thm.foodtruckbe.entities.Customer;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import de.thm.foodtruckbe.entities.Dish;
 import de.thm.foodtruckbe.entities.Location;
+import de.thm.foodtruckbe.entities.user.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +41,7 @@ public abstract class Order {
 
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
+    @JsonManagedReference
     private Location location;
 
     @ElementCollection
@@ -49,6 +52,7 @@ public abstract class Order {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JsonManagedReference
     protected Customer customer;
 
     protected double price;
