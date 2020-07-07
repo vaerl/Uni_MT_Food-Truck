@@ -25,7 +25,6 @@
         android:background="#00FFFFFF"
         android:onClick="ownerHome"
         android:scaleType="centerInside"
-        android:srcCompat="@drawable/peters_foodtruck_owner_edition"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
