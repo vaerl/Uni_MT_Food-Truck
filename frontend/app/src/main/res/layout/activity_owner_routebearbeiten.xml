@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/addstandort_button3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="80dp"
+        android:text="Standort hinzufügen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider21" />
+
     <ImageButton
         android:id="@+id/back_imageButton10"
         android:layout_width="0dp"
@@ -72,5 +84,5 @@
         app:layout_constraintBottom_toTopOf="@+id/routebearbeiten_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider21" />
+        app:layout_constraintTop_toBottomOf="@+id/addstandort_button3" />
 </android.support.constraint.ConstraintLayout>
