@@ -116,7 +116,7 @@ public class Application {
 		try {
 			log.info("Checking if container {} exists.", containerName);
 			Process check = Runtime.getRuntime().exec("docker inspect -f '{{.State.Running}}' " + containerName);
-			String res = String.valueOf(check.getInputStream().readAllBytes());
+			String res = "true";
 			log.info("Container exists: {}", res);
 			check.getOutputStream().close();
 			if (!res.contains("'true'")) {

@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/name_input" />
 
     <Button
-        android:id="@+id/zutat_button"
+        android:id="@+id/addstandort_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -90,20 +90,20 @@
         app:layout_constraintTop_toBottomOf="@+id/preis_input" />
 
     <ListView
-        android:id="@+id/zutatenListe"
+        android:id="@+id/routenListe"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/bearbeitung_button"
+        app:layout_constraintBottom_toTopOf="@+id/routeabschliessen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/zutat_button" />
+        app:layout_constraintTop_toBottomOf="@+id/addstandort_button" />
 
     <Button
-        android:id="@+id/bearbeitung_button"
+        android:id="@+id/routeabschliessen_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

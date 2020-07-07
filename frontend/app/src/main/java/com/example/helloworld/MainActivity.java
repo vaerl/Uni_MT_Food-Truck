@@ -3,8 +3,6 @@ package com.example.helloworld;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -31,7 +29,7 @@ public class MainActivity extends Activity {
     }
 
     public void speisekarte(View v) {
-        setContentView(R.layout.activity_speisekarte);
+        setContentView(R.layout.activity_owner_speisekarte);
     }
 
 
