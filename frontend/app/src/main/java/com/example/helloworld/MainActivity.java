@@ -30,5 +30,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_owner_menu);
     }
 
+    public void speisekarte(View v) {
+        setContentView(R.layout.activity_speisekarte);
+    }
+
 
 }
