@@ -1,6 +1,7 @@
 package de.thm.foodtruckbe.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,7 @@ public class CustomerController {
     }
 
     public Operator getOperator(Long id) {
-        var operator = operatorRepository.findById(id);
+        Optional<Operator> operator = operatorRepository.findById(id);
         if (operator.isPresent()) {
             return operator.get();
         } else {
@@ -42,7 +43,7 @@ public class CustomerController {
     }
 
     public Customer getCustomer(Long id) {
-        var customer = customerRespository.findById(id);
+        Optional<Customer> customer = customerRespository.findById(id);
         if (customer.isPresent()) {
             return customer.get();
         } else {
