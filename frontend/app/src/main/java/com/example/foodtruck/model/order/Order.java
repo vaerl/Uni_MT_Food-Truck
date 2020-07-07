@@ -1,9 +1,12 @@
 package com.example.foodtruck.model.order;
 
+import android.os.Parcelable;
+
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Location;
 import com.example.foodtruck.model.user.Customer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -14,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Order {
+public abstract class Order implements Serializable {
 
     private Long id;
     private Location location;

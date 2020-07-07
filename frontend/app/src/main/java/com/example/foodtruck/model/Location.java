@@ -4,6 +4,7 @@ import com.example.foodtruck.model.order.PreOrder;
 import com.example.foodtruck.model.order.Reservation;
 import com.example.foodtruck.model.user.Operator;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Location {
+public class Location implements Serializable {
 
     private Long id;
     private String name;

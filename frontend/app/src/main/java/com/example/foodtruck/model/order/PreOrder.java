@@ -1,5 +1,7 @@
 package com.example.foodtruck.model.order;
 
+import android.os.Parcel;
+
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Location;
 import com.example.foodtruck.model.user.Customer;
@@ -15,4 +17,13 @@ public class PreOrder extends Order {
         super(customer, items);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

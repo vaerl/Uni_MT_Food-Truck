@@ -1,5 +1,6 @@
 package com.example.foodtruck.model;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import lombok.Getter;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Dish {
+public class Dish implements Serializable {
 
     private Long id;
     private String name;
