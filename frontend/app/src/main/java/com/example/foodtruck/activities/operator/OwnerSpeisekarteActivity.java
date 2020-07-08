@@ -31,30 +31,35 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
 
         ListView lv = findViewById(R.id.speisekarte_ListView);
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
+        String EXTRA_PARAMETER = "gericht";
         RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
-
 
         // Gerichte laden
 
-        Log.d(TAG, "show menu: try to get Speisekarte");                                                                            // menu/preorder oder menu/reservatio?
-        GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
+        Log.d(TAG, "show menu: try to get Speisekarte");
+        // menu/preorder oder menu/reservatio?
+        GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 gerichte = response;
                 AdvancedOwnerSpeisekarteAdapter advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);
                 lv.setAdapter(advancedToDoAdapter);
 
-                lv.setOnItemClickListener((parent, view, lv_position, l) -> {
+                lv.setOnItemClickListener((parent, view, lv_position, id) -> {
                     // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
+                    Intent intent = new Intent(OwnerSpeisekarteActivity.this, OwnerSpeisebearbeitenActivity.class);
+                    intent.putExtra(EXTRA_PARAMETER, gerichte[lv_position]);
+                    startActivity(intent);
                 });
             }
         }, error -> {
             Log.e(TAG, "Could not get Speisekarte!", error);
         });
         queue.add(requestGerichte);
+    }
 
+    public void openSpeiseneu(View v) {
+        Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
+        startActivity(in);
     }
 
     public void ownerHome(View v) {
