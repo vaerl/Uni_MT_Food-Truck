@@ -32,10 +32,17 @@ public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
         TextView locationDeparture = element.findViewById(R.id.location_route_departure_c_text);
 
         locationName.setText(Objects.requireNonNull(getItem(position)).getName());
-        String arrivalTime = Objects.requireNonNull(getItem(position)).getArrival().getHour() + ":" + Objects.requireNonNull(getItem(position)).getArrival().getMinute();
+        String arrivalTime = timeFormatter(Objects.requireNonNull(getItem(position)).getArrival().getHour()) + ":" + timeFormatter(Objects.requireNonNull(getItem(position)).getArrival().getMinute());
         locationArrival.setText(arrivalTime);
-        String departureTime = Objects.requireNonNull(getItem(position)).getDeparture().getHour() + ":" + Objects.requireNonNull(getItem(position)).getDeparture().getMinute();
+        String departureTime = timeFormatter(Objects.requireNonNull(getItem(position)).getDeparture().getHour()) + ":" + timeFormatter(Objects.requireNonNull(getItem(position)).getDeparture().getMinute());
         locationDeparture.setText(departureTime);
         return element;
+    }
+
+    public String timeFormatter(int time){
+        if (time < 10){
+            return "0" + time;
+        }
+        return Integer.toString(time);
     }
 }
