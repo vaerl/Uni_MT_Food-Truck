@@ -44,8 +44,8 @@ public class CustomerShowOrdersActivity extends AppCompatActivity {
         GsonRequest<Order[], Order[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/customer/" + DataService.getInstance(this).getUserId() + "/orders", Order[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 orders = response;
-                AdvancedCustomerOrdersAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrdersAdapter(this, 0, orders);
-                lv.setAdapter(advancedToDoAdapterReservation);
+                AdvancedCustomerOrdersAdapter advancedCustomerOrdersAdapter = new AdvancedCustomerOrdersAdapter(this, 0, orders);
+                lv.setAdapter(advancedCustomerOrdersAdapter);
                 lv.setOnItemClickListener((parent, view, position, id) -> {
                     Intent intent = new Intent(CustomerShowOrdersActivity.this, CustomerShowOrderDetailsActivity.class);
                     intent.putExtra(EXTRA_PARAMETER, orders[position]);
