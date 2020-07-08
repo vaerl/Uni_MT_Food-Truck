@@ -99,9 +99,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/selected_items"
         android:layout_width="154dp"
-        android:layout_height="550dp"
+        android:layout_height="0dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/new_order_forward_button_c"

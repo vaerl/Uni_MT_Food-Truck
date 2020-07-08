@@ -2,6 +2,7 @@ package com.example.foodtruck.activities.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +65,28 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         RecyclerView.Adapter  recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
         selected_items.setAdapter(recyclerViewSelectedOrderItemsAdapter);
 
+        TabLayout tabs = findViewById(R.id.tabLayout2);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0){
+                    setOrderMenuToReservation(tabs);
+                } else {
+                    setOrderMenuToPreorder(tabs);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -123,6 +146,22 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
     }
 
     public void forwardNewOrderActivityOne(View v) {
+
+        for (Dish dish: selectedItems) {
+            if (lvReservation.getVisibility() == View.VISIBLE) {
+                if (selectedDishesReservation.containsKey(dish)) {
+                    selectedDishesReservation.put(dish, selectedDishesReservation.get(dish) + 1);
+                } else {
+                    selectedDishesReservation.put(dish, 1);
+                }
+            } else {
+                if (selectedDishesPreOrder.containsKey(dish)) {
+                    selectedDishesPreOrder.put(dish, selectedDishesPreOrder.get(dish) + 1);
+                } else {
+                    selectedDishesPreOrder.put(dish, 1);
+                }
+            }
+        }
 
         Intent intent = new Intent(CustomerNewOrderActivityOne.this, CustomerNewOrderActivityTwo.class);
         if (lvReservation.getVisibility() == View.VISIBLE) {
