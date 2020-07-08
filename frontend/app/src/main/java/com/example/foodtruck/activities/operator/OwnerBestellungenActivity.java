@@ -46,7 +46,7 @@ public class OwnerBestellungenActivity extends AppCompatActivity {
 
         Log.d(TAG, "show menu: try to get Bestellungen");
 
-        GsonRequest<Order[]> requestOrders = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Order[].class, params, response -> {
+        GsonRequest<Order[],Order[]> requestOrders = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Order[].class, params, response -> {
             if (response != null) {
                 orders = response;
                 AdvancedOwnerBestellungenAdapter advancedToDoAdapter = new AdvancedOwnerBestellungenAdapter(this, 0, orders);
