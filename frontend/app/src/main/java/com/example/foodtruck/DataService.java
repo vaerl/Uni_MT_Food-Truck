@@ -19,8 +19,8 @@ public class DataService {
     private static SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    //    public static String BACKEND_URL = "http://192.168.54.225:8080/api";
-    public static String BACKEND_URL = "http://192.168.0.115:8080/api";
+    public static String BACKEND_URL = "http://192.168.54.225:8080/api";
+    //public static String BACKEND_URL = "http://192.168.0.115:8080/api";
     public static String USER_TYPE_TAG = "user_type";
     public static String USER_ID_TAG = "user_id";
     public static String Location_ID_TAG = "location_id";
