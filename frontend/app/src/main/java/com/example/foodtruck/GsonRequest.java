@@ -8,6 +8,7 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.example.foodtruck.model.Dish;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -26,7 +27,7 @@ public class GsonRequest<E, T> extends Request<T> {
         Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
         return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
     }).registerTypeAdapter(Duration.class, (JsonDeserializer<Duration>) (json, type, jsonDeserializationContext) -> {
-        Log.d(TAG, "deserialized Duration " +Duration.parse(json.getAsJsonPrimitive().getAsString()).toString());
+        Log.d(TAG, "deserialized Duration " + Duration.parse(json.getAsJsonPrimitive().getAsString()).toString());
         return Duration.parse(json.getAsJsonPrimitive().getAsString());
     }).create();
     private final Class<T> clazz;

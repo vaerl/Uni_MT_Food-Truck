@@ -1,20 +1,9 @@
 package de.thm.foodtruckbe.data.entities;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import de.thm.foodtruckbe.data.dto.DtoLocation;
-import de.thm.foodtruckbe.data.entities.Dish.Ingredient;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.order.PreOrder;
 import de.thm.foodtruckbe.data.entities.order.Reservation;
@@ -22,6 +11,14 @@ import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -263,8 +260,7 @@ public class Location {
     // check orders
     private boolean isPossible(final Order order) {
         for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
-            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
-                    .entrySet()) {
+            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()) {
                 if (dishEntry.getValue() * ingredientEntry.getValue() > operator.getStock()
                         .get(ingredientEntry.getKey())) {
                     return false;

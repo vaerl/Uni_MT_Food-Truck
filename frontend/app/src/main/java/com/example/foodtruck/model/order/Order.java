@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Order implements Serializable {
+public class Order implements Serializable {
 
     private Long id;
     private Location location;

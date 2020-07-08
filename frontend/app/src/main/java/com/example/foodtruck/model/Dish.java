@@ -17,7 +17,7 @@ public class Dish implements Serializable {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-    private Map<Ingredient, Integer> ingredients;
+    private ArrayList<Ingredient> ingredients;
 
     public Dish(String name, double basePrice, Map<Ingredient, Integer> ingredients) {
         this.name = name;

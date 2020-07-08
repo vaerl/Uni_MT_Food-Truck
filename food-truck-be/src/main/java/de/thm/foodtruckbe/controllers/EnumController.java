@@ -1,6 +1,7 @@
 package de.thm.foodtruckbe.controllers;
 
 import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.Ingredient;
 import de.thm.foodtruckbe.data.entities.Location;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ public class EnumController {
     @GetMapping(path = "/ingredients")
     public List<String> getInrgedients() {
         ArrayList<String> ingredients = new ArrayList<>();
-        for (Dish.Ingredient ingredient : Dish.Ingredient.class.getEnumConstants()) {
+        for (Ingredient ingredient : Ingredient.class.getEnumConstants()) {
             String ingredientString = ingredient.toString().toLowerCase();
             ingredients.add(ingredientString.substring(0, 1).toUpperCase() + ingredientString.substring(1));
         }

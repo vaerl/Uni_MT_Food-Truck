@@ -1,31 +1,28 @@
 package de.thm.foodtruckbe;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.EnumMap;
-import java.util.HashMap;
-
+import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.Ingredient;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.entities.order.Reservation;
+import de.thm.foodtruckbe.data.entities.user.Customer;
+import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.repos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import de.thm.foodtruckbe.data.entities.user.Customer;
-import de.thm.foodtruckbe.data.entities.Dish;
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.data.entities.Dish.Ingredient;
-import de.thm.foodtruckbe.data.entities.order.PreOrder;
-import de.thm.foodtruckbe.data.entities.order.Reservation;
-import de.thm.foodtruckbe.data.repos.CustomerRepository;
-import de.thm.foodtruckbe.data.repos.DishRepository;
-import de.thm.foodtruckbe.data.repos.LocationRepository;
-import de.thm.foodtruckbe.data.repos.OperatorRepository;
-import de.thm.foodtruckbe.data.repos.OrderRepository;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -59,28 +56,28 @@ public class Application {
 			Customer alex = new Customer("Alex", "xlea");
 			Customer lukas = new Customer("Lukas", "sakul");
 
-			EnumMap<Ingredient, Integer> lasagnaIngredients = new EnumMap<>(Ingredient.class);
-			lasagnaIngredients.put(Ingredient.NUDELN, 3);
-			lasagnaIngredients.put(Ingredient.TOMATEN, 2);
-			lasagnaIngredients.put(Ingredient.METT, 3);
-			lasagnaIngredients.put(Ingredient.KAESE, 2);
+			List<Ingredient> lasagnaIngredients = new ArrayList<>();
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.NUDELN, 3));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.METT, 3));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.KAESE, 2));
 			Dish lasagna = new Dish("Lasagne", operator, 5.50, lasagnaIngredients);
 
-			EnumMap<Ingredient, Integer> burgerIngredients = new EnumMap<>(Ingredient.class);
-			burgerIngredients.put(Ingredient.BROETCHEN, 1);
-			burgerIngredients.put(Ingredient.TOMATEN, 2);
-			burgerIngredients.put(Ingredient.GURKE, 3);
-			burgerIngredients.put(Ingredient.SALAT, 2);
-			burgerIngredients.put(Ingredient.BOULETTE, 2);
-			burgerIngredients.put(Ingredient.POMMES, 1);
-			burgerIngredients.put(Ingredient.KETCHUP, 1);
+			List<Ingredient> burgerIngredients = new ArrayList<>();
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.GURKE, 3));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.SALAT, 2));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BROETCHEN, 1));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BOULETTE, 2));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.POMMES, 1));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.KETCHUP, 1));
 			Dish burger = new Dish("Burger", operator, 7d, burgerIngredients);
 
-			EnumMap<Ingredient, Integer> pancakeIngredients = new EnumMap<>(Ingredient.class);
-			pancakeIngredients.put(Ingredient.EI, 3);
-			pancakeIngredients.put(Ingredient.MEHL, 2);
-			pancakeIngredients.put(Ingredient.SALZ, 1);
-			pancakeIngredients.put(Ingredient.ZUCKER, 2);
+			List<Ingredient> pancakeIngredients = new ArrayList<>();
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.EI, 3));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.MEHL, 2));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.SALZ, 1));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER, 2));
 			Dish pancakes = new Dish("Pancakes", operator, 4d, pancakeIngredients);
 
 			HashMap<Dish, Integer> itemsManuel = new HashMap<>();

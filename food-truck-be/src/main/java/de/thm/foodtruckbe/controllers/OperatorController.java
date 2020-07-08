@@ -1,37 +1,30 @@
 package de.thm.foodtruckbe.controllers;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
 import de.thm.foodtruckbe.data.dto.order.DtoReservation;
 import de.thm.foodtruckbe.data.dto.user.DtoOperator;
+import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.Ingredient;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.order.Order;
+import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.entities.order.Reservation;
 import de.thm.foodtruckbe.data.entities.user.Customer;
+import de.thm.foodtruckbe.data.entities.user.Operator;
 import de.thm.foodtruckbe.data.repos.*;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import de.thm.foodtruckbe.data.entities.Dish;
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.data.entities.order.Order;
-import de.thm.foodtruckbe.data.entities.order.PreOrder;
-import de.thm.foodtruckbe.data.entities.order.Reservation;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/operator")
@@ -114,12 +107,12 @@ public class OperatorController {
     }
 
     @GetMapping(path = "/{id}/shopping-list")
-    public Map<Dish.Ingredient, Integer> getShoppingListByOperatorId(@PathVariable(value = "id") Long id) {
+    public List<Ingredient> getShoppingListByOperatorId(@PathVariable(value = "id") Long id) {
         return getOperator(id).getShoppingList();
     }
 
     @PostMapping(path = "/{id}/shopping")
-    public boolean goShopping(@PathVariable(value = "id") Long id, @RequestBody Map<Dish.Ingredient, Integer> ingredients) {
+    public boolean goShopping(@PathVariable(value = "id") Long id, @RequestBody List<Ingredient> ingredients) {
         return getOperator(id).goShopping(ingredients);
     }
 
