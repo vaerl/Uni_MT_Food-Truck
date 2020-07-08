@@ -34,7 +34,6 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
 
         dishName = element.findViewById(R.id.dish_new_order_menu_name_c);
         dishPrice = element.findViewById(R.id.dish_new_order_menu_price_c);
-        dishSelected = element.findViewById(R.id.dish_new_order_menu_checkbox_c);
 
         dishName.setText(getItem(position).getName());
         if (type.equals("reservation")) {

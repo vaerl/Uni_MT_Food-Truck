@@ -38,11 +38,11 @@ public class Operator extends User {
     private Long id;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+    @JsonBackReference(value = "operator")
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+//    @JsonBackReference(value = "operator")
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")

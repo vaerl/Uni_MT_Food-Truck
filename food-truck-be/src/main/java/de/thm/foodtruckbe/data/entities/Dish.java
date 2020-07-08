@@ -31,11 +31,11 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference
+    @JsonManagedReference(value = "operator")
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    @JsonBackReference
+    @JsonBackReference(value = "ingredients")
     private List<Ingredient> ingredients;
 
     /**

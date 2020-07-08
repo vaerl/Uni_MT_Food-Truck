@@ -40,7 +40,7 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
             orderNumber.setText(order.getId().toString());
             orderStatus.setText(order.getStatus().toString());
             //TODO: Mapping Dishes in ListAdapter
-            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
+            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, order.getItems());
             lvReservation.setAdapter(advancedToDoAdapterReservation);
         }
 

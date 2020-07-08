@@ -1,5 +1,7 @@
 package de.thm.foodtruckbe.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.entities.Ingredient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class DtoDish {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
+
+    @JsonManagedReference(value = "operator")
     private List<DtoIngredient> dtoIngredients;
 
     public DtoDish(String name, double basePrice, List<DtoIngredient> dtoIngredients) {
@@ -25,9 +29,4 @@ public class DtoDish {
         this.dtoIngredients = dtoIngredients;
     }
 
-    @Override
-    public String toString() {
-        // TODO add ingredients
-        return name + ": " + basePrice;
-    }
 }

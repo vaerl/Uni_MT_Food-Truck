@@ -25,7 +25,7 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
-    @JsonManagedReference
+    @JsonManagedReference(value = "ingredients")
     private Dish dish;
 
     @ManyToOne
