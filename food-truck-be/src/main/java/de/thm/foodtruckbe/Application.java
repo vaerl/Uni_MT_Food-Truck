@@ -1,6 +1,7 @@
 package de.thm.foodtruckbe;
 
 import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.Ingredient;
 import de.thm.foodtruckbe.data.entities.Location;
 import de.thm.foodtruckbe.data.entities.order.PreOrder;
@@ -20,8 +21,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
 
 @SpringBootApplication
@@ -56,39 +55,42 @@ public class Application {
 			Customer alex = new Customer("Alex", "xlea");
 			Customer lukas = new Customer("Lukas", "sakul");
 
+			Dish lasagna = new Dish("Lasagne", operator, 5.50, null);
 			List<Ingredient> lasagnaIngredients = new ArrayList<>();
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.NUDELN, 3));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.METT, 3));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.KAESE, 2));
-			Dish lasagna = new Dish("Lasagne", operator, 5.50, lasagnaIngredients);
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.NUDELN, 3, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.METT, 3, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.KAESE, 2, lasagna, operator));
+			lasagna.setIngredients(lasagnaIngredients);
 
+			Dish burger = new Dish("Burger", operator, 7d, null);
 			List<Ingredient> burgerIngredients = new ArrayList<>();
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.GURKE, 3));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.SALAT, 2));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BROETCHEN, 1));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BOULETTE, 2));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.POMMES, 1));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.KETCHUP, 1));
-			Dish burger = new Dish("Burger", operator, 7d, burgerIngredients);
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.GURKE, 3, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.SALAT, 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BROETCHEN, 1, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BOULETTE, 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.POMMES, 1, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.KETCHUP, 1, burger, operator));
+			burger.setIngredients(burgerIngredients);
 
+			Dish pancakes = new Dish("Pancakes", operator, 4d, null);
 			List<Ingredient> pancakeIngredients = new ArrayList<>();
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.EI, 3));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.MEHL, 2));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.SALZ, 1));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER, 2));
-			Dish pancakes = new Dish("Pancakes", operator, 4d, pancakeIngredients);
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.EI, 3, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.MEHL, 2, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.SALZ, 1, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER, 2, pancakes, operator));
+			pancakes.setIngredients(pancakeIngredients);
 
-			HashMap<Dish, Integer> itemsManuel = new HashMap<>();
-			itemsManuel.put(burger, 1);
-			itemsManuel.put(lasagna, 1);
+			ArrayList<DishWrapper> itemsManuel =new ArrayList<>();
+			itemsManuel.add(new DishWrapper(burger, 1));
+			itemsManuel.add(new DishWrapper(lasagna, 1));
 			Reservation reservationManuel = new Reservation(manuel, tor, itemsManuel);
-			HashMap<Dish, Integer> itemsAlex = new HashMap<>();
-			itemsAlex.put(lasagna, 2);
+			ArrayList<DishWrapper> itemsAlex =new ArrayList<>();
+			itemsAlex.add(new DishWrapper(lasagna, 2));
 			Reservation reservationAlex = new Reservation(alex, tor, itemsAlex);
-			HashMap<Dish, Integer> itemsLukas = new HashMap<>();
-			itemsLukas.put(pancakes, 4);
+			ArrayList<DishWrapper> itemsLukas =new ArrayList<>();
+			itemsLukas.add(new DishWrapper(pancakes, 4));
 			PreOrder preOrderLukas = new PreOrder(lukas, thm, itemsLukas);
 
 			operatorRepository.save(operator);

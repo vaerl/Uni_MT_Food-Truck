@@ -2,6 +2,7 @@ package de.thm.foodtruckbe.data.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,11 @@ public class Ingredient {
     @JsonManagedReference
     private Operator operator;
 
-    public Ingredient(IngredientName name, int amount){
+    public Ingredient(IngredientName name, int amount, Dish dish, Operator operator){
         this.name = name;
         this.amount = amount;
+        this.dish = dish;
+        this.operator = operator;
     }
 
     public void addAmount(int amount){
@@ -43,6 +46,10 @@ public class Ingredient {
 
     public void subtractAmount(int amount){
         this.amount -= amount;
+    }
+
+    public static Ingredient create(DtoIngredient dtoIngredient, Dish dish, Operator operator){
+        return new Ingredient(dtoIngredient.getName(), dtoIngredient.getAmount(), dish, operator);
     }
 
     public enum IngredientName {

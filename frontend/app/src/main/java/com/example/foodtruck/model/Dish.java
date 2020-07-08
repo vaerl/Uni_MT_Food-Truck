@@ -1,11 +1,11 @@
 package com.example.foodtruck.model;
 
-import java.io.Serializable;
-import java.util.Map;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +17,9 @@ public class Dish implements Serializable {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-    private ArrayList<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
-    public Dish(String name, double basePrice, Map<Ingredient, Integer> ingredients) {
+    public Dish(String name, double basePrice, List<Ingredient> ingredients) {
         this.name = name;
         this.basePrice = Math.abs(basePrice);
         this.ingredients = ingredients;
@@ -29,11 +29,5 @@ public class Dish implements Serializable {
     public String toString() {
         // TODO add ingredients
         return name + ": " + basePrice;
-    }
-
-    public enum Ingredient {
-        MEHL, BUTTER, BROT, OEL, POMMES, SALZ, PFEFFER, MAGGI, TOMATEN, EI, REIS, MICLH, NUDELN, REMOULDAE, BOULETTE,
-        BROETCHEN, SALAT, GURKE, KETCHUP, MAYO, SENF, ZUCKER, HONIG, METT, SCHWEINESTEAK, PUTENSTEAK, KARTOFFELN,
-        BLUMENKOHL, HOLLANDAISE, KAESE
     }
 }

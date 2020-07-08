@@ -18,13 +18,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-// TODO add status
 public class Location {
 
     // Time per unit in seconds - I assumed a velocity of 50 km/h.
@@ -61,7 +59,7 @@ public class Location {
 
     /**
      * Minimal constructor - for internal use or Customer-Location.
-     * 
+     *
      * @param name the location's name
      * @param x
      * @param y
@@ -79,7 +77,7 @@ public class Location {
     /**
      * Constructor for initial {@code Location}. Needs an intial arrival-time.
      * {@code Operator} uses a {@code Market} as its first location.
-     * 
+     *
      * @param name     the location's name
      * @param x
      * @param y
@@ -87,7 +85,7 @@ public class Location {
      * @param duration the duration the food-truck stays
      */
     public Location(final String name, final Operator operator, final double x, final double y,
-            final LocalDateTime arrival, final Duration duration) {
+                    final LocalDateTime arrival, final Duration duration) {
         this(name, operator, x, y);
         this.arrival = arrival;
         this.departure = arrival.plus(duration);
@@ -97,7 +95,7 @@ public class Location {
      * Constructor for {@code Locations} that follow an initial @code{Location}.
      * Automatically sets arrival date based upon the previous location and the new
      * coordinates.
-     * 
+     *
      * @param previous the previous location
      * @param name     the location's name
      * @param x
@@ -105,17 +103,18 @@ public class Location {
      * @param duration the duration the food-truck stays
      */
     public Location(final String name, final Operator operator, final double x, final double y, final Location previous,
-            final Duration duration) {
+                    final Duration duration) {
         this(name, operator, x, y);
         this.arrival = previous.getDeparture().plus(previous.calculateTravelTime(this));
         this.departure = arrival.plus(duration);
     }
 
     // methods for setting delays
+
     /**
      * Adds the given duration to the arrival-time. Also adds the delay to the
      * departure time, as it is impacted by the arrival-delay.
-     * 
+     *
      * @param duration delay for the arrival time
      * @return success of operation
      */
@@ -127,7 +126,7 @@ public class Location {
 
     /**
      * Adds the given delay to only the departure time.
-     * 
+     *
      * @param duration delay for the arrival time
      * @return success of operation
      */
@@ -138,7 +137,7 @@ public class Location {
 
     /**
      * Subtracts the given duration from both arrival- and departure-time.
-     * 
+     *
      * @param duration lead for the arrival time
      * @return
      */
@@ -150,7 +149,7 @@ public class Location {
 
     /**
      * Subtracts the given duration from the departure-time.
-     * 
+     *
      * @param duration lead for the arrival time
      * @return
      */
@@ -160,9 +159,10 @@ public class Location {
     }
 
     // coordinate-methods
+
     /**
      * Calculates the Distance from a to b.
-     * 
+     *
      * @param b destination-coordinates
      * @return length of the distance between a and b
      */
@@ -176,7 +176,7 @@ public class Location {
 
     /**
      * Calculates the travel-time from a to b.
-     * 
+     *
      * @param b destination-location
      * @return a Duration based on the assumed velocity {@code KILOMETERS_PER_HOUR}
      */
@@ -186,7 +186,7 @@ public class Location {
 
     /**
      * Calculates the travel-time from a to b.
-     * 
+     *
      * @param b                 destination-location
      * @param kilometersPerHour the food-trucks average verlocity
      * @return a Duration based on the given velocity {@code kilometersPerHour}
@@ -259,10 +259,10 @@ public class Location {
 
     // check orders
     private boolean isPossible(final Order order) {
-        for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
-            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()) {
-                if (dishEntry.getValue() * ingredientEntry.getValue() > operator.getStock()
-                        .get(ingredientEntry.getKey())) {
+        for (DishWrapper dishWrapper : order.getItems()) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (dishWrapper.getAmount() * ingredient.getAmount() > operator.getStock()
+                        .get(operator.getStock().indexOf(ingredient)).getAmount()) {
                     return false;
                 }
             }
@@ -271,8 +271,9 @@ public class Location {
     }
 
     private boolean isPossible(final Dish dish) {
-        for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
-            if (ingredient.getValue() > operator.getStock().get(ingredient.getKey())) {
+        for (Ingredient ingredient : dish.getIngredients()) {
+            if (ingredient.getAmount() > operator.getStock()
+                    .get(operator.getStock().indexOf(ingredient)).getAmount()) {
                 return false;
             }
         }
@@ -284,7 +285,7 @@ public class Location {
         return LocalDateTime.now().isBefore(LocalDateTime.of(arrival.toLocalDate().plusDays(1), LocalTime.of(7, 0, 0)));
     }
 
-    public static Location create(DtoLocation dtoLocation, Operator operator, Location location){
+    public static Location create(DtoLocation dtoLocation, Operator operator, Location location) {
         return new Location(dtoLocation.getName(), operator, dtoLocation.getX(), dtoLocation.getY(), location, dtoLocation.getDuration());
     }
 

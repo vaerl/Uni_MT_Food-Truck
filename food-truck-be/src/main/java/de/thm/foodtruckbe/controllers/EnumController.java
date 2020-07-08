@@ -1,6 +1,5 @@
 package de.thm.foodtruckbe.controllers;
 
-import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Ingredient;
 import de.thm.foodtruckbe.data.entities.Location;
 import de.thm.foodtruckbe.data.entities.order.Order;

@@ -19,6 +19,7 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerNewOrderMenuAdapter;
 import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.order.Order;
 import com.example.foodtruck.model.order.PreOrder;
 import com.example.foodtruck.model.order.Reservation;
@@ -26,7 +27,9 @@ import com.example.foodtruck.model.user.Customer;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CustomerNewOrderActivityOne extends AppCompatActivity {
@@ -42,8 +45,8 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
     ListView lvReservation;
     ListView lvPreorder;
 
-    Map<Dish, Integer> selectedDishesReservation;
-    Map<Dish, Integer> selectedDishesPreOrder;
+    List<DishWrapper> selectedDishesReservation;
+    List<DishWrapper> selectedDishesPreOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,8 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         lvReservation = findViewById(R.id.new_order_list_reservation);
         lvPreorder = findViewById(R.id.new_order_list_preorder);
 
-        selectedDishesPreOrder = new HashMap<>();
-        selectedDishesReservation = new HashMap<>();
+        selectedDishesPreOrder = new ArrayList<>();
+        selectedDishesReservation = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -70,7 +73,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
                     CheckBox checkBox = view.findViewById(R.id.dish_new_order_menu_checkbox_c);
                     EditText dishAmount = view.findViewById(R.id.dish_new_order_menu_amount_c);
                     if (checkBox.isChecked()) {
-                        selectedDishesReservation.put(dishesReservation[position], Integer.getInteger(dishAmount.getText().toString()));
+                        selectedDishesReservation.add(new DishWrapper(dishesReservation[position], Integer.getInteger(dishAmount.getText().toString())));
                     } else {
                         selectedDishesReservation.remove(dishesReservation[position]);
                     }
@@ -93,7 +96,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
                     CheckBox checkBox = view.findViewById(R.id.dish_new_order_menu_checkbox_c);
                     EditText dishAmount = view.findViewById(R.id.dish_new_order_menu_amount_c);
                     if (checkBox.isChecked()) {
-                        selectedDishesPreOrder.put(dishesPreorder[position], Integer.getInteger(dishAmount.getText().toString()));
+                        selectedDishesPreOrder.add(new DishWrapper(dishesPreorder[position], Integer.getInteger(dishAmount.getText().toString())));
                     } else {
                         selectedDishesPreOrder.remove(dishesPreorder[position]);
                     }

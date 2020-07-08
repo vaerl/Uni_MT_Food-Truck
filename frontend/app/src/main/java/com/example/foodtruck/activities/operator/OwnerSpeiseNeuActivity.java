@@ -13,15 +13,18 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.Ingredient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OwnerSpeiseNeuActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
-    private Map<Dish.Ingredient, Integer> ingredients = new HashMap<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private static int RC_NEW_INGREDIENT = 1;
     public static String INTENT_NEW_INGREDIENT = "new_ingredient";
     public static String INTENT_NEW_AMOUNT = "new_amount";
@@ -34,11 +37,11 @@ public class OwnerSpeiseNeuActivity extends AppCompatActivity {
 
     public void speiseAnlegen(View v) {
         String name = ((EditText) findViewById(R.id.neu_name_input)).getText().toString();
-        if(name.equals("")){
+        if (name.equals("")) {
             ((EditText) findViewById(R.id.neu_name_input)).setError("Name fehlt");
             return;
         }
-        if(((EditText) findViewById(R.id.neu_preis_input)).getText().toString().equals("")){
+        if (((EditText) findViewById(R.id.neu_preis_input)).getText().toString().equals("")) {
             ((EditText) findViewById(R.id.neu_preis_input)).setError("Preis fehlt");
             return;
         }
@@ -72,9 +75,9 @@ public class OwnerSpeiseNeuActivity extends AppCompatActivity {
                 String ingredient = (String) data.getSerializableExtra(INTENT_NEW_INGREDIENT);
                 int amount = data.getIntExtra(INTENT_NEW_AMOUNT, 1);
                 // TODO improve
-                for (Dish.Ingredient ingredientEnum : Dish.Ingredient.class.getEnumConstants()) {
+                for (Ingredient.IngredientName ingredientEnum : Ingredient.IngredientName.class.getEnumConstants()) {
                     if (ingredientEnum.toString().equalsIgnoreCase(ingredient)) {
-                        ingredients.put(ingredientEnum, amount);
+                        ingredients.add(new Ingredient(ingredientEnum, amount));
                     }
                 }
 

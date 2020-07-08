@@ -11,8 +11,11 @@ package com.example.foodtruck.activities.operator;
 
         import com.example.foodtruck.R;
         import com.example.foodtruck.model.Dish;
+        import com.example.foodtruck.model.Ingredient;
 
+        import java.util.ArrayList;
         import java.util.HashMap;
+        import java.util.List;
         import java.util.Map;
 
 public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
@@ -21,7 +24,7 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
 
     Dish dish;
 
-    private Map<Dish.Ingredient, Integer> ingredients = new HashMap<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
     private static int RC_NEW_INGREDIENT = 1;
     public static String INTENT_NEW_INGREDIENT = "new_ingredient";
     public static String INTENT_NEW_AMOUNT = "new_amount";
@@ -58,7 +61,7 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
         } else {
             preis = Double.parseDouble(preisString);
         }
-        ingredients.putAll(dish.getIngredients());
+        ingredients.addAll(dish.getIngredients());
         Dish newDish = new Dish(name, preis, ingredients);
         newDish.setId(dish.getId());
         Intent returnIntent = new Intent();
@@ -90,9 +93,9 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
                 String ingredient = (String) data.getSerializableExtra(INTENT_NEW_INGREDIENT);
                 int amount = data.getIntExtra(INTENT_NEW_AMOUNT, 1);
                 // TODO improve
-                for (Dish.Ingredient ingredientEnum : Dish.Ingredient.class.getEnumConstants()) {
+                for (Ingredient.IngredientName ingredientEnum : Ingredient.IngredientName.class.getEnumConstants()) {
                     if (ingredientEnum.toString().equalsIgnoreCase(ingredient)) {
-                        ingredients.put(ingredientEnum, amount);
+                        ingredients.add(new Ingredient(ingredientEnum, amount));
                     }
                 }
 

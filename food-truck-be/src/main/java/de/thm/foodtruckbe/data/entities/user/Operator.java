@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.user.DtoOperator;
-import de.thm.foodtruckbe.data.entities.Dish;
-import de.thm.foodtruckbe.data.entities.Ingredient;
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.entities.Market;
+import de.thm.foodtruckbe.data.entities.*;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.order.PreOrder;
 import lombok.Getter;
@@ -25,7 +22,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
@@ -188,12 +184,12 @@ public class Operator extends User {
         ArrayList<Ingredient> results = new ArrayList<>();
         for (Location location : route) {
             for (PreOrder preOrder : location.getPreOrders()) {
-                for (final Map.Entry<Dish, Integer> dishEntry : preOrder.getItems().entrySet()) {
-                    for (Ingredient ingredient : dishEntry.getKey().getIngredients()) {
+                for (DishWrapper dishWrapper : preOrder.getItems()) {
+                    for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
                         if (results.contains(ingredient)) {
-                            results.get(results.indexOf(ingredient)).addAmount(ingredient.getAmount() * dishEntry.getValue());
+                            results.get(results.indexOf(ingredient)).addAmount(ingredient.getAmount() * dishWrapper.getAmount());
                         } else {
-                            ingredient.setAmount(ingredient.getAmount() * dishEntry.getValue());
+                            ingredient.setAmount(ingredient.getAmount() * dishWrapper.getAmount());
                         }
                         results.add(ingredient);
                     }
@@ -231,9 +227,9 @@ public class Operator extends User {
     }
 
     public boolean isPossible(Order order) {
-        for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
-            for (Ingredient ingredient : dishEntry.getKey().getIngredients()) {
-                if (dishEntry.getValue() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()){
+        for (DishWrapper dishWrapper : order.getItems()) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()){
                     return false;
                 }
             }
@@ -265,10 +261,10 @@ public class Operator extends User {
         return true;
     }
 
-    public boolean addToStock(final Map<Dish, Integer> items) {
-        for (final Map.Entry<Dish, Integer> dishEntry : items.entrySet()) {
-            for (Ingredient ingredient : dishEntry.getKey().getIngredients()) {
-                if (!addToStock(ingredient, dishEntry.getValue() * ingredient.getAmount())) {
+    public boolean addToStock(List<DishWrapper> items) {
+        for (DishWrapper dishWrapper : items) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (!addToStock(ingredient, dishWrapper.getAmount() * ingredient.getAmount())) {
                     return false;
                 }
             }
@@ -285,10 +281,10 @@ public class Operator extends User {
         return true;
     }
 
-    public boolean removeFromStock(final Map<Dish, Integer> items) {
-        for (final Map.Entry<Dish, Integer> dishEntry : items.entrySet()) {
-            for (Ingredient ingredient : dishEntry.getKey().getIngredients()) {
-                if (!removeFromStock(ingredient, dishEntry.getValue() * ingredient.getAmount())) {
+    public boolean removeFromStock(List<DishWrapper> items) {
+        for (DishWrapper dishWrapper : items) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (!removeFromStock(ingredient, dishWrapper.getAmount() * ingredient.getAmount())) {
                     return false;
                 }
             }

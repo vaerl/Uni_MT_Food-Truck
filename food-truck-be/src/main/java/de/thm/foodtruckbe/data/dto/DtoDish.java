@@ -17,12 +17,12 @@ public class DtoDish {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-    private List<Ingredient> ingredients;
+    private List<DtoIngredient> dtoIngredients;
 
-    public DtoDish(String name, double basePrice, List<Ingredient> ingredients) {
+    public DtoDish(String name, double basePrice, List<DtoIngredient> dtoIngredients) {
         this.name = name;
         this.basePrice = Math.abs(basePrice);
-        this.ingredients = ingredients;
+        this.dtoIngredients = dtoIngredients;
     }
 
     @Override

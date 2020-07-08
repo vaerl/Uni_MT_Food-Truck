@@ -3,12 +3,14 @@ package de.thm.foodtruckbe.data.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDish;
+import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,19 +34,9 @@ public class Dish {
     @JsonManagedReference
     private Operator operator;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
     @JsonBackReference
     private List<Ingredient> ingredients;
-
-//    @ElementCollection
-//    @CollectionTable(name = "ingredient_amount_mapping_dish")
-//    @MapKeyEnumerated(EnumType.STRING)
-//    @MapKeyClass(Ingredient.class)
-//    @MapKeyColumn(name = "ingredient", nullable = false)
-//    @Column(name = "amount")
-////    @JsonSerialize(keyUsing = DishSerializer.class)
-//    @JsonIgnore
-//    private Map<Ingredient, Integer> ingredients;
 
     /**
      * Constructor for {@code Dish}.
@@ -77,7 +69,13 @@ public class Dish {
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
-        return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), dtoDish.getIngredients());
+        Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
+        List<Ingredient> ingredients = new ArrayList<>();
+        for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
+            ingredients.add(Ingredient.create(dtoIngredient, dish, operator));
+        }
+        dish.setIngredients(ingredients);
+        return dish;
     }
 
     public Dish merge(Dish dish) {

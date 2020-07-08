@@ -1,15 +1,16 @@
 package com.example.foodtruck.model.order;
 
-import com.example.foodtruck.model.Dish;
 
-import java.util.Map;
+import com.example.foodtruck.model.DishWrapper;
+
+import java.util.List;
 
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class Reservation extends Order  {
+public class Reservation extends Order {
 
-    public Reservation(Map<Dish, Integer> items) {
+    public Reservation(List<DishWrapper> items) {
         super(items);
     }
 }

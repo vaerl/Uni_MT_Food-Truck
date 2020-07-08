@@ -1,15 +1,15 @@
 package de.thm.foodtruckbe.data.dto.order;
 
-import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
-import de.thm.foodtruckbe.data.entities.Dish;
+import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
+import de.thm.foodtruckbe.data.entities.DishWrapper;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @NoArgsConstructor
 public class DtoPreOrder extends DtoOrder {
 
-    public DtoPreOrder(Map<Dish, Integer> items) {
+    public DtoPreOrder(List<DtoDishWrapper> items) {
         super(items);
     }
 
