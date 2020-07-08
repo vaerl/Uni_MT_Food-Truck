@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Location;
 
 import java.util.Objects;
+
+import static com.example.foodtruck.FormattingHelper.timeFormatter;
 
 public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
 
@@ -39,10 +40,4 @@ public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
         return element;
     }
 
-    public String timeFormatter(int time){
-        if (time < 10){
-            return "0" + time;
-        }
-        return Integer.toString(time);
-    }
 }
