@@ -18,7 +18,6 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
 
     TextView dishName;
     TextView dishPrice;
-    public CheckBox dishSelected;
 
     public AdvancedCustomerNewOrderMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
         super(context, textviewResourceId, objects);
@@ -43,7 +42,6 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
         } else {
             dishPrice.setText(Double.toString(getItem(position).getBasePrice()));
         }
-        dishSelected.setChecked(false);
         return element;
     }
 }

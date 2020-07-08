@@ -1,6 +1,7 @@
 package com.example.foodtruck.activities.customer;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,29 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
+        TabLayout tabs = findViewById(R.id.tabLayout);
+        tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d(TAG, "onTabSelected: position" + tab.getPosition());
+               if(tab.getPosition() == 0){
+                   setMenuToReservation(tabs);
+               } else {
+                   setMenuToPreorder(tabs);
+               }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         // Reservation
         // ---------------------------------------------------------------
         Log.d(TAG, "show route: try to get reservation manu");
@@ -68,11 +92,13 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
     }
 
     public void setMenuToPreorder(View v){
+        Log.d(TAG, "setMenuToPreorder: changing to preorder");
         lvReservation.setVisibility(View.GONE);
         lvPreorder.setVisibility(View.VISIBLE);
     }
 
     public void setMenuToReservation(View v){
+        Log.d(TAG, "setMenuToReservation: changing to reservation");
         lvPreorder.setVisibility(View.GONE);
         lvReservation.setVisibility(View.VISIBLE);
     }
