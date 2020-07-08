@@ -13,10 +13,6 @@ package com.example.foodtruck.adapter;
 
 public class AdvancedOwnerSpeisekarteAdapter extends ArrayAdapter<Dish> {
 
-//    public AdvancedCustomerShowMenuAdapter(Context context, int textviewResourceId, Dish[] objects){
-//        super(context, textviewResourceId, objects);
-//    }
-
     public AdvancedOwnerSpeisekarteAdapter(@NonNull Context context, int resource, Dish[] objects) {
         super(context, resource, objects);
     }
@@ -29,8 +25,8 @@ public class AdvancedOwnerSpeisekarteAdapter extends ArrayAdapter<Dish> {
             element = inflater.inflate(R.layout.activity_owner_speisekarte_item, null);
         }
 
-        TextView gericht = element.findViewById(R.id.Gericht_textView);
-        TextView preis = element.findViewById(R.id.Preis_textView);
+        TextView gericht = element.findViewById(R.id.gericht_textView3);
+        TextView preis = element.findViewById(R.id.preis_textView3);
 
         gericht.setText(getItem(position).getName());
         preis.setText(Double.toString(getItem(position).getPrice()));
