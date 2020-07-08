@@ -28,6 +28,7 @@
         android:layout_marginBottom="16dp"
         android:text="Standort"
         android:textSize="18sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/status_textView17"
         app:layout_constraintTop_toTopOf="parent" />
