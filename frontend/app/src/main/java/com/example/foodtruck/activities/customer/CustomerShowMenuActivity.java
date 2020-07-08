@@ -1,4 +1,4 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities.customer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,9 @@ import android.widget.ListView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.foodtruck.DataService;
+import com.example.foodtruck.GsonRequest;
+import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
 import com.example.foodtruck.model.Dish;
 

@@ -1,4 +1,4 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.widget.ListView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.foodtruck.DataService;
+import com.example.foodtruck.GsonRequest;
+import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerOrdersAdapter;
-import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
-import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.order.Order;
 
 import java.util.HashMap;
