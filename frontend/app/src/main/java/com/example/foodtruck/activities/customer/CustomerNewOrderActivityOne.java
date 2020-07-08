@@ -102,7 +102,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         selectedItems.add(dishesReservation[position]);
-
+                        recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
                     }
                 });
             }
@@ -119,11 +119,9 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
                 dishesPreorder = response;
                 AdvancedCustomerNewOrderMenuAdapter advancedCustomerNewOrderMenuAdapterPreOrder = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesPreorder, "preorder");
                 lvPreorder.setAdapter(advancedCustomerNewOrderMenuAdapterPreOrder);
-                lvPreorder.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedItems.add(dishesReservation[position]);
-                    }
+                lvPreorder.setOnItemClickListener((parent, view, position, id) -> {
+                    selectedItems.add(dishesReservation[position]);
+                    recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
                 });
             }
         }, error -> {
