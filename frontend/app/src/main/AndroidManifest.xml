@@ -43,6 +43,7 @@
         <activity android:name=".activities.operator.OwnerAddzutatActivity" />
         <activity android:name=".activities.operator.OwnerAddzutatBearbActivity" />
         <activity android:name=".activities.operator.OwnerBestellungActivity" />
+        <activity android:name=".activities.operator.OwnerLBZutatenActivity" />
 
     </application>
 
