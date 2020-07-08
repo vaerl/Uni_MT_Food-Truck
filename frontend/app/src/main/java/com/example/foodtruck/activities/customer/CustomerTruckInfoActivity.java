@@ -59,4 +59,9 @@ public class CustomerTruckInfoActivity extends AppCompatActivity {
         Intent in = new Intent(this, CustomerShowMenuActivity.class);
         startActivity(in);
     }
+
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
+        startActivity(in);
+    }
 }

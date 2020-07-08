@@ -15,18 +15,14 @@ public class CustomerThankYouActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_thanks);
     }
 
-    public void openTruckInfos(View v){
-        Intent in = new Intent(this, CustomerTruckInfoActivity.class);
-        startActivity(in);
-    }
-
-    public void newOrder(View v){
-        Intent in = new Intent(this, CustomerNewOrderActivityOne.class);
-        startActivity(in);
-    }
 
     public void showOrders(View v){
         Intent in = new Intent(this, CustomerShowOrdersActivity.class);
+        startActivity(in);
+    }
+
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }
 

@@ -174,4 +174,9 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
+        startActivity(in);
+    }
+
 }
