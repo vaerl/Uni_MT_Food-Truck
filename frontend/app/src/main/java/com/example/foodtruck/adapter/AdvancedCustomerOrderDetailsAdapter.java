@@ -1,13 +1,10 @@
 package com.example.foodtruck.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +19,6 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -51,7 +47,7 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Map.Entry<
             postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getKey().getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
 
             dishName.setText(Objects.requireNonNull(getItem(position)).getKey().getName());
-            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getKey().getPrice()));
+            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getKey().getBasePrice()));
         });
         return element;
     }

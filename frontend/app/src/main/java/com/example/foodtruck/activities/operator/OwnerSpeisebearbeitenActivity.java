@@ -6,15 +6,9 @@ package com.example.foodtruck.activities.operator;
         import android.support.v7.app.AppCompatActivity;
         import android.view.View;
         import android.widget.EditText;
-        import android.widget.ListView;
-        import android.widget.TextView;
 
         import com.example.foodtruck.R;
         import com.example.foodtruck.model.Dish;
-
-
-        import java.util.ArrayList;
-        import java.util.Map;
 
 public class OwnerSpeisebearbeitenActivity extends AppCompatActivity {
 
@@ -41,7 +35,7 @@ public class OwnerSpeisebearbeitenActivity extends AppCompatActivity {
             Intent intent = getIntent();
             Dish gericht = (Dish) intent.getSerializableExtra(EXTRA_PARAMETER);
             gerichtName.setText(gericht.getName());
-            gerichtPreis.setText(Double.toString(gericht.getPrice()));
+            gerichtPreis.setText(Double.toString(gericht.getBasePrice()));
         }
     }
 

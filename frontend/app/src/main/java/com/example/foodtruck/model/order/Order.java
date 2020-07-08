@@ -27,7 +27,7 @@ public abstract class Order implements Serializable {
     public Order(Map<Dish, Integer> items) {
         this.items = items;
         this.price = new ArrayList<>(items.entrySet()).stream()
-                .map(e -> e.getKey().getPrice() * e.getValue()).reduce(0d, Double::sum);
+                .map(e -> e.getKey().getBasePrice() * e.getValue()).reduce(0d, Double::sum);
         this.status = Status.ACCEPTED;
     }
 

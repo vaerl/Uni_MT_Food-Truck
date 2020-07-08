@@ -29,7 +29,7 @@ public class AdvancedOwnerSpeisekarteAdapter extends ArrayAdapter<Dish> {
         TextView preis = element.findViewById(R.id.preis_textView3);
 
         gericht.setText(getItem(position).getName());
-        preis.setText(Double.toString(getItem(position).getPrice()));
+        preis.setText(Double.toString(getItem(position).getBasePrice()));
 
         return element;
     }

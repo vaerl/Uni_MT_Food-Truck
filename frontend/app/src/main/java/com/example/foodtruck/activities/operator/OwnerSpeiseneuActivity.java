@@ -1,11 +1,13 @@
 package com.example.foodtruck.activities.operator;
 
+        import android.app.Activity;
         import android.content.Intent;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.view.View;
 
         import com.example.foodtruck.R;
+        import com.example.foodtruck.model.Dish;
 
 public class OwnerSpeiseneuActivity extends AppCompatActivity {
 
@@ -19,8 +21,11 @@ public class OwnerSpeiseneuActivity extends AppCompatActivity {
 
         //hier Logik zum anlegen
 
-        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
-        startActivity(in);
+        Dish dish = new Dish();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(dish);
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        finish();
     }
 
     public void openAddzutat(View v) {

@@ -14,20 +14,21 @@ public class Dish implements Serializable {
 
     private Long id;
     private String name;
-    private double price;
+    private double basePrice;
+    private double adjustedPrice;
     private double rating;
     private Map<Ingredient, Integer> ingredients;
 
-    public Dish(String name, double price, Map<Ingredient, Integer> ingredients) {
+    public Dish(String name, double basePrice, Map<Ingredient, Integer> ingredients) {
         this.name = name;
-        this.price = Math.abs(price);
+        this.basePrice = Math.abs(basePrice);
         this.ingredients = ingredients;
     }
 
     @Override
     public String toString() {
         // TODO add ingredients
-        return name + ": " + price;
+        return name + ": " + basePrice;
     }
 
     public enum Ingredient {
