@@ -37,7 +37,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
         // Gerichte laden
 
         Log.d(TAG, "show menu: try to get Speisekarte");
-        // menu/preorder oder menu/reservatio?
+
         GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 gerichte = response;
@@ -59,6 +59,11 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
 
     public void openSpeiseneu(View v) {
         Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
+        startActivity(in);
+    }
+
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
         startActivity(in);
     }
 
