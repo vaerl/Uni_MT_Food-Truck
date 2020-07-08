@@ -12,9 +12,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 
+import com.example.foodtruck.activities.customer.CustomerMenuActivity;
 import com.example.foodtruck.model.user.Customer;
 import com.example.foodtruck.model.user.Operator;
 import com.example.foodtruck.model.user.User;
+import com.example.foodtruck.activities.operator.OwnerMenuActivity;
 
 public class MainActivity extends Activity {
 

@@ -18,21 +18,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomerMenuActivity"/>
-        <activity android:name=".CustomerTruckInfoActivity"/>
-        <activity android:name=".CustomerShowRouteActivity"/>
-        <activity android:name=".CustomerShowMenuActivity"/>
-        <activity android:name=".CustomerShowOrdersActivity"/>
-        <activity android:name=".CustomerNewOrderActivityOne"/>
+        <activity android:name=".activities.customer.CustomerMenuActivity"/>
+        <activity android:name=".activities.customer.CustomerTruckInfoActivity"/>
+        <activity android:name=".activities.customer.CustomerShowRouteActivity"/>
+        <activity android:name=".activities.customer.CustomerShowMenuActivity"/>
+        <activity android:name=".activities.customer.CustomerShowOrdersActivity"/>
+        <activity android:name=".activities.customer.CustomerNewOrderActivityOne"/>
 
-        <activity android:name=".OwnerMenuActivity" />
-        <activity android:name=".OwnerRoutenplanungActivity" />
-        <activity android:name=".OwnerSpeisekarteActivity" />
-        <activity android:name=".OwnerBestellungenActivity" />
-        <activity android:name=".OwnerLebensmittelbestellungActivity" />
-        <activity android:name=".OwnerAktuellerstandortActivity" />
-        <activity android:name=".OwnerNeuerouteActivity" />
-        <activity android:name=".OwnerRoutebearbeitenActivity" />
+        <activity android:name=".activities.operator.OwnerMenuActivity" />
+        <activity android:name=".activities.operator.OwnerRoutenplanungActivity" />
+        <activity android:name=".activities.operator.OwnerSpeisekarteActivity" />
+        <activity android:name=".activities.operator.OwnerBestellungenActivity" />
+        <activity android:name=".activities.operator.OwnerLebensmittelbestellungActivity" />
+        <activity android:name=".activities.operator.OwnerAktuellerstandortActivity" />
+        <activity android:name=".activities.operator.OwnerNeuerouteActivity" />
+        <activity android:name=".activities.operator.OwnerRoutebearbeitenActivity" />
 
     </application>
 

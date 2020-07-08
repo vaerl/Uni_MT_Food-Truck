@@ -1,9 +1,11 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities.customer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.example.foodtruck.R;
 
 public class CustomerMenuActivity extends AppCompatActivity {
 
