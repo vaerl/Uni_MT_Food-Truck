@@ -1,16 +1,18 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities.operator;
 
         import android.content.Intent;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.view.View;
 
-public class OwnerAktuellerstandortActivity extends AppCompatActivity {
+        import com.example.foodtruck.R;
+
+public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_aktuellerstandort);
+        setContentView(R.layout.activity_owner_lebensmittelbestellung);
     }
 
     public void ownerHome(View v) {

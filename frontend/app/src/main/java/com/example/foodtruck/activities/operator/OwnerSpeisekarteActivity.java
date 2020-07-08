@@ -1,16 +1,18 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities.operator;
 
         import android.content.Intent;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.View;
-        import android.widget.AdapterView;
         import android.widget.ListView;
 
         import com.android.volley.Request;
         import com.android.volley.RequestQueue;
         import com.android.volley.toolbox.Volley;
+        import com.example.foodtruck.DataService;
+        import com.example.foodtruck.GsonRequest;
+        import com.example.foodtruck.R;
         import com.example.foodtruck.adapter.AdvancedOwnerSpeisekarteAdapter;
         import com.example.foodtruck.model.Dish;
 
