@@ -33,6 +33,10 @@
         <activity android:name=".activities.operator.OwnerAktuellerstandortActivity" />
         <activity android:name=".activities.operator.OwnerNeuerouteActivity" />
         <activity android:name=".activities.operator.OwnerRoutebearbeitenActivity" />
+        <activity android:name=".activities.operator.OwnerAddstandortActivity" />
+        <activity android:name=".activities.operator.OwnerSpeisebearbeitenActivity" />
+        <activity android:name=".activities.operator.OwnerSpeiseneuActivity" />
+        <activity android:name=".activities.operator.OwnerAddzutatActivity" />
 
     </application>
 
