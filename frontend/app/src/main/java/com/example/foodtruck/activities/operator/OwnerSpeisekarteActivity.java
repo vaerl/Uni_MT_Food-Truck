@@ -16,13 +16,11 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedOwnerSpeisekarteAdapter;
 import com.example.foodtruck.model.Dish;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class OwnerSpeisekarteActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     private static int RC_NEW_DISH = 1;
+    private static int RC_EDIT_DISH = 2;
     public static String INTENT_NEW_DISH = "new_dish";
     public static String INTENT_EDIT_DISH = "edit_dish";
 
@@ -51,9 +49,9 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
                 lv.setAdapter(advancedToDoAdapter);
                 lv.setOnItemClickListener((parent, view, lv_position, id) -> {
                     // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
-                    Intent intent = new Intent(OwnerSpeisekarteActivity.this, OwnerSpeisebearbeitenActivity.class);
+                    Intent intent = new Intent(this, OwnerSpeiseBearbeitenActivity.class);
                     intent.putExtra(INTENT_EDIT_DISH, gerichte[lv_position]);
-                    startActivity(intent);
+                    startActivityForResult(intent, RC_EDIT_DISH);
                 });
             }
         }, error -> {
@@ -63,32 +61,41 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
     }
 
     public void openSpeiseNeu(View v) {
-        Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
-        startActivityForResult(in, RC_NEW_DISH);
+        startActivityForResult(new Intent(this, OwnerSpeiseNeuActivity.class), RC_NEW_DISH);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
-        startActivity(in);
+        startActivity(new Intent(this, OwnerMenuActivity.class));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == RC_NEW_DISH && data.hasExtra(INTENT_NEW_DISH)) {
                 Dish dish = (Dish) data.getSerializableExtra(INTENT_NEW_DISH);
                 // save dish
-                GsonRequest<Dish, Dish> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes", dish, Dish.class, DataService.getStandardHeader(), response -> {
+                GsonRequest<Dish, Dish> requestGerichte = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes", dish, Dish.class, DataService.getStandardHeader(), response -> {
                     if (response != null) {
                         Log.d(TAG, "onActivityResult: saved new dish.");
+                        loadDishes();
                     }
                 }, error -> {
                     Log.e(TAG, "Could not save Dish!", error);
                 });
                 queue.add(requestGerichte);
-                // update
-                loadDishes();
+            } else if(requestCode == RC_EDIT_DISH && data.hasExtra(INTENT_EDIT_DISH)){
+                Dish dish = (Dish) data.getSerializableExtra(INTENT_EDIT_DISH);
+                // save dish
+                GsonRequest<Dish, Dish> requestGerichte = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + dish.getId() + "/update", dish, Dish.class, DataService.getStandardHeader(), response -> {
+                    if (response != null) {
+                        Log.d(TAG, "onActivityResult: updated dish.");
+                        loadDishes();
+                    }
+                }, error -> {
+                    Log.e(TAG, "Could not update Dish!", error);
+                });
+                queue.add(requestGerichte);
             }
         } else {
             Log.e(TAG, "onActivityResult: resultCode != 0");

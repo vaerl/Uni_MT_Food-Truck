@@ -39,13 +39,13 @@ public class OwnerAddzutatBearbActivity extends AppCompatActivity {
         //hier Logik zum anlegen
 
 
-        Intent in = new Intent(this, OwnerSpeisebearbeitenActivity.class);
+        Intent in = new Intent(this, OwnerSpeiseBearbeitenActivity.class);
         startActivity(in);
     }
 
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerSpeisebearbeitenActivity.class);
+        Intent in = new Intent(this, OwnerSpeiseBearbeitenActivity.class);
         startActivity(in);
     }
 

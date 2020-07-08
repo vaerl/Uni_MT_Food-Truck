@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.foodtruck.model.order.Order;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,5 +100,16 @@ public class DataService {
 
     public enum UserType {
         CUSTOMER, OPERATOR
+    }
+
+    public static String translate(Order.Status status){
+        switch (status){
+            case DONE: return "Fertig";
+            case STARTED: return "Begonnen";
+            case ACCEPTED: return "Akzeptiert";
+            case CONFIRMED: return "Bestätigt";
+            case NOT_POSSIBLE: return "Nicht möglich";
+            default: return "ERROR";
+        }
     }
 }

@@ -208,6 +208,16 @@ public class OperatorController {
         getOperator(operatorId).getDishFromMenu(getDish(dishId)).addRating(rating);
     }
 
+    @PostMapping(path = "/{id}/dishes/{dishId}/update")
+    public Dish updateDish(@PathVariable(value = "id") Long operatorId,
+                           @PathVariable(value = "dishId") Long dishId, @RequestBody DtoDish dtoDish) {
+        Operator operator = getOperator(operatorId);
+        Dish dish = operator.getDishFromMenu(getDish(dishId));
+        dish = dish.merge(Dish.create(dtoDish, operator));
+        operator.updateMenu(dish);
+        return dishRepository.save(dish);
+    }
+
     @PostMapping(path = "/{id}/dishes/{dishId}/adjustPrice")
     public void adjustDishPrice(@PathVariable(value = "id") Long operatorId,
                                 @PathVariable(value = "dishId") Long dishId, @RequestBody Double adjustedPrice) {

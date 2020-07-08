@@ -14,9 +14,12 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
 import de.thm.foodtruckbe.data.dto.user.DtoOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.webjars.NotFoundException;
 
 import de.thm.foodtruckbe.data.entities.Dish;
@@ -34,6 +37,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Operator extends User {
+
+    @Transient
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Id
     @GeneratedValue
@@ -94,6 +100,15 @@ public class Operator extends User {
             reservationMenu.add(dish);
         }
         return preOrderMenu.add(dish);
+    }
+
+    public boolean updateMenu(Dish dish) {
+        if (preOrderMenu.contains(dish)) {
+            removeDishFromMenu(dish);
+            return addDishToMenu(dish);
+        } else {
+            return false;
+        }
     }
 
     public boolean removeDishFromMenu(final Dish dish) {
@@ -170,6 +185,7 @@ public class Operator extends User {
 
     // shopping
     @JsonIgnore
+    // TODO accept Map<Ingredient, Integer>
     public Map<Ingredient, Integer> getShoppingList() {
         final EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
         for (Location location : route) {
@@ -232,7 +248,14 @@ public class Operator extends User {
 
     public boolean isPossible(final Dish dish) {
         for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
-            if (ingredient.getValue() > stock.get(ingredient.getKey())) {
+            log.debug("In foreach in isPossible.");
+            log.info("Key: " + ingredient.getKey());
+            log.info("Value: " + ingredient.getValue());
+            if (stock.containsKey(ingredient.getKey())) {
+                if (ingredient.getValue() > stock.get(ingredient.getKey())) {
+                    return false;
+                }
+            } else {
                 return false;
             }
         }
