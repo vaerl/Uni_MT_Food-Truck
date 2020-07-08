@@ -5,12 +5,12 @@ package com.example.foodtruck;
         import android.support.v7.app.AppCompatActivity;
         import android.view.View;
 
-public class OwnerRoutenplanungActivity extends AppCompatActivity {
+public class OwnerNeuerouteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_routenplanung);
+        setContentView(R.layout.activity_owner_neueroute);
     }
 
     public void ownerHome(View v) {
@@ -18,14 +18,5 @@ public class OwnerRoutenplanungActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void openNeueroute(View v) {
-        Intent in = new Intent(this, OwnerNeuerouteActivity.class);
-        startActivity(in);
-    }
-
-    public void openRoutebearbeiten(View v) {
-        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-        startActivity(in);
-    }
 
 }

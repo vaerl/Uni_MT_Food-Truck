@@ -31,6 +31,9 @@
         <activity android:name=".OwnerBestellungenActivity" />
         <activity android:name=".OwnerLebensmittelbestellungActivity" />
         <activity android:name=".OwnerAktuellerstandortActivity" />
+        <activity android:name=".OwnerNeuerouteActivity" />
+        <activity android:name=".OwnerRoutebearbeitenActivity" />
+
     </application>
 
 </manifest>
