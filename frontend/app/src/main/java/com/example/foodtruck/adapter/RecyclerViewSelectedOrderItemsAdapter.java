@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.foodtruck.R;
@@ -24,11 +25,11 @@ public class RecyclerViewSelectedOrderItemsAdapter extends RecyclerView.Adapter<
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ConstraintLayout cl;
+        public LinearLayout cl;
         public TextView name;
         public ImageView deleteButton;
 
-        public MyViewHolder(ConstraintLayout v) {
+        public MyViewHolder(LinearLayout v) {
             super(v);
             cl = v;
             name = cl.findViewById(R.id.new_order_selected_item_name);
@@ -53,7 +54,7 @@ public class RecyclerViewSelectedOrderItemsAdapter extends RecyclerView.Adapter<
     @Override
     public RecyclerViewSelectedOrderItemsAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_customer_order_selection_item, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
@@ -62,11 +63,9 @@ public class RecyclerViewSelectedOrderItemsAdapter extends RecyclerView.Adapter<
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.getName().setText(selectedItems.get(position).getName());
-        holder.getDeleteButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedItems.remove(holder.getAdapterPosition());
-            }
+        holder.getDeleteButton().setOnClickListener(view -> {
+            selectedItems.remove(holder.getAdapterPosition());
+            this.notifyDataSetChanged();
         });
     }
 

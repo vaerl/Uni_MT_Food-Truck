@@ -75,6 +75,7 @@ public class Application {
 			burgerIngredients.put(Ingredient.POMMES, 1);
 			burgerIngredients.put(Ingredient.KETCHUP, 1);
 			Dish burger = new Dish("Burger", operator, 7d, burgerIngredients);
+			burger.setAdjustedPrice(5000d);
 
 			EnumMap<Ingredient, Integer> pancakeIngredients = new EnumMap<>(Ingredient.class);
 			pancakeIngredients.put(Ingredient.EI, 3);
