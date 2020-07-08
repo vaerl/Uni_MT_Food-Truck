@@ -1,7 +1,5 @@
 package com.example.foodtruck.model.order;
 
-import android.os.Parcelable;
-
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Location;
 import com.example.foodtruck.model.user.Customer;

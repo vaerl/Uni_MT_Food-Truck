@@ -64,19 +64,17 @@
                 android:id="@+id/passwort_editText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Passwort"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <EditText
                 android:id="@+id/passwort2_editText"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="Passwort wiederholen"
-                android:inputType="textPersonName" />
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/registrieren_button"

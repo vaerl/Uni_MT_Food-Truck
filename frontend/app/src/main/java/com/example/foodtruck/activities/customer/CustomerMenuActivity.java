@@ -26,8 +26,11 @@ public class CustomerMenuActivity extends AppCompatActivity {
     }
 
     public void showOrders(View v){
-        Intent in = new Intent(this, CustomerShowOrdersActivity.class);
-        startActivity(in);
+        startActivity(new Intent(this, CustomerShowOrdersActivity.class));
+    }
+
+    public void openLocationSuggestion(View v){
+        startActivity(new Intent(this, CustomerLocationActivity.class));
     }
 
 }
