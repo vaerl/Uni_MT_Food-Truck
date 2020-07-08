@@ -24,6 +24,9 @@ public class OwnerSpeiseneuActivity extends AppCompatActivity {
     }
 
     public void openAddzutat(View v) {
+
+        // richtige ID für neues Gericht ermitteln und übergeben??
+
         Intent in = new Intent(this, OwnerAddzutatActivity.class);
         startActivity(in);
     }

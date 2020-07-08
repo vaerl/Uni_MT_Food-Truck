@@ -15,6 +15,24 @@ public class OwnerAddstandortActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_addstandort);
     }
 
+    public void standortAnlegen(View v) {
+
+        //hier Logik zum anlegen
+
+        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
+        startActivity(in);
+    }
+
+
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
+        startActivity(in);
+    }
+
+    public void ownerHome(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
 
 
 }

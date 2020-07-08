@@ -22,7 +22,9 @@ public class OwnerSpeisebearbeitenActivity extends AppCompatActivity {
 
     String EXTRA_PARAMETER = "gericht";
 
-    Dish[] dishesReservation;
+    String EXTRA_PARAMETER2 = "gericht2";
+
+    Dish[] dish;
 
     EditText gerichtName;
     EditText gerichtPreis;
@@ -44,10 +46,21 @@ public class OwnerSpeisebearbeitenActivity extends AppCompatActivity {
     }
 
     public void bearbAbschliessen(View v) {
+
+        //Hier Logik für UPDATE auf Datenbank
+
         Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
         startActivity(in);
     }
 
+
+    public void openAddzutatBearb(View v) {
+
+        Intent intent = new Intent(OwnerSpeisebearbeitenActivity.this, OwnerAddzutatBearbActivity.class);
+        Dish dish = (Dish) intent.getSerializableExtra(EXTRA_PARAMETER);
+        intent.putExtra(EXTRA_PARAMETER2, dish);
+        startActivity(intent);
+    }
 
     public void backButton(View v) {
         Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
