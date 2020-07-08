@@ -5,16 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
 
-public class AdvancedCustomerShowMenuAdapter extends ArrayAdapter<Dish> {
+public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
 
     String type;
 
-    public AdvancedCustomerShowMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
+    TextView dishName;
+    TextView dishPrice;
+    CheckBox dishSelected;
+
+    public AdvancedCustomerNewOrderMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
         super(context, textviewResourceId, objects);
         this.type = type;
     }
@@ -27,18 +33,17 @@ public class AdvancedCustomerShowMenuAdapter extends ArrayAdapter<Dish> {
             element = inflater.inflate(R.layout.activity_customer_show_menu_item, null);
         }
 
-        TextView dishName = element.findViewById(R.id.dish_menu_name_c);
-        TextView dishPrice = element.findViewById(R.id.dish_menu_price_c);
-        TextView dishRating = element.findViewById(R.id.dish_menu_rating_c);
+        dishName = element.findViewById(R.id.dish_new_order_menu_name_c);
+        dishPrice = element.findViewById(R.id.dish_new_order_menu_price_c);
+        dishSelected = element.findViewById(R.id.dish_new_order_menu_checkbox_c);
 
         dishName.setText(getItem(position).getName());
-
         if (type.equals("reservation")) {
             dishPrice.setText(Double.toString(getItem(position).getAdjustedPrice()));
         } else {
             dishPrice.setText(Double.toString(getItem(position).getBasePrice()));
         }
-        dishRating.setText(Double.toString(getItem(position).getRating()));
+        dishSelected.setChecked(false);
         return element;
     }
 }

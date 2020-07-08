@@ -7,12 +7,12 @@ import android.view.View;
 
 import com.example.foodtruck.R;
 
-public class CustomerMenuActivity extends AppCompatActivity {
+public class CustomerThankYouActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_menu);
+        setContentView(R.layout.activity_customer_thanks);
     }
 
     public void openTruckInfos(View v){
@@ -26,15 +26,7 @@ public class CustomerMenuActivity extends AppCompatActivity {
     }
 
     public void showOrders(View v){
-        startActivity(new Intent(this, CustomerShowOrdersActivity.class));
-    }
-
-    public void openLocationSuggestion(View v){
-        startActivity(new Intent(this, CustomerLocationActivity.class));
-    }
-
-    public void getToHome(View v){
-        Intent in = new Intent(this, CustomerMenuActivity.class);
+        Intent in = new Intent(this, CustomerShowOrdersActivity.class);
         startActivity(in);
     }
 

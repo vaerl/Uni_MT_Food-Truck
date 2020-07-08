@@ -37,14 +37,11 @@ public class CustomerShowOrdersActivity extends AppCompatActivity {
 
         lv = findViewById(R.id.customer_orders_list);
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
 
         Log.d(TAG, "show orders: try to get orders");
-        //TODO: Kein Endpunkt um Orders zu einem Customer abzurufen?
-        GsonRequest<Order[], Order[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Order[].class, params, response -> {
+
+        GsonRequest<Order[], Order[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/customer/" + DataService.getInstance(this).getUserId() + "/orders", Order[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 orders = response;
                 AdvancedCustomerOrdersAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrdersAdapter(this, 0, orders);

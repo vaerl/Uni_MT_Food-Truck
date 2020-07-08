@@ -35,18 +35,15 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         lvReservation = findViewById(R.id.customer_show_menu_reservation_list);
         lvPreorder = findViewById(R.id.customer_show_menu_preorder_list);
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
 
         // Reservation
         // ---------------------------------------------------------------
         Log.d(TAG, "show route: try to get reservation manu");
-        GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Dish[].class, params, response -> {
+        GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/reservation", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesReservation = response;
-                AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation);
+                AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation, "reservation");
                 lvReservation.setAdapter(advancedToDoAdapterReservation);
             }
         }, error -> {
@@ -57,10 +54,10 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         // Preorder
         // ---------------------------------------------------------------
         Log.d(TAG, "show menu: try to get preorder menu");
-        GsonRequest<Dish[], Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
+        GsonRequest<Dish[], Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesPreorder = response;
-                AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder);
+                AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder, "preorder");
                 lvPreorder.setAdapter(advancedToDoAdapterPreorder);
             }
         }, error -> {

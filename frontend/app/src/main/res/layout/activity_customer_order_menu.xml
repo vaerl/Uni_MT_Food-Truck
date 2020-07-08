@@ -30,26 +30,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton5" />
 
-    <ScrollView
-        android:id="@+id/scrollView3"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_order_date_c">
+        app:layout_constraintTop_toBottomOf="@+id/divider8">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <android.support.design.widget.TabItem
+            android:id="@+id/reservation_tab_neworder"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:onClick="setOrderMenuToReservation"
+            android:text="Heute" />
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
+        <android.support.design.widget.TabItem
+            android:id="@+id/preorder_tab_neworder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setOrderMenuToPreorder"
+            android:text="Vorbestellung" />
+
+    </android.support.design.widget.TabLayout>
+
+    <ListView
+        android:id="@+id/new_order_list_reservation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/new_order_forward_button_c"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout2" >
+
+    </ListView>
+
+    <ListView
+        android:id="@+id/new_order_list_preorder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/new_order_list_reservation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/divider8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout2" />
 
     <Button
         android:id="@+id/new_order_forward_button_c"
@@ -63,18 +94,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/new_order_date_c"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="date"
-        android:text="Lieferdatum"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
 </android.support.constraint.ConstraintLayout>
