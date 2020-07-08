@@ -10,28 +10,24 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.time.Instant;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Map;
 
-public class GsonRequest<T> extends Request<T> {
+public class GsonRequest<E, T> extends Request<T> {
 
     private String TAG = getClass().getSimpleName();
 
     private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
         Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
         return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
+    }).registerTypeAdapter(Duration.class, (JsonDeserializer<Duration>) (json, type, jsonDeserializationContext) -> {
+        Log.d(TAG, "deserialized Duration " +Duration.parse(json.getAsJsonPrimitive().getAsString()).toString());
+        return Duration.parse(json.getAsJsonPrimitive().getAsString());
     }).create();
     private final Class<T> clazz;
     private final Map<String, String> headers;
@@ -45,7 +41,7 @@ public class GsonRequest<T> extends Request<T> {
      * @param clazz   Relevant class object, for Gson's reflection
      * @param headers Map of request headers
      */
-    public GsonRequest(int method, String url, T dataIn, Class<T> clazz, Map<String, String> headers,
+    public GsonRequest(int method, String url, E dataIn, Class<T> clazz, Map<String, String> headers,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.dataIn = dataIn;

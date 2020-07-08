@@ -24,11 +24,10 @@ public abstract class DtoOrder {
     protected double price;
     protected Status status;
 
-    public DtoOrder(DtoCustomer dtoCustomer, Map<Dish, Integer> items) {
-        this.dtoCustomer = dtoCustomer;
+    public DtoOrder(Map<Dish, Integer> items) {
         this.items = items;
         this.price = new ArrayList<>(items.entrySet()).stream()
-                .map(e -> e.getKey().getPrice() * e.getValue()).reduce(0d, Double::sum);
+                .map(e -> e.getKey().getAdjustedPrice() * e.getValue()).reduce(0d, Double::sum);
         this.status = Status.ACCEPTED;
     }
 

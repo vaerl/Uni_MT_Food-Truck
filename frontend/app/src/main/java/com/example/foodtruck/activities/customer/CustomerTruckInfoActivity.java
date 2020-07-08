@@ -40,7 +40,7 @@ public class CustomerTruckInfoActivity extends AppCompatActivity {
 
         TextView currentLocation =  findViewById(R.id.current_truck_location);
 
-        GsonRequest<Location> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/location", Location.class, params, response -> {
+        GsonRequest<Location, Location> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/location", Location.class, params, response -> {
             if (response!= null) {
                 currentLocation.setText(response.getName());
             }

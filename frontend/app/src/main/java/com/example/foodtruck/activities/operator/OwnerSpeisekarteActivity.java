@@ -40,7 +40,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
         // Gerichte laden
 
         Log.d(TAG, "show menu: try to get Speisekarte");                                                                            // menu/preorder oder menu/reservatio?
-        GsonRequest<Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
+        GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
             if (response != null) {
                 gerichte = response;
                 AdvancedOwnerSpeisekarteAdapter advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);

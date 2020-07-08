@@ -65,7 +65,7 @@ public abstract class Order {
         this.location = location;
         this.items = items;
         this.price = items.entrySet().stream().collect(Collectors.toList()).stream()
-                .map(e -> e.getKey().getPrice() * e.getValue()).reduce(0d, (a, b) -> a + b);
+                .map(e -> e.getKey().getAdjustedPrice() * e.getValue()).reduce(0d, (a, b) -> a + b);
         this.status = Status.ACCEPTED;
     }
 
@@ -87,7 +87,7 @@ public abstract class Order {
         } else {
             items.put(dish, amount);
         }
-        price += dish.getPrice() * amount;
+        price += dish.getAdjustedPrice() * amount;
         return true;
     }
 
@@ -97,7 +97,7 @@ public abstract class Order {
      * @param dish
      */
     public boolean removeItem(Dish dish) {
-        price -= dish.getPrice();
+        price -= dish.getAdjustedPrice();
         return items.remove(dish) != null;
     }
 

@@ -64,8 +64,8 @@ public class CustomerController {
 
     @PostMapping(path = "/{id}/locations")
     public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
-                                                                       @RequestParam(value = "operatorId") Long operatorId, @RequestParam(value = "x") double x, @RequestParam(value = "y") double y) {
-        return getCustomer(customerId).getNearestLocations(getOperator(operatorId), x, y);
+                                                                       @RequestParam(value = "operatorId") Long operatorId, @RequestBody double[] array) {
+        return getCustomer(customerId).getNearestLocations(getOperator(operatorId), array[0], array[1]);
     }
 
     @GetMapping(path = "/{id}")

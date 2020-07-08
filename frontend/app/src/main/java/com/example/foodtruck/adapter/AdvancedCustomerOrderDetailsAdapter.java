@@ -62,7 +62,7 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Map.Entry<
         // Reservation
         // ---------------------------------------------------------------
         Log.d(TAG, "postRating: trying to rate dish.");
-        GsonRequest<Double> requestReservation = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + id + "/rate",rating, Double.class, DataService.getStandardHeader(), response -> {
+        GsonRequest<Double, Double> requestReservation = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + id + "/rate",rating, Double.class, DataService.getStandardHeader(), response -> {
             Log.d(TAG, "postRating: rated dish.");
         }, error -> {
             Log.e(TAG, "Could not rate dish!", error);

@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
 import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
@@ -39,8 +38,9 @@ public class RegisterActivity extends Activity {
             }
             RequestQueue queue = Volley.newRequestQueue(this);
             if(DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER){
-                GsonRequest<Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/customer", new Customer(name, password), Customer.class, DataService.getStandardHeader(), response -> {
+                GsonRequest<Customer, Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/customer", new Customer(name, password), Customer.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
+                        DataService.getInstance(this).setUserId(response.getId());
                         startActivity(new Intent(this, CustomerLocationActivity.class));
                     } else {
                         showRegistrationError();
@@ -51,8 +51,9 @@ public class RegisterActivity extends Activity {
                 });
                 queue.add(request);
             } else {
-                GsonRequest<Operator> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator", new Operator(name, password), Operator.class, DataService.getStandardHeader(), response -> {
+                GsonRequest<Operator, Operator> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator", new Operator(name, password), Operator.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
+                        DataService.getInstance(this).setUserId(response.getId());
                         startActivity(new Intent(this, OwnerMenuActivity.class));
                     } else {
                         showRegistrationError();

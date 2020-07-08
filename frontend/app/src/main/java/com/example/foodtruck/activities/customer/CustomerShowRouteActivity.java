@@ -31,13 +31,9 @@ public class CustomerShowRouteActivity extends AppCompatActivity {
 
         Log.d(TAG, "show route: try to get locations");
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
-
         RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
 
-        GsonRequest<Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/route", Location[].class, params, response -> {
+        GsonRequest<Location[], Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", Location[].class, DataService.getStandardHeader(), response -> {
             if (response!= null) {
                 locations = response;
                 AdvancedCustomerShowRouteAdapter advancedToDoAdapter = new AdvancedCustomerShowRouteAdapter(this, 0, locations);

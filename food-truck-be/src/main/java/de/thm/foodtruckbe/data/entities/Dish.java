@@ -53,7 +53,7 @@ public class Dish {
 
     /**
      * Constructor for {@code Dish}.
-     * 
+     *
      * @param name
      * @param basePrice
      * @param ingredients
@@ -67,17 +67,30 @@ public class Dish {
 
     /**
      * Adds a given rating by calculating its average.
-     * 
+     *
      * @param rating the given rating
      * @return
      */
     public boolean addRating(int rating) {
-        this.rating = (this.rating * rating) / 2;
+        if (this.rating == 0) {
+            this.rating = 0;
+        } else {
+            this.rating = (this.rating * rating) / 2;
+        }
         return true;
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
         return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), dtoDish.getIngredients());
+    }
+
+    public Dish merge(Dish dish) {
+        this.adjustedPrice = dish.adjustedPrice;
+        this.basePrice = this.basePrice;
+        this.ingredients = dish.ingredients;
+        this.name = dish.name;
+        this.rating = rating;
+        return this;
     }
 
     @Override

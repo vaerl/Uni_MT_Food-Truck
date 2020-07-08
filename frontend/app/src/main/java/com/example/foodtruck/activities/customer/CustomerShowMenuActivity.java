@@ -43,7 +43,7 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         // Reservation
         // ---------------------------------------------------------------
         Log.d(TAG, "show route: try to get reservation manu");
-        GsonRequest<Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Dish[].class, params, response -> {
+        GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Dish[].class, params, response -> {
             if (response != null) {
                 dishesReservation = response;
                 AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation);
@@ -57,7 +57,7 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         // Preorder
         // ---------------------------------------------------------------
         Log.d(TAG, "show menu: try to get preorder menu");
-        GsonRequest<Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
+        GsonRequest<Dish[], Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
             if (response != null) {
                 dishesPreorder = response;
                 AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder);

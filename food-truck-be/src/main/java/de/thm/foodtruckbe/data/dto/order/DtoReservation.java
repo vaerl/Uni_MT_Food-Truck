@@ -9,7 +9,7 @@ import java.util.Map;
 @NoArgsConstructor
 public class DtoReservation extends DtoOrder {
 
-    public DtoReservation(DtoCustomer dtoCustomer, Map<Dish, Integer> items) {
-        super(dtoCustomer, items);
+    public DtoReservation(Map<Dish, Integer> items) {
+        super(items);
     }
 }

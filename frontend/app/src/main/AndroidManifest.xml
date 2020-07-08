@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.foodtruck.MainActivity">
+        <activity android:name="com.example.foodtruck.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +25,7 @@
         <activity android:name=".activities.customer.CustomerShowMenuActivity"/>
         <activity android:name=".activities.customer.CustomerShowOrdersActivity"/>
         <activity android:name=".activities.customer.CustomerNewOrderActivityOne"/>
-
+        <activity android:name=".activities.customer.CustomerLocationActivity"/>
         <activity android:name=".activities.operator.OwnerMenuActivity" />
         <activity android:name=".activities.operator.OwnerRoutenplanungActivity" />
         <activity android:name=".activities.operator.OwnerSpeisekarteActivity" />

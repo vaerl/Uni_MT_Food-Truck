@@ -1,4 +1,4 @@
-package com.example.foodtruck;
+package com.example.foodtruck.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,14 +11,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.Volley;
-
-import com.example.foodtruck.activities.RegisterActivity;
-import com.example.foodtruck.activities.customer.CustomerLocationActivity;
+import com.example.foodtruck.DataService;
+import com.example.foodtruck.GsonRequest;
+import com.example.foodtruck.R;
 import com.example.foodtruck.activities.customer.CustomerMenuActivity;
-import com.example.foodtruck.model.user.Customer;
-import com.example.foodtruck.model.user.Operator;
-import com.example.foodtruck.model.user.User;
 import com.example.foodtruck.activities.operator.OwnerMenuActivity;
+import com.example.foodtruck.model.user.User;
 
 public class MainActivity extends Activity {
 
@@ -32,13 +30,13 @@ public class MainActivity extends Activity {
 
         findViewById(R.id.type_customer_button).setOnClickListener(view -> {
             Log.d(TAG, "onCreate: user is customer, saving.");
-            DataService.getInstance(this).setEntry(DataService.USER_TYPE, DataService.UserType.CUSTOMER.toString());
+            DataService.getInstance(this).setEntry(DataService.USER_TYPE_TAG, DataService.UserType.CUSTOMER.toString());
             setContentView(R.layout.activity_general_login);
         });
 
         findViewById(R.id.type_operator_button).setOnClickListener(view -> {
             Log.d(TAG, "onCreate: user is operator, saving.");
-            DataService.getInstance(this).setEntry(DataService.USER_TYPE, DataService.UserType.OPERATOR.toString());
+            DataService.getInstance(this).setEntry(DataService.USER_TYPE_TAG, DataService.UserType.OPERATOR.toString());
             setContentView(R.layout.activity_general_login);
         });
     }
@@ -49,8 +47,9 @@ public class MainActivity extends Activity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String name = ((EditText) findViewById(R.id.name_editText)).getText().toString();
         String password = ((EditText) findViewById(R.id.passwort_editText)).getText().toString();
-        GsonRequest<User> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/user/login", new User(name, password), User.class, DataService.getStandardHeader(), response -> {
+        GsonRequest<User, User> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/user/login", new User(name, password), User.class, DataService.getStandardHeader(), response -> {
             if (response.getName().equalsIgnoreCase(name)) {
+                DataService.getInstance(this).setUserId(response.getId());
                 if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
                     startActivity(new Intent(this, CustomerMenuActivity.class));
                 } else {
