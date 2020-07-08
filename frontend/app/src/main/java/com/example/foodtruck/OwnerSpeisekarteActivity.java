@@ -5,6 +5,7 @@ package com.example.foodtruck;
         import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
         import android.view.View;
+        import android.widget.AdapterView;
         import android.widget.ListView;
 
         import com.android.volley.Request;
@@ -42,6 +43,10 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
                 gerichte = response;
                 AdvancedOwnerSpeisekarteAdapter advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);
                 lv.setAdapter(advancedToDoAdapter);
+
+                lv.setOnItemClickListener((parent, view, lv_position, l) -> {
+                    // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
+                });
             }
         }, error -> {
             Log.e(TAG, "Could not get Speisekarte!", error);
