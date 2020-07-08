@@ -64,6 +64,11 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
         startActivityForResult(new Intent(this, OwnerSpeiseNeuActivity.class), RC_NEW_DISH);
     }
 
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
+
     public void ownerHome(View v) {
         startActivity(new Intent(this, OwnerMenuActivity.class));
     }
