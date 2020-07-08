@@ -9,20 +9,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyClass;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MapKeyEnumerated;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -70,6 +57,9 @@ public class Operator extends User {
     @JsonIgnore
     private Location currentLocation;
 
+    @Transient
+    private Location initialLocation;
+
     @ElementCollection
     @CollectionTable(name = "ingredient_amount_mapping_stock")
     @MapKeyEnumerated(EnumType.STRING)
@@ -81,7 +71,7 @@ public class Operator extends User {
     /**
      * Constructor for inital use. Sets the {@code Market} as the operators initial
      * location with its start at 7AM and a duration of 30 minutes.
-     * 
+     *
      * @param name
      */
     public Operator(String name, String password) {
@@ -92,6 +82,7 @@ public class Operator extends User {
         double[] coordinates = Market.getCoordinates();
         this.currentLocation = new Location("Market", this, coordinates[0], coordinates[1],
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 0, 0)), Duration.ofMinutes(30));
+        this.initialLocation = this.currentLocation;
     }
 
     // TODO check whether removing/adding works correctly - maybe i need Log.d(TAG, "parseNetworkResponse: response: " + response.toString());orkwokto
@@ -134,8 +125,8 @@ public class Operator extends User {
     }
 
     public boolean removeLocation(final DtoLocation dtoLocation) {
-        for (Location location: route) {
-            if(dtoLocation.getName().equalsIgnoreCase(location.getName())){
+        for (Location location : route) {
+            if (dtoLocation.getName().equalsIgnoreCase(location.getName())) {
                 return route.remove(location);
             }
         }
@@ -200,7 +191,10 @@ public class Operator extends User {
         return results;
     }
 
-    public void goShopping(final Map<Ingredient, Integer> ingredients) {
+    public boolean goShopping(final Map<Ingredient, Integer> ingredients) {
+        if (currentLocation != initialLocation) {
+            return false;
+        }
         // get available ingredients
         stock = Market.buyIngredients(ingredients);
         // check possible orders and adjust each status
@@ -220,9 +214,11 @@ public class Operator extends User {
                 reservationMenu.add(dish);
             }
         });
+        moveToNextLocation();
+        return true;
     }
 
-    private boolean isPossible(Order order) {
+    public boolean isPossible(Order order) {
         for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
             for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
                     .entrySet()) {
@@ -234,7 +230,7 @@ public class Operator extends User {
         return true;
     }
 
-    private boolean isPossible(final Dish dish) {
+    public boolean isPossible(final Dish dish) {
         for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
             if (ingredient.getValue() > stock.get(ingredient.getKey())) {
                 return false;

@@ -25,6 +25,7 @@ import de.thm.foodtruckbe.data.repos.DishRepository;
 import de.thm.foodtruckbe.data.repos.LocationRepository;
 import de.thm.foodtruckbe.data.repos.OperatorRepository;
 import de.thm.foodtruckbe.data.repos.OrderRepository;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 
 @SpringBootApplication
 public class Application {
@@ -50,6 +51,7 @@ public class Application {
 			Location thm = new Location("THM", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofHours(1));
 			Location tor = new Location("Frankenberger Tor", operator, 25.0, 17.0, thm, Duration.ofHours(1));
 			Location lasertag = new Location("Lasertag-Halle", operator, 30.0, 35.0, tor, Duration.ofHours(1));
+			thm.setArriving(Duration.ofHours(2));
 			operator.addLocation(thm);
 			operator.addLocation(tor);
 			operator.addLocation(lasertag);
@@ -143,5 +145,15 @@ public class Application {
 			log.error("Could'nt start docker-container with name: {}", containerName);
 		}
 	}
+
+    @Bean
+    public CommonsRequestLoggingFilter requestLoggingFilter() {
+        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+        loggingFilter.setIncludeClientInfo(true);
+        loggingFilter.setIncludeQueryString(true);
+        loggingFilter.setIncludePayload(true);
+        loggingFilter.setMaxPayloadLength(64000);
+        return loggingFilter;
+    }
 
 }

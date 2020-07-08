@@ -44,18 +44,15 @@ public class CustomerShowOrdersActivity extends AppCompatActivity {
 
         Log.d(TAG, "show orders: try to get orders");
         //TODO: Kein Endpunkt um Orders zu einem Customer abzurufen?
-        GsonRequest<Order[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Order[].class, params, response -> {
+        GsonRequest<Order[], Order[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Order[].class, params, response -> {
             if (response != null) {
                 orders = response;
                 AdvancedCustomerOrdersAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrdersAdapter(this, 0, orders);
                 lv.setAdapter(advancedToDoAdapterReservation);
-                lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(CustomerShowOrdersActivity.this, CustomerShowOrderDetailsActivity.class);
-                        intent.putExtra(EXTRA_PARAMETER, orders[position]);
-                        startActivity(intent);
-                    }
+                lv.setOnItemClickListener((parent, view, position, id) -> {
+                    Intent intent = new Intent(CustomerShowOrdersActivity.this, CustomerShowOrderDetailsActivity.class);
+                    intent.putExtra(EXTRA_PARAMETER, orders[position]);
+                    startActivity(intent);
                 });
             }
         }, error -> {

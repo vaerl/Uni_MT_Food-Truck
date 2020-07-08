@@ -26,8 +26,7 @@ public abstract class Order implements Serializable {
     protected double price;
     protected Status status;
 
-    public Order(Customer customer, Map<Dish, Integer> items) {
-        this.customer = customer;
+    public Order(Map<Dish, Integer> items) {
         this.items = items;
         this.price = new ArrayList<>(items.entrySet()).stream()
                 .map(e -> e.getKey().getPrice() * e.getValue()).reduce(0d, Double::sum);

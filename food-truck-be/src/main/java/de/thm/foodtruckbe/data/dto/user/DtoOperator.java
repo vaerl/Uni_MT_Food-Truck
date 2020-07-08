@@ -15,12 +15,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DtoOperator extends DtoUser {
 
-    private List<DtoDish> preOrderMenu;
-    private List<DtoDish> reservationMenu;
-    private List<DtoLocation> route;
-    private DtoLocation currentLocation;
-    private Map<Dish.Ingredient, Integer> stock;
-
     public DtoOperator(String name, String password) {
         super(name, password);
     }
@@ -31,10 +25,5 @@ public class DtoOperator extends DtoUser {
             return ((DtoOperator) obj).getName().equals(this.getName());
         }
         return super.equals(obj);
-    }
-
-    @Override
-    public String toString() {
-        return "Operator " + name + ": \n-> currently at: " + currentLocation;
     }
 }

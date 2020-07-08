@@ -9,8 +9,8 @@ import java.util.Map;
 @NoArgsConstructor
 public class DtoPreOrder extends DtoOrder {
 
-    public DtoPreOrder(DtoCustomer customer, Map<Dish, Integer> items) {
-        super(customer, items);
+    public DtoPreOrder(Map<Dish, Integer> items) {
+        super(items);
     }
 
 }

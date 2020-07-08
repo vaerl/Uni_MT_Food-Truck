@@ -13,8 +13,6 @@ package com.example.foodtruck.activities.operator;
         import com.example.foodtruck.DataService;
         import com.example.foodtruck.GsonRequest;
         import com.example.foodtruck.R;
-        import com.example.foodtruck.activities.customer.CustomerShowOrderDetailsActivity;
-        import com.example.foodtruck.activities.customer.CustomerShowOrdersActivity;
         import com.example.foodtruck.adapter.AdvancedOwnerSpeisekarteAdapter;
         import com.example.foodtruck.model.Dish;
 
@@ -23,8 +21,6 @@ package com.example.foodtruck.activities.operator;
 
 public class OwnerSpeisekarteActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
-
-    String EXTRA_PARAMETER = "gericht";
 
     Dish[] gerichte;
 
@@ -43,17 +39,15 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
 
         // Gerichte laden
 
-        Log.d(TAG, "show menu: try to get Speisekarte");
-        GsonRequest<Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
+        Log.d(TAG, "show menu: try to get Speisekarte");                                                                            // menu/preorder oder menu/reservatio?
+        GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/preorder", Dish[].class, params, response -> {
             if (response != null) {
                 gerichte = response;
                 AdvancedOwnerSpeisekarteAdapter advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);
                 lv.setAdapter(advancedToDoAdapter);
 
-                lv.setOnItemClickListener((parent, view, lv_position, id) -> {
-                    Intent intent = new Intent(OwnerSpeisekarteActivity.this, OwnerSpeisebearbeitenActivity.class);
-                    intent.putExtra(EXTRA_PARAMETER, gerichte[lv_position]);
-                    startActivity(intent);
+                lv.setOnItemClickListener((parent, view, lv_position, l) -> {
+                    // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
                 });
             }
         }, error -> {
@@ -61,16 +55,6 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
         });
         queue.add(requestGerichte);
 
-    }
-
-    public void openSpeiseneu(View v) {
-        Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
-        startActivity(in);
-    }
-
-    public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
-        startActivity(in);
     }
 
     public void ownerHome(View v) {

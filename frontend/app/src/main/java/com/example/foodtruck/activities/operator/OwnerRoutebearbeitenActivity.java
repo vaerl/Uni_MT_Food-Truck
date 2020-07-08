@@ -40,7 +40,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String operatorId = "1";
 
-        GsonRequest<Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/route", Location[].class, params, response -> {
+        GsonRequest<Location[], Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/route", Location[].class, params, response -> {
             if (response!= null) {
                 standorte = response;
                 AdvancedOwnerRoutebearbeitenAdapter advancedToDoAdapter = new AdvancedOwnerRoutebearbeitenAdapter(this, 0, standorte);
