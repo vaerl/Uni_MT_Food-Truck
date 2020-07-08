@@ -31,6 +31,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_routebearbeiten);
 
         ListView lv = findViewById(R.id.routebearbeiten_ListView);
+        String EXTRA_PARAMETER = "standort";
 
         Log.d(TAG, "show route: try to get Standorte");
 
@@ -45,6 +46,12 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
                 standorte = response;
                 AdvancedOwnerRoutebearbeitenAdapter advancedToDoAdapter = new AdvancedOwnerRoutebearbeitenAdapter(this, 0, standorte);
                 lv.setAdapter(advancedToDoAdapter);
+
+                lv.setOnItemClickListener((parent, view, lv_position, id) -> {
+                    Intent intent = new Intent(OwnerRoutebearbeitenActivity.this, OwnerStandortbearbeitenActivity.class);
+                    intent.putExtra(EXTRA_PARAMETER, standorte[lv_position]);
+                    startActivity(intent);
+                });
             }
         }, error -> {
             Log.e(TAG, "Could not get locations!", error);

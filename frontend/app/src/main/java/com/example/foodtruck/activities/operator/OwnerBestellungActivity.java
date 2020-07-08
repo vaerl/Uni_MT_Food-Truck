@@ -48,9 +48,20 @@ public class OwnerBestellungActivity extends AppCompatActivity {
             orderPerson.setText(order.getCustomer().toString());
             orderStatus.setText(order.getStatus().toString());
             //TODO: Mapping Dishes in ListAdapter
-            //AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
-            //gerichteListView.setAdapter(advancedToDoAdapterReservation);
+            //AdvancedCustomerOrderDetailsAdapter advancedToDoAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
+            //gerichteListView.setAdapter(advancedToDoAdapter);
         }
 
     }
+
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerBestellungenActivity.class);
+        startActivity(in);
+    }
+
+    public void ownerHome(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
+
 }
