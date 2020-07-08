@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Location;
 
 import java.util.Objects;
+
+import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
 
 public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
 
@@ -32,10 +33,11 @@ public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
         TextView locationDeparture = element.findViewById(R.id.location_route_departure_c_text);
 
         locationName.setText(Objects.requireNonNull(getItem(position)).getName());
-        String arrivalTime = Objects.requireNonNull(getItem(position)).getArrival().getHour() + ":" + Objects.requireNonNull(getItem(position)).getArrival().getMinute();
+        String arrivalTime = localDateTimeFormatter(Objects.requireNonNull(getItem(position)).getArrival());
         locationArrival.setText(arrivalTime);
-        String departureTime = Objects.requireNonNull(getItem(position)).getDeparture().getHour() + ":" + Objects.requireNonNull(getItem(position)).getDeparture().getMinute();
+        String departureTime = localDateTimeFormatter(Objects.requireNonNull(getItem(position)).getDeparture());
         locationDeparture.setText(departureTime);
         return element;
     }
+
 }
