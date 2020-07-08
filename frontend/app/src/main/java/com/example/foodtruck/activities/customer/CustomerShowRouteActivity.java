@@ -36,8 +36,8 @@ public class CustomerShowRouteActivity extends AppCompatActivity {
         GsonRequest<Location[], Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", Location[].class, DataService.getStandardHeader(), response -> {
             if (response!= null) {
                 locations = response;
-                AdvancedCustomerShowRouteAdapter advancedToDoAdapter = new AdvancedCustomerShowRouteAdapter(this, 0, locations);
-                lv.setAdapter(advancedToDoAdapter);
+                AdvancedCustomerShowRouteAdapter advancedCustomerShowRouteAdapter = new AdvancedCustomerShowRouteAdapter(this, 0, locations);
+                lv.setAdapter(advancedCustomerShowRouteAdapter);
             }
         }, error -> {
             Log.e(TAG, "Could not get locations!", error);
