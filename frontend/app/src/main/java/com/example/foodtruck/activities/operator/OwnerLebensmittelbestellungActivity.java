@@ -16,36 +16,49 @@ package com.example.foodtruck.activities.operator;
         import com.example.foodtruck.adapter.AdvancedOwnerLebensmittelbestellungAdapter;
         import com.example.foodtruck.adapter.AdvancedOwnerSpeisekarteAdapter;
         import com.example.foodtruck.model.Dish;
+        import com.example.foodtruck.model.order.Order;
+        import com.example.foodtruck.model.order.PreOrder;
+
+        import java.util.List;
 
 public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
-    Dish[] gerichte; //evtl orders
+    Dish[] menu;
+    PreOrder[] preOrders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_lebensmittelbestellung);
 
-        ListView lv = findViewById(R.id.lebensmittelbestellung_ListView);
+
+        ListView lv = (ListView) findViewById(R.id.lebensmittelbestellung_ListView);
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-
-        // bestellte Gerichte laden
-
-        Log.d(TAG, "show menu: try to get bestellte Gerichte");
-        //"Dish[]" & Gson muss wahrscheinlich geändert werden
-        GsonRequest<Dish[], Dish[]> requestBestellteGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
+        GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
-                gerichte = response;
-                AdvancedOwnerLebensmittelbestellungAdapter advancedToDoAdapter = new AdvancedOwnerLebensmittelbestellungAdapter(this, 0, gerichte);
+                menu = response;
+                AdvancedOwnerLebensmittelbestellungAdapter advancedToDoAdapter = new AdvancedOwnerLebensmittelbestellungAdapter(this, 0, menu, preOrders);
                 lv.setAdapter(advancedToDoAdapter);
             }
         }, error -> {
             Log.e(TAG, "Could not get bestellte Gerichte!", error);
         });
-        queue.add(requestBestellteGerichte);
+
+        // bestellte Gerichte laden
+        Log.d(TAG, "show menu: try to get bestellte Gerichte");
+        //"Dish[]" & Gson muss wahrscheinlich geändert werden
+        GsonRequest<PreOrder[], PreOrder[]> requestPreOrders = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/preorders", PreOrder[].class, DataService.getStandardHeader(), response -> {
+            if (response != null) {
+                preOrders = response;
+                queue.add(requestGerichte);
+            }
+        }, error -> {
+            Log.e(TAG, "Could not get bestellte Gerichte!", error);
+        });
+        queue.add(requestPreOrders);
     }
 
     public void zeigeZutaten(View v) {

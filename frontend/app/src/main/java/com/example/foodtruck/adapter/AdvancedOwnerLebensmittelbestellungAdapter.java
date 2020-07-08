@@ -9,11 +9,17 @@ import android.widget.TextView;
 
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.order.PreOrder;
+
+import java.util.Objects;
 
 public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dish> {
 
-    public AdvancedOwnerLebensmittelbestellungAdapter(Context context, int resource, Dish[] objects) {
+    PreOrder[] preOrders;
+
+    public AdvancedOwnerLebensmittelbestellungAdapter(Context context, int resource, Dish[] objects, PreOrder[] preOrders) {
         super(context, resource, objects);
+        this.preOrders = preOrders;
     }
 
     @Override
@@ -25,10 +31,17 @@ public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dis
         }
 
         TextView gericht = element.findViewById(R.id.Gericht_textView2);
+        int amount = 0;
+        for (PreOrder preOrder: preOrders) {
+            if (preOrder.getItems().containsKey(getItem(position))){
+                amount += preOrder.getItems().get(getItem(position));
+            }
+        }
+
         TextView bestellungen = element.findViewById(R.id.bestellungen_textView);
 
-        gericht.setText(getItem(position).getName());
-        //bestellungen.setText(getItem(position).getBestellungen().toString());
+        gericht.setText(Objects.requireNonNull(getItem(position)).getName());
+        bestellungen.setText(Integer.toString(amount));
 
         return element;
     }
