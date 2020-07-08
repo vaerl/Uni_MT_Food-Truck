@@ -11,6 +11,7 @@ package com.example.foodtruck.activities.operator;
         import com.example.foodtruck.R;
         import com.example.foodtruck.model.Dish;
         import com.example.foodtruck.model.Location;
+        import com.example.foodtruck.model.user.Operator;
 
         import java.time.Duration;
         import java.time.LocalDateTime;
@@ -25,10 +26,37 @@ public class OwnerAddstandortActivity extends AppCompatActivity {
 
     public void standortAnlegen(View v) {
 
-        //hier Logik zum anlegen
+        String standortName = ((EditText) findViewById(R.id.standortname_editText9)).getText().toString();
+        if(standortName.equals("")){
+            ((EditText) findViewById(R.id.standortname_editText9)).setError("Name fehlt");
+            return;
+        }
+        String X = ((EditText) findViewById(R.id.breitengradx_editTextNumberDecimal2)).getText().toString();
+        if(X.equals("")){
+            ((EditText) findViewById(R.id.breitengradx_editTextNumberDecimal2)).setError("Name fehlt");
+            return;
+        }
+        String Y = ((EditText) findViewById(R.id.laengengrady_editTextNumberDecimal2)).getText().toString();
+        if(Y.equals("")){
+            ((EditText) findViewById(R.id.laengengrady_editTextNumberDecimal2)).setError("Name fehlt");
+            return;
+        }
 
-        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-        startActivity(in);
+        //Todo: AnkunftZeit aus "ankunft_editTextTime2"
+
+        //Todo: AbreiseZeit/Duration "abreise_editTextTime2"
+
+        double standortX = Double.parseDouble(((EditText) findViewById(R.id.breitengradx_editTextNumberDecimal2)).getText().toString());
+        double standortY = Double.parseDouble(((EditText) findViewById(R.id.laengengrady_editTextNumberDecimal2)).getText().toString());
+
+        // Location location = new Location(standortName, 1, standortX, standortY, (LocalDateTime), (Duration)); //Todo
+        //Todo: Weitere Logik
+
+
+
+
+        //Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
+        //startActivity(in);
     }
 
 

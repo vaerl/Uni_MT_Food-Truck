@@ -42,12 +42,12 @@ public class OwnerBestellungActivity extends AppCompatActivity {
         if(getIntent().hasExtra(EXTRA_PARAMETER)){
             Intent intent = getIntent();
             Order order = (Order) intent.getSerializableExtra(EXTRA_PARAMETER);
-//            orderTime.setText(order.getTime().toString());
+//            orderTime.setText(order.getTime().toString());    // Wird ordertime in Datenbank gespeichert?
             orderNumber.setText(order.getId().toString());
             orderLocation.setText(order.getLocation().toString());
             orderPerson.setText(order.getCustomer().toString());
             orderStatus.setText(order.getStatus().toString());
-            //TODO: Mapping Dishes in ListAdapter
+            // TODO: Noch anzupassen
             //AdvancedCustomerOrderDetailsAdapter advancedToDoAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
             //gerichteListView.setAdapter(advancedToDoAdapter);
         }
