@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
+import de.thm.foodtruckbe.data.entities.order.Order;
+import de.thm.foodtruckbe.data.repos.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +30,13 @@ public class CustomerController {
 
     private CustomerRepository customerRespository;
     private OperatorRepository operatorRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public CustomerController(CustomerRepository customerRepository, OperatorRepository operatorRepository) {
+    public CustomerController(CustomerRepository customerRepository, OperatorRepository operatorRepository, OrderRepository orderRepository) {
         this.customerRespository = customerRepository;
         this.operatorRepository = operatorRepository;
+        this.orderRepository = orderRepository;
     }
 
     public Operator getOperator(Long id) {
@@ -49,7 +53,7 @@ public class CustomerController {
         if (customer.isPresent()) {
             return customer.get();
         } else {
-        entr    throw new EntityNotFoundException("Customer", id);
+            throw new EntityNotFoundException("Customer", id);
         }
     }
 
@@ -60,13 +64,18 @@ public class CustomerController {
 
     @PostMapping(path = "/{id}/locations")
     public List<Location> getNearestLocationsByCustomerIdAndOperatorId(@PathVariable(value = "id") Long customerId,
-            @RequestParam(value = "operatorId") Long operatorId, @RequestParam(value = "x") double x,@RequestParam(value = "y") double y) {
-        return getCustomer(customerId).getNearestLocations(getOperator(operatorId),x ,y);
+                                                                       @RequestParam(value = "operatorId") Long operatorId, @RequestParam(value = "x") double x, @RequestParam(value = "y") double y) {
+        return getCustomer(customerId).getNearestLocations(getOperator(operatorId), x, y);
     }
 
     @GetMapping(path = "/{id}")
     public Customer getCustomerById(@PathVariable(value = "id") Long id) {
         return getCustomer(id);
+    }
+
+    @GetMapping(path = "/{id}/orders")
+    public List<Order> getCustomerOrdersById(@PathVariable(value = "id") Long id) {
+        return orderRepository.findAllByCustomerId(id);
     }
 
     @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE,

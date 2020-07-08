@@ -222,7 +222,7 @@ public class Operator extends User {
         });
     }
 
-    private boolean isPossible(Order order) {
+    public boolean isPossible(Order order) {
         for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
             for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
                     .entrySet()) {
@@ -234,7 +234,7 @@ public class Operator extends User {
         return true;
     }
 
-    private boolean isPossible(final Dish dish) {
+    public boolean isPossible(final Dish dish) {
         for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
             if (ingredient.getValue() > stock.get(ingredient.getKey())) {
                 return false;

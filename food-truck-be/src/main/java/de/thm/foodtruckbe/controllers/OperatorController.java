@@ -47,7 +47,7 @@ public class OperatorController {
 
     @Autowired
     public OperatorController(OperatorRepository operatorRepository, LocationRepository locationRepository,
-            DishRepository dishRepository, OrderRepository orderRepository, CustomerRepository customerRespository) {
+                              DishRepository dishRepository, OrderRepository orderRepository, CustomerRepository customerRespository) {
         this.operatorRepository = operatorRepository;
         this.locationRepository = locationRepository;
         this.dishRepository = dishRepository;
@@ -108,7 +108,7 @@ public class OperatorController {
 
     @GetMapping(path = "/{id}/location")
     public Location getCurrentLocationByOperatorId(@PathVariable(value = "id") Long id) {
-        log.info("OperatorController: /" + id+"/location");
+        log.info("OperatorController: /" + id + "/location");
         log.info("OperatorController: Result:" + getOperator(id).getCurrentLocation());
         return getOperator(id).getCurrentLocation();
     }
@@ -120,7 +120,7 @@ public class OperatorController {
 
     @GetMapping(path = "/{id}/orders/{locationId}")
     public List<Order> getAllOrdersForLocationByOperatorIdAndLocationId(@PathVariable(value = "id") Long operatorId,
-            @PathVariable(value = "locationId") Long locationId) {
+                                                                        @PathVariable(value = "locationId") Long locationId) {
         return getOperator(operatorId).getLocation(getLocation(locationId)).getAllOrders();
     }
 
@@ -131,8 +131,8 @@ public class OperatorController {
 
     @PostMapping(path = "/{id}/orders/{locationId}/preorders")
     public boolean addPreOrderForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoPreOrder> dtoPreOrders,
-            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
-        for (DtoPreOrder dtoPreOrder: dtoPreOrders) {
+                                                                             @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
+        for (DtoPreOrder dtoPreOrder : dtoPreOrders) {
             PreOrder preOrder = PreOrder.create(dtoPreOrder, getCustomer(customerId), getLocation(locationId));
             getOperator(operatorId).getLocation(getLocation(locationId)).addPreOrder(preOrder);
             orderRepository.save(preOrder);
@@ -142,8 +142,8 @@ public class OperatorController {
 
     @PostMapping(path = "/{id}/orders/{locationId}/dtoReservations")
     public boolean addReservationsForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoReservation> dtoReservations,
-            @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
-        for (DtoReservation dtoReservation: dtoReservations) {
+                                                                                 @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
+        for (DtoReservation dtoReservation : dtoReservations) {
             Reservation reservation = Reservation.create(dtoReservation, getCustomer(customerId), getLocation(locationId));
             getOperator(operatorId).getLocation(getLocation(locationId)).addReservation(reservation);
             orderRepository.save(reservation);
@@ -153,13 +153,13 @@ public class OperatorController {
 
     @PostMapping(path = "/{id}/route")
     public boolean addLocationsToRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
-            @PathVariable(value = "id") Long id) {
+                                                   @PathVariable(value = "id") Long id) {
         return getOperator(id).addLocations(dtoLocations);
     }
 
     @DeleteMapping(path = "/{id}/route")
-    public boolean removeLocationsFromRouteByOperatorId(@RequestBody  List<DtoLocation> dtoLocations,
-            @PathVariable(value = "id") Long id) {
+    public boolean removeLocationsFromRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
+                                                        @PathVariable(value = "id") Long id) {
         return getOperator(id).removeLocations(dtoLocations);
     }
 
@@ -168,34 +168,47 @@ public class OperatorController {
         return getOperator(id).removeDishFromMenu(dish);
     }
 
-    @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Operator createOperator(@RequestBody DtoOperator dtoOperator) {
         return operatorRepository.save(Operator.create(dtoOperator));
     }
 
+    @GetMapping(path = "/{id}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public Operator getOperatorById(@PathVariable(value = "id") Long id) {
+        return getOperator(id);
+    }
+
     @GetMapping(path = "/{id}/dishes/{dishId}/rating")
     public double getDishRatingByDishIdAndOperatorId(@PathVariable(value = "id") Long operatorId,
-            @PathVariable(value = "dishId") Long dishId) {
+                                                     @PathVariable(value = "dishId") Long dishId) {
         return getOperator(operatorId).getDishFromMenu(getDish(dishId)).getRating();
     }
 
     @PostMapping(path = "/{id}/dishes/{dishId}/rating")
     public void setDishRatingByDishIdAndOperatorId(@PathVariable(value = "id") Long operatorId,
-            @PathVariable(value = "dishId") Long dishId, @RequestParam(value = "rating") Double rating) {
+                                                   @PathVariable(value = "dishId") Long dishId, @RequestParam(value = "rating") Double rating) {
         getOperator(operatorId).getDishFromMenu(getDish(dishId)).setRating(rating);
     }
 
     @PostMapping(path = "/{id}/dishes/{dishId}/rate")
     public void addDishRatingByDishIdAndOperatorId(@PathVariable(value = "id") Long operatorId,
-            @PathVariable(value = "dishId") Long dishId, @RequestParam(value = "rating") Integer rating) {
+                                                   @PathVariable(value = "dishId") Long dishId, @RequestParam(value = "rating") Integer rating) {
         getOperator(operatorId).getDishFromMenu(getDish(dishId)).addRating(rating);
+    }
+
+    @PostMapping(path = "/{id}/dishes/{dishId}/adjustPrice")
+    public void adjustDishPrice(@PathVariable(value = "id") Long operatorId,
+                                                   @PathVariable(value = "dishId") Long dishId, @RequestBody Double adjustedPrice) {
+        Operator operator = getOperator(operatorId);
+        operator.getDishFromMenu(getDish(dishId)).setAdjustedPrice(adjustedPrice);
+        operator.getPreOrderMenu().forEach(operator::isPossible);
     }
 
     @DeleteMapping(path = "/{id}/dishes/{dishId}")
     public boolean deleteDishAndOperatorId(@PathVariable(value = "id") Long operatorId,
-            @PathVariable(value = "dishId") Long dishId) {
-
+                                           @PathVariable(value = "dishId") Long dishId) {
         Dish dish = getDish(dishId);
         dishRepository.delete(dish);
         return getOperator(operatorId).removeDishFromMenu(dish);

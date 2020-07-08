@@ -56,4 +56,14 @@ public class LocationController {
     public boolean setLocationDelayByLocationId(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
         return getLocation(id).setArrivalDelay(duration);
     }
+
+    @PostMapping(path = "/{id}/leave")
+    public boolean leaveLocaiton(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
+        return getLocation(id).setLeaving(duration);
+    }
+
+    @PostMapping(path = "/{id}/arrive")
+    public boolean arriveAtLocation(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
+        return getLocation(id).setArriving(duration);
+    }
 }

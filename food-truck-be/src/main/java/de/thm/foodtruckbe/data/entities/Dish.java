@@ -18,7 +18,6 @@ import javax.persistence.MapKeyEnumerated;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import de.thm.foodtruckbe.data.dto.DtoDish;
-import de.thm.foodtruckbe.data.dto.user.DtoOperator;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +34,8 @@ public class Dish {
     private Long id;
 
     private String name;
-    private double price;
+    private double basePrice;
+    private double adjustedPrice;
     private double rating;
 
     @ManyToOne
@@ -55,13 +55,13 @@ public class Dish {
      * Constructor for {@code Dish}.
      * 
      * @param name
-     * @param price
+     * @param basePrice
      * @param ingredients
      */
-    public Dish(String name, Operator operator, double price, Map<Ingredient, Integer> ingredients) {
+    public Dish(String name, Operator operator, double basePrice, Map<Ingredient, Integer> ingredients) {
         this.name = name;
         this.operator = operator;
-        this.price = Math.abs(price);
+        this.basePrice = Math.abs(basePrice);
         this.ingredients = ingredients;
     }
 
@@ -77,13 +77,13 @@ public class Dish {
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
-        return new Dish(dtoDish.getName(), operator, dtoDish.getPrice(), dtoDish.getIngredients());
+        return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), dtoDish.getIngredients());
     }
 
     @Override
     public String toString() {
         // TODO add ingredients
-        return name + ": " + price;
+        return name + ": " + basePrice;
     }
 
     public enum Ingredient {

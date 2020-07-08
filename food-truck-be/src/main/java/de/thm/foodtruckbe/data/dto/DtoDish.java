@@ -14,19 +14,20 @@ public class DtoDish {
 
     private Long id;
     private String name;
-    private double price;
+    private double basePrice;
+    private double adjustedPrice;
     private double rating;
     private Map<Dish.Ingredient, Integer> ingredients;
 
-    public DtoDish(String name, double price, Map<Dish.Ingredient, Integer> ingredients) {
+    public DtoDish(String name, double basePrice, Map<Dish.Ingredient, Integer> ingredients) {
         this.name = name;
-        this.price = Math.abs(price);
+        this.basePrice = Math.abs(basePrice);
         this.ingredients = ingredients;
     }
 
     @Override
     public String toString() {
         // TODO add ingredients
-        return name + ": " + price;
+        return name + ": " + basePrice;
     }
 }

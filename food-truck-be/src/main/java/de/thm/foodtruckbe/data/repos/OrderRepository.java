@@ -9,4 +9,6 @@ import de.thm.foodtruckbe.data.entities.order.Order;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAll();
+
+    List<Order> findAllByCustomerId(Long id);
 }
