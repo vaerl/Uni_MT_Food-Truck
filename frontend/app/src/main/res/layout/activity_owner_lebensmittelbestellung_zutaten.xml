@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck_owner_edition" />
+        app:srcCompat="@drawable/peters_foodtruck_owner_edition_v2" />
 
     <ImageButton
         android:id="@+id/back_imageButton4"
