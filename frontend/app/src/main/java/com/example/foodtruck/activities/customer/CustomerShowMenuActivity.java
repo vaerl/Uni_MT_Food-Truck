@@ -43,8 +43,8 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/reservation", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesReservation = response;
-                AdvancedCustomerShowMenuAdapter advancedCustomerShowMenuAdapter = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation, "reservation");
-                lvReservation.setAdapter(advancedCustomerShowMenuAdapter);
+                AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation, "reservation");
+                lvReservation.setAdapter(advancedToDoAdapterReservation);
             }
         }, error -> {
             Log.e(TAG, "Could not get reservation menu!", error);
@@ -57,8 +57,8 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         GsonRequest<Dish[], Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesPreorder = response;
-                AdvancedCustomerShowMenuAdapter advancedCustomerShowMenuAdapter = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder, "preorder");
-                lvPreorder.setAdapter(advancedCustomerShowMenuAdapter);
+                AdvancedCustomerShowMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerShowMenuAdapter(this, 0, dishesPreorder, "preorder");
+                lvPreorder.setAdapter(advancedToDoAdapterPreorder);
             }
         }, error -> {
             Log.e(TAG, "Could not get preorder menu!", error);

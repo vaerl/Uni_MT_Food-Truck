@@ -16,7 +16,7 @@ public class OwnerMenuActivity extends AppCompatActivity {
     }
 
     public void openRoutenplanung(View v) {
-        Intent in = new Intent(this, OwnerRoutenplanungActivity.class);
+        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
         startActivity(in);
     }
 

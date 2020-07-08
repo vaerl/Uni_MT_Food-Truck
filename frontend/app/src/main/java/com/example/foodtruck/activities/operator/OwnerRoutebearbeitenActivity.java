@@ -71,7 +71,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerRoutenplanungActivity.class);
+        Intent in = new Intent(this, OwnerMenuActivity.class);
         startActivity(in);
     }
 
