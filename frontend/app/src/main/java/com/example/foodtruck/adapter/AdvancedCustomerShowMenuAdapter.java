@@ -29,7 +29,7 @@ public class AdvancedCustomerShowMenuAdapter extends ArrayAdapter<Dish> {
         TextView dishRating = element.findViewById(R.id.dish_menu_rating_c);
 
         dishName.setText(getItem(position).getName());
-        dishPrice.setText(Double.toString(getItem(position).getPrice()));
+        dishPrice.setText(Double.toString(getItem(position).getBasePrice()));
         dishRating.setText(Double.toString(getItem(position).getRating()));
         return element;
     }

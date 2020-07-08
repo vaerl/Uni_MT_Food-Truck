@@ -51,7 +51,6 @@ public class Application {
 			Location thm = new Location("THM", operator, 5.0, 7.0, LocalDateTime.now(), Duration.ofHours(1));
 			Location tor = new Location("Frankenberger Tor", operator, 25.0, 17.0, thm, Duration.ofHours(1));
 			Location lasertag = new Location("Lasertag-Halle", operator, 30.0, 35.0, tor, Duration.ofHours(1));
-			thm.setArriving(Duration.ofHours(2));
 			operator.addLocation(thm);
 			operator.addLocation(tor);
 			operator.addLocation(lasertag);
