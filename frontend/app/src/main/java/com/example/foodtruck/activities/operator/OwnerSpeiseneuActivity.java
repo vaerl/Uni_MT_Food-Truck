@@ -5,9 +5,12 @@ package com.example.foodtruck.activities.operator;
         import android.os.Bundle;
         import android.support.v7.app.AppCompatActivity;
         import android.view.View;
+        import android.widget.EditText;
 
         import com.example.foodtruck.R;
         import com.example.foodtruck.model.Dish;
+
+        import java.util.HashMap;
 
 public class OwnerSpeiseneuActivity extends AppCompatActivity {
 
@@ -18,12 +21,11 @@ public class OwnerSpeiseneuActivity extends AppCompatActivity {
     }
 
     public void speiseAnlegen(View v) {
-
-        //hier Logik zum anlegen
-
-        Dish dish = new Dish();
+        String name = ((EditText) findViewById(R.id.neu_name_input)).getText().toString();
+        double basePrice = Double.parseDouble(((EditText) findViewById(R.id.neu_preis_input)).getText().toString());
+        Dish dish = new Dish(name, basePrice, new HashMap<>());
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(dish);
+        returnIntent.putExtra(OwnerSpeisekarteActivity.INTENT_NEW_DISH, dish);
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
     }

@@ -53,7 +53,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_order_menu);
+        setContentView(R.layout.activity_customer_order_location);
 
         locationSpinner = findViewById(R.id.new_order_location_spinner);
         totalCost = findViewById(R.id.order_payment_price);
@@ -72,19 +72,6 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        if(DataService.Location_ID_TAG != null) {
-            Log.d(TAG, "get location: try to get customer location");
-            GsonRequest<Location, Location> requestCustomerLocation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/location/" + DataService.Location_ID_TAG, Location.class, DataService.getStandardHeader(), response -> {
-                if (response != null) {
-                    customerLocation = response;
-                }
-            }, error -> {
-                Log.e(TAG, "Could not get location!", error);
-            });
-            queue.add(requestCustomerLocation);
-        }
-
-
         Log.d(TAG, "get locations: try to get route");
         GsonRequest<Location[], Location[]> requestRoute = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", Location[].class, DataService.getStandardHeader(), response -> {
             if (response!= null) {
@@ -99,14 +86,32 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
                 ArrayAdapter<Object> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, activeLocationsNames.toArray());
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 locationSpinner.setAdapter(adapter);
-                if(DataService.Location_ID_TAG != null) {
+                if(DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
                     locationSpinner.setSelection(adapter.getPosition(customerLocation.getName()));
                 }
             }
         }, error -> {
             Log.e(TAG, "Could not get locations!", error);
         });
-        queue.add(requestRoute);
+
+        String id = DataService.getInstance(this).getLocationId();
+        if(DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
+            Log.d(TAG, "get location: try to get customer location");
+            GsonRequest<Location, Location> requestCustomerLocation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/location/" + DataService.getInstance(this).getLocationId(), Location.class, DataService.getStandardHeader(), response -> {
+                if (response != null) {
+                    customerLocation = response;
+                    queue.add(requestRoute);
+                }
+            }, error -> {
+                Log.e(TAG, "Could not get location!", error);
+            });
+            queue.add(requestCustomerLocation);
+        } else {
+            queue.add(requestRoute);
+        }
+
+
+
 
     }
 

@@ -62,6 +62,7 @@ public class Dish {
         this.name = name;
         this.operator = operator;
         this.basePrice = Math.abs(basePrice);
+        this.adjustedPrice = basePrice;
         this.ingredients = ingredients;
     }
 

@@ -23,10 +23,10 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     private static int RC_NEW_DISH = 1;
-    private static String INTENT_NEW_DISH = "new_dish";
-    private static String INTENT_EDIT_DISH = "edit_dish";
+    public static String INTENT_NEW_DISH = "new_dish";
+    public static String INTENT_EDIT_DISH = "edit_dish";
 
-    Dish[] gerichte;
+    Dish[] gerichte = {};
     ListView lv;
     AdvancedOwnerSpeisekarteAdapter advancedToDoAdapter;
     RequestQueue queue;
@@ -35,24 +35,20 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_speisekarte);
-
-
-        String EXTRA_PARAMETER = "gericht";
         queue = Volley.newRequestQueue(this);
-        lv = findViewById(R.id.speisekarte_ListView);
-        advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);
-        lv.setAdapter(advancedToDoAdapter);
-
         loadDishes();
     }
 
     public void loadDishes() {
         // Gerichte laden
-        Log.d(TAG, "show menu: try to get Speisekarte");
+        Log.d(TAG, "show menu: try to get menu.");
         // menu/preorder oder menu/reservatio?
         GsonRequest<Dish[], Dish[]> requestGerichte = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 gerichte = response;
+                lv = findViewById(R.id.speisekarte_ListView);
+                advancedToDoAdapter = new AdvancedOwnerSpeisekarteAdapter(this, 0, gerichte);
+                lv.setAdapter(advancedToDoAdapter);
                 lv.setOnItemClickListener((parent, view, lv_position, id) -> {
                     // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
                     Intent intent = new Intent(OwnerSpeisekarteActivity.this, OwnerSpeisebearbeitenActivity.class);

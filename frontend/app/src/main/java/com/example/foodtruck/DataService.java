@@ -63,6 +63,10 @@ public class DataService {
         return preferences.getString(tag, "getEntry-Default");
     }
 
+    public boolean isPresent(String tag){
+        return !preferences.getString(tag, "getEntry-Default").equals("getEntry-Default");
+    }
+
     public boolean getUserType(UserType type) {
         return setEntry(USER_TYPE_TAG, type.toString());
     }
@@ -82,6 +86,7 @@ public class DataService {
     public String getUserId(){
         return getEntry(USER_ID_TAG);
     }
+
 
     public boolean setLocationId(Long id){
         return setEntry(Location_ID_TAG, String.valueOf(id));

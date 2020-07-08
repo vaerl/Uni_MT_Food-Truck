@@ -18,7 +18,7 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
 
     TextView dishName;
     TextView dishPrice;
-    CheckBox dishSelected;
+    public CheckBox dishSelected;
 
     public AdvancedCustomerNewOrderMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
         super(context, textviewResourceId, objects);
@@ -30,7 +30,7 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_customer_show_menu_item, null);
+            element = inflater.inflate(R.layout.activity_customer_order_menu_item, null);
         }
 
         dishName = element.findViewById(R.id.dish_new_order_menu_name_c);
