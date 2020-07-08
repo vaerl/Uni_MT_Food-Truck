@@ -17,6 +17,7 @@ import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.order.Order;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
             orderNumber.setText(order.getId().toString());
             orderStatus.setText(order.getStatus().toString());
             //TODO: Mapping Dishes in ListAdapter
-            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, order.getItems());
+            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
             lvReservation.setAdapter(advancedToDoAdapterReservation);
         }
 

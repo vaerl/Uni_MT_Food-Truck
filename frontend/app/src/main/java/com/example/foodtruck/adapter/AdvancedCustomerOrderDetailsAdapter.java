@@ -2,6 +2,7 @@ package com.example.foodtruck.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,14 +21,17 @@ import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Dish> {
+public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Map.Entry<Dish, Integer>> {
 
-    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, Dish[] objects){
-        super(context, textviewResourceId, objects);
+    private String TAG = getClass().getSimpleName();
+
+    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, ArrayList<Map.Entry<Dish, Integer>> objects) {
+        super(context, textviewResourceId, (Map.Entry<Dish, Integer>[]) objects.toArray());
     }
 
     @Override
@@ -41,36 +46,26 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Dish> {
         TextView dishPrice = element.findViewById(R.id.order_details_dish_price_c);
         Button rateButton = element.findViewById(R.id.order_details_dish_rating_button_c);
 
-        rateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: POST Request für speichern des rating - Wohin Methode?
-                postRating();
-            }
-        });
+        View finalElement = element;
+        rateButton.setOnClickListener(view -> {
+            postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getKey().getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
 
-        dishName.setText(Objects.requireNonNull(getItem(position)).getName());
-        dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getPrice()));
+            dishName.setText(Objects.requireNonNull(getItem(position)).getKey().getName());
+            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getKey().getPrice()));
+        });
         return element;
     }
 
-    public void postRating(){
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
+    public void postRating(Context context, Long id, Double rating) {
+        RequestQueue queue = Volley.newRequestQueue(context);
 
         // Reservation
         // ---------------------------------------------------------------
-        Log.d(TAG, "show route: try to get reservation manu");
-        GsonRequest<Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/menu/reservation", Dish[].class, params, response -> {
-            if (response != null) {
-                dishesReservation = response;
-                AdvancedCustomerShowMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerShowMenuAdapter(this, 0, dishesReservation);
-                lvReservation.setAdapter(advancedToDoAdapterReservation);
-            }
+        Log.d(TAG, "postRating: trying to rate dish.");
+        GsonRequest<Double> requestReservation = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + id + "/rate",rating, Double.class, DataService.getStandardHeader(), response -> {
+            Log.d(TAG, "postRating: rated dish.");
         }, error -> {
-            Log.e(TAG, "Could not get reservation menu!", error);
+            Log.e(TAG, "Could not rate dish!", error);
         });
         queue.add(requestReservation);
     }
