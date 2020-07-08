@@ -12,7 +12,7 @@ import com.example.foodtruck.model.Location;
 
 import java.util.Objects;
 
-import static com.example.foodtruck.FormattingHelper.timeFormatter;
+import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
 
 public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
 
@@ -33,9 +33,9 @@ public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
         TextView locationDeparture = element.findViewById(R.id.location_route_departure_c_text);
 
         locationName.setText(Objects.requireNonNull(getItem(position)).getName());
-        String arrivalTime = timeFormatter(Objects.requireNonNull(getItem(position)).getArrival().getHour()) + ":" + timeFormatter(Objects.requireNonNull(getItem(position)).getArrival().getMinute());
+        String arrivalTime = localDateTimeFormatter(Objects.requireNonNull(getItem(position)).getArrival());
         locationArrival.setText(arrivalTime);
-        String departureTime = timeFormatter(Objects.requireNonNull(getItem(position)).getDeparture().getHour()) + ":" + timeFormatter(Objects.requireNonNull(getItem(position)).getDeparture().getMinute());
+        String departureTime = localDateTimeFormatter(Objects.requireNonNull(getItem(position)).getDeparture());
         locationDeparture.setText(departureTime);
         return element;
     }
