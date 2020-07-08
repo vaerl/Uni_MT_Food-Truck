@@ -30,25 +30,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
 
-    <ScrollView
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider6">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/today_tab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setMenuToReservation"
+            android:text="Heute" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/other_tab_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setMenuToPreorder"
+            android:text="Vorbestellung" />
+
+    </android.support.design.widget.TabLayout>
+
+    <ListView
+        android:id="@+id/customer_show_menu_reservation_list"
         android:layout_width="0dp"
-        android:layout_height="566dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    </ListView>
 
-            <ListView
-                android:id="@+id/customer_show_menu_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
+    <ListView
+        android:id="@+id/customer_show_menu_preorder_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </android.support.constraint.ConstraintLayout>
