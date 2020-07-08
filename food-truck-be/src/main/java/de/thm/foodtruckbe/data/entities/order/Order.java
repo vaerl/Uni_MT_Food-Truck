@@ -72,34 +72,19 @@ public abstract class Order {
     /**
      * Adds an item to this order and raises its price accordingly. Only accepts
      * positive integers.
-     * 
+     *
      * @param dish
      * @param amount
      * @return
      */
-    public boolean addItem(Dish dish, int amount) {
-        if (amount <= 0) {
-            return false;
-        }
-        // check if item is already present -> update amount
-        if (items.containsKey(dish)) {
-            items.replace(dish, items.get(dish) + amount);
-        } else {
-            items.put(dish, amount);
-        }
-        price += dish.getAdjustedPrice() * amount;
-        return true;
-    }
+    public abstract boolean addItem(Dish dish, int amount);
 
     /**
      * Removes the given item.
-     * 
+     *
      * @param dish
      */
-    public boolean removeItem(Dish dish) {
-        price -= dish.getAdjustedPrice();
-        return items.remove(dish) != null;
-    }
+    public abstract boolean removeItem(Dish dish);
 
     @Override
     public String toString() {

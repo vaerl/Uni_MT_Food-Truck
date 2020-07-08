@@ -22,4 +22,25 @@ public class Reservation extends Order {
     public static Reservation create(DtoReservation dtoPreOrder, Customer customer, Location location){
         return new Reservation(customer, location, dtoPreOrder.getItems());
     }
+
+    @Override
+    public boolean addItem(Dish dish, int amount) {
+        if (amount <= 0) {
+            return false;
+        }
+        // check if item is already present -> update amount
+        if (items.containsKey(dish)) {
+            items.replace(dish, items.get(dish) + amount);
+        } else {
+            items.put(dish, amount);
+        }
+        price += dish.getAdjustedPrice() * amount;
+        return true;
+    }
+
+    @Override
+    public boolean removeItem(Dish dish) {
+        price -= dish.getAdjustedPrice();
+        return items.remove(dish) != null;
+    }
 }
