@@ -208,6 +208,13 @@ public class Location {
     }
 
     // preOrders
+    @JsonIgnore
+    public List<Order> getAllPreOrders() {
+        final ArrayList<Order> result = new ArrayList<>(preOrders);
+        return result;
+    }
+
+    // preOrders
     public boolean addPreOrder(final PreOrder preOrder) {
         if (isBeforeNextDay() || status == Status.CLOSED || status == Status.LEAVING) {
             return false;

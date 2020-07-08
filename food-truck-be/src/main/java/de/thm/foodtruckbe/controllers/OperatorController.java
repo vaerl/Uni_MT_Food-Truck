@@ -134,6 +134,11 @@ public class OperatorController {
         return getOperator(id).getAllOrders();
     }
 
+    @GetMapping(path = "/{id}/preorders")
+    public List<Order> getAllPreOrdersByOperatorId(@PathVariable(value = "id") Long id) {
+        return getOperator(id).getAllPreOrders();
+    }
+
     @PostMapping(path = "/{id}/orders/{locationId}/{customerId}/preorders")
     public boolean addPreOrderForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoPreOrder> dtoPreOrders,
                                                                              @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {

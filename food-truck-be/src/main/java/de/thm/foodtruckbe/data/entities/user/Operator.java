@@ -313,6 +313,14 @@ public class Operator extends User {
         return result;
     }
 
+    // preOrders
+    @JsonIgnore
+    public List<Order> getAllPreOrders() {
+        ArrayList<Order> result = new ArrayList<>();
+        route.forEach(location -> result.addAll(location.getAllPreOrders()));
+        return result;
+    }
+
     public static Operator create(DtoOperator dtoOperator) {
         return new Operator(dtoOperator.getName(), dtoOperator.getPassword());
     }
