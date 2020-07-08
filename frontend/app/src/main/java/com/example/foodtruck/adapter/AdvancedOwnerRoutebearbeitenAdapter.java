@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Location;
 
+import java.util.Objects;
+
 
 public class AdvancedOwnerRoutebearbeitenAdapter extends ArrayAdapter<Location> {
 
@@ -30,8 +32,12 @@ public class AdvancedOwnerRoutebearbeitenAdapter extends ArrayAdapter<Location> 
             TextView abfahrt_textView = element.findViewById(R.id.abfahrt_textView);
 
             standort_textView.setText(getItem(position).getName());
-            ankunft_textView.setText(getItem(position).getArrival().toString());
-            abfahrt_textView.setText(getItem(position).getDeparture().toString());
+            String arrivalTime = Objects.requireNonNull(getItem(position)).getArrival().getHour() + ":" + Objects.requireNonNull(getItem(position)).getArrival().getMinute();
+            ankunft_textView.setText(arrivalTime);
+            String departureTime = Objects.requireNonNull(getItem(position)).getDeparture().getHour() + ":" + Objects.requireNonNull(getItem(position)).getDeparture().getMinute();
+            abfahrt_textView.setText(departureTime);
+
             return element;
-            }
+    }
+
 }

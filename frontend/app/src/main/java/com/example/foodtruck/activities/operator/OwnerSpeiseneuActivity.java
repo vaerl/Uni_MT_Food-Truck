@@ -7,28 +7,32 @@ package com.example.foodtruck.activities.operator;
 
         import com.example.foodtruck.R;
 
-public class OwnerAktuellerstandortActivity extends AppCompatActivity {
+public class OwnerSpeiseneuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_aktuellerstandort);
+        setContentView(R.layout.activity_owner_speiseneu);
     }
 
-    public void annahmeAusloesen(View v) {
+    public void speiseAnlegen(View v) {
 
-        // Hier Logik für Reservierungsannahme
+        //hier Logik zum anlegen
 
+        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
+        startActivity(in);
     }
 
-    public void schlussAusloesen(View v) {
+    public void openAddzutat(View v) {
 
-        // Hier Logik für Reservierungsschluss
+        // richtige ID für neues Gericht ermitteln und übergeben??
 
+        Intent in = new Intent(this, OwnerAddzutatActivity.class);
+        startActivity(in);
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
         startActivity(in);
     }
 
@@ -36,5 +40,7 @@ public class OwnerAktuellerstandortActivity extends AppCompatActivity {
         Intent in = new Intent(this, OwnerMenuActivity.class);
         startActivity(in);
     }
+
+
 
 }

@@ -53,7 +53,20 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
 
     }
 
+    public void openAddstandort(View v) {
+        Intent in = new Intent(this, OwnerAddstandortActivity.class);
+        startActivity(in);
+    }
 
+    public void routeBearbAbschliessen(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
+
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerRoutenplanungActivity.class);
+        startActivity(in);
+    }
 
     public void ownerHome(View v) {
         Intent in = new Intent(this, OwnerMenuActivity.class);

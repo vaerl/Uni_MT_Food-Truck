@@ -15,6 +15,11 @@ public class OwnerRoutenplanungActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_routenplanung);
     }
 
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
+
     public void ownerHome(View v) {
         Intent in = new Intent(this, OwnerMenuActivity.class);
         startActivity(in);

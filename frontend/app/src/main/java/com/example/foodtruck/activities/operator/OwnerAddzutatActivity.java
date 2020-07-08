@@ -7,28 +7,27 @@ package com.example.foodtruck.activities.operator;
 
         import com.example.foodtruck.R;
 
-public class OwnerAktuellerstandortActivity extends AppCompatActivity {
+public class OwnerAddzutatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_aktuellerstandort);
+        setContentView(R.layout.activity_owner_addzutat);
     }
 
-    public void annahmeAusloesen(View v) {
+    public void zutatAnlegen(View v) {
 
-        // Hier Logik für Reservierungsannahme
+        //hier Logik zum anlegen
 
+
+        // Rückschritt zu "Speiseneu" problematisch. Zutaten nur bei "bearbeiten" hinzufügbar?
+        Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
+        startActivity(in);
     }
 
-    public void schlussAusloesen(View v) {
-
-        // Hier Logik für Reservierungsschluss
-
-    }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OwnerSpeiseneuActivity.class);
         startActivity(in);
     }
 
@@ -36,5 +35,6 @@ public class OwnerAktuellerstandortActivity extends AppCompatActivity {
         Intent in = new Intent(this, OwnerMenuActivity.class);
         startActivity(in);
     }
+
 
 }

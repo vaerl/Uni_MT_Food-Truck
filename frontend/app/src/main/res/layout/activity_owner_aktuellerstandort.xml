@@ -41,6 +41,7 @@
         android:layout_marginBottom="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="backButton"
         android:tint="#000000"
         app:layout_constraintBottom_toTopOf="@id/divider23"
         app:layout_constraintEnd_toStartOf="@id/logo_imageButton12"
@@ -54,20 +55,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="160dp"
-        android:text="Reservierungsschluss auslösen um:"
+        android:text="Reservierungsschluss auslösen in:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider23" />
-
-    <EditText
-        android:id="@+id/editTextTime"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView19"
@@ -75,9 +66,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
-        android:text="Uhr"
+        android:text="Min."
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/editTextTime"
+        app:layout_constraintStart_toEndOf="@+id/reservierungsschluss_number"
         app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
     <Button
@@ -87,6 +78,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
+        android:onClick="schlussAusloesen"
         android:text="Auslösen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView19"
@@ -98,20 +90,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Reservierungsannahme auslösen um:"
+        android:text="Reservierungsannahme auslösen in:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider23" />
-
-    <EditText
-        android:id="@+id/editTextTime2"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <TextView
         android:id="@+id/textView21"
@@ -119,9 +101,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
-        android:text="Uhr"
+        android:text="Min."
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/editTextTime2"
+        app:layout_constraintStart_toEndOf="@+id/reservierungsannahme_number"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
     <Button
@@ -131,8 +113,29 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="16dp"
+        android:onClick="annahmeAusloesen"
         android:text="Auslösen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <EditText
+        android:id="@+id/reservierungsannahme_number"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <EditText
+        android:id="@+id/reservierungsschluss_number"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
 </android.support.constraint.ConstraintLayout>
