@@ -29,8 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/peters_foodtruck_owner_edition"
-        tools:srcCompat="@drawable/peters_foodtruck_owner_edition" />
+        app:srcCompat="@drawable/peters_foodtruck_owner_edition_v2" />
 
     <ImageButton
         android:id="@+id/back_imageButton15"
@@ -61,8 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/speisekarte_RecyclerView"
+    <ListView
+        android:id="@+id/speisekarte_ListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -72,6 +71,6 @@
         app:layout_constraintBottom_toTopOf="@+id/speiseanlegen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider26" />
+        app:layout_constraintTop_toBottomOf="@+id/divider26" />
 
 </android.support.constraint.ConstraintLayout>

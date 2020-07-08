@@ -1,5 +1,6 @@
 package com.example.foodtruck;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,28 +13,29 @@ public class OwnerMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_menu);
     }
 
-    public void ownerHome(View v) {
-        setContentView(R.layout.activity_owner_menu);
-    }
-
-    public void openRoutenplanung(View v)  {
-        setContentView(R.layout.activity_owner_routenplanung);
+    public void openRoutenplanung(View v) {
+        Intent in = new Intent(this, OwnerRoutenplanungActivity.class);
+        startActivity(in);
     }
 
     public void openSpeisekarte(View v) {
-        setContentView(R.layout.activity_owner_speisekarte);
+        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
+        startActivity(in);
     }
 
     public void openBestellungen(View v) {
-        setContentView(R.layout.activity_owner_bestellungen);
+        Intent in = new Intent(this, OwnerBestellungenActivity.class);
+        startActivity(in);
     }
 
     public void openLebensmittelbestellung(View v) {
-        setContentView(R.layout.activity_owner_speisekarte);
+        Intent in = new Intent(this, OwnerLebensmittelbestellungActivity.class);
+        startActivity(in);
     }
 
     public void openAktuellerstandort(View v) {
-        setContentView(R.layout.activity_owner_aktuellerstandort);
+        Intent in = new Intent(this, OwnerAktuellerstandortActivity.class);
+        startActivity(in);
     }
 
 
