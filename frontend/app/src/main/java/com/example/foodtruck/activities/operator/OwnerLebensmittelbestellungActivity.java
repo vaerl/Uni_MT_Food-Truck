@@ -49,7 +49,7 @@ public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
     }
 
     public void zeigeZutaten(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class); // <- Platzhalter
+        Intent in = new Intent(this, OwnerLBZutatenActivity.class); // <- Platzhalter
         startActivity(in);
     }
 

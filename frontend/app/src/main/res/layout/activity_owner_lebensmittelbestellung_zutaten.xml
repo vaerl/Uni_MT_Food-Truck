@@ -41,6 +41,7 @@
         android:layout_marginBottom="16dp"
         android:background="#FFFFFF"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="backButton"
         android:tint="#000000"
         app:layout_constraintBottom_toTopOf="@id/divider15"
         app:layout_constraintEnd_toStartOf="@id/logo_imageButton4"

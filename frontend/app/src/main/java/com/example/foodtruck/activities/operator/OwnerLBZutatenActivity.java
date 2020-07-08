@@ -14,4 +14,17 @@ public class OwnerLBZutatenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owner_lebensmittelbestellung_zutaten);
     }
+
+
+
+    public void backButton(View v) {
+        Intent in = new Intent(this, OwnerLebensmittelbestellungActivity.class);
+        startActivity(in);
+    }
+
+    public void ownerHome(View v) {
+        Intent in = new Intent(this, OwnerMenuActivity.class);
+        startActivity(in);
+    }
+
 }
