@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.customer.CustomerMenuActivity"/>
         <activity android:name=".activities.customer.CustomerTruckInfoActivity"/>
         <activity android:name=".activities.customer.CustomerShowRouteActivity"/>

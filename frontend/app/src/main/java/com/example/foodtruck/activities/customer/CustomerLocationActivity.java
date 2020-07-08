@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.example.foodtruck.R;
 
-public class MyLocationActivity extends AppCompatActivity {
+public class CustomerLocationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
