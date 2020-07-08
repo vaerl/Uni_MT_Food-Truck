@@ -55,13 +55,13 @@
         app:layout_constraintTop_toBottomOf="@id/laengengrady_editTextNumberDecimal" />
 
     <EditText
-        android:id="@+id/abreise_editTextTime"
+        android:id="@+id/aufenthaltsdauer_editTextTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Abreisezeit"
+        android:hint="Aufenthaltsdauer [min]"
         android:inputType="time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ankunft_editTextTime" />
@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/abreise_editTextTime" />
+        app:layout_constraintTop_toBottomOf="@+id/aufenthaltsdauer_editTextTime" />
 
     <Button
         android:id="@+id/standortentfernen_button"
