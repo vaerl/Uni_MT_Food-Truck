@@ -49,7 +49,7 @@ public class Location implements Serializable {
         this.departure = arrival.plus(duration);
     }
 
-    public Location(final String name, final Operator operator, final double x, final double y,
+    public Location(final String name, final double x, final double y,
                     final LocalDateTime arrival, final Duration duration) {
         this(name, x, y);
         this.arrival = arrival;
