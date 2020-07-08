@@ -3,15 +3,12 @@ package com.example.foodtruck.activities.customer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,12 +17,16 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerNewOrderMenuAdapter;
-import com.example.foodtruck.adapter.RecyclerViewSelectedOrderItemsAdapter;
+import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.order.Order;
 import com.example.foodtruck.model.order.PreOrder;
 import com.example.foodtruck.model.order.Reservation;
+import com.example.foodtruck.model.user.Customer;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CustomerNewOrderActivityOne extends AppCompatActivity {
@@ -41,8 +42,6 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
     ListView lvReservation;
     ListView lvPreorder;
 
-    ArrayList<Dish> selectedItems = new ArrayList<>();
-
     Map<Dish, Integer> selectedDishesReservation;
     Map<Dish, Integer> selectedDishesPreOrder;
 
@@ -54,16 +53,8 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         lvReservation = findViewById(R.id.new_order_list_reservation);
         lvPreorder = findViewById(R.id.new_order_list_preorder);
 
-        RecyclerView selected_items = (RecyclerView) findViewById(R.id.selected_items);
-        selected_items.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        selected_items.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        RecyclerView.Adapter  recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
-        selected_items.setAdapter(recyclerViewSelectedOrderItemsAdapter);
-
+        selectedDishesPreOrder = new HashMap<>();
+        selectedDishesReservation = new HashMap<>();
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -73,13 +64,15 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/reservation", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesReservation = response;
-                AdvancedCustomerNewOrderMenuAdapter advancedCustomerNewOrderMenuAdapterReservation = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesReservation, "reservation");
-                lvReservation.setAdapter(advancedCustomerNewOrderMenuAdapterReservation);
-                lvReservation.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedItems.add(dishesReservation[position]);
-
+                AdvancedCustomerNewOrderMenuAdapter advancedToDoAdapterReservation = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesReservation, "reservation");
+                lvReservation.setAdapter(advancedToDoAdapterReservation);
+                lvReservation.setOnItemClickListener((parent, view, position, id) -> {
+                    CheckBox checkBox = view.findViewById(R.id.dish_new_order_menu_checkbox_c);
+                    EditText dishAmount = view.findViewById(R.id.dish_new_order_menu_amount_c);
+                    if (checkBox.isChecked()) {
+                        selectedDishesReservation.put(dishesReservation[position], Integer.getInteger(dishAmount.getText().toString()));
+                    } else {
+                        selectedDishesReservation.remove(dishesReservation[position]);
                     }
                 });
             }
@@ -94,12 +87,15 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         GsonRequest<Dish[], Dish[]> requestPreorder = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/preorder", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesPreorder = response;
-                AdvancedCustomerNewOrderMenuAdapter advancedCustomerNewOrderMenuAdapterPreOrder = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesPreorder, "preorder");
-                lvPreorder.setAdapter(advancedCustomerNewOrderMenuAdapterPreOrder);
-                lvPreorder.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedItems.add(dishesReservation[position]);
+                AdvancedCustomerNewOrderMenuAdapter advancedToDoAdapterPreorder = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesPreorder, "preorder");
+                lvPreorder.setAdapter(advancedToDoAdapterPreorder);
+                lvPreorder.setOnItemClickListener((parent, view, position, id) -> {
+                    CheckBox checkBox = view.findViewById(R.id.dish_new_order_menu_checkbox_c);
+                    EditText dishAmount = view.findViewById(R.id.dish_new_order_menu_amount_c);
+                    if (checkBox.isChecked()) {
+                        selectedDishesPreOrder.put(dishesPreorder[position], Integer.getInteger(dishAmount.getText().toString()));
+                    } else {
+                        selectedDishesPreOrder.remove(dishesPreorder[position]);
                     }
                 });
             }
@@ -111,13 +107,11 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
     }
 
     public void setOrderMenuToPreorder(View v) {
-        selectedItems.clear();
         lvReservation.setVisibility(View.GONE);
         lvPreorder.setVisibility(View.VISIBLE);
     }
 
     public void setOrderMenuToReservation(View v) {
-        selectedItems.clear();
         lvPreorder.setVisibility(View.GONE);
         lvReservation.setVisibility(View.VISIBLE);
     }

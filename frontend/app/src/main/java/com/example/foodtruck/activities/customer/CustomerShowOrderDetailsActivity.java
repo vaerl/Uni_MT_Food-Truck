@@ -39,8 +39,9 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
             Order order = (Order) intent.getSerializableExtra(EXTRA_PARAMETER);
             orderNumber.setText(order.getId().toString());
             orderStatus.setText(order.getStatus().toString());
-            AdvancedCustomerOrderDetailsAdapter advancedCustomerOrderDetailsAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
-            lvReservation.setAdapter(advancedCustomerOrderDetailsAdapter);
+            //TODO: Mapping Dishes in ListAdapter
+            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, new ArrayList<Map.Entry<Dish, Integer>>(order.getItems().entrySet()));
+            lvReservation.setAdapter(advancedToDoAdapterReservation);
         }
 
     }

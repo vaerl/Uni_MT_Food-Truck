@@ -5,21 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <CheckBox
+        android:id="@+id/dish_new_order_menu_checkbox_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/dish_new_order_menu_amount_c"
+        android:layout_width="86dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="Anzahl"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dish_new_order_menu_checkbox_c"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:text="€"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dish_new_order_menu_price_c"
         app:layout_constraintTop_toTopOf="@+id/dish_new_order_menu_price_c" />
 
     <TextView
         android:id="@+id/dish_new_order_menu_name_c"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="26dp"
         android:layout_marginBottom="27dp"
         android:text="Speise"
@@ -32,10 +57,10 @@
         android:id="@+id/dish_new_order_menu_price_c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="136dp"
         android:text="Preis"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dish_new_order_menu_name_c" />
 
 </android.support.constraint.ConstraintLayout>
