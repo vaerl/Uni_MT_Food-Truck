@@ -47,14 +47,22 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
 
     public void speicherStandort(View v){
 
-        //Logik zum Speichern hier
-        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-        startActivity(in);
+        String name = standortName.getText().toString();
+        String X = standortX.getText().toString();
+        String Y = standortY.getText().toString();
+        String Ankunft = standortAnkunft.getText().toString();
+        String Abreise = standortAbreise.getText().toString();
+
+        //Todo: Logik zum Speichern
+
+
+//        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
+//        startActivity(in);
     }
 
     public void löscheStandort(View v){
 
-        //Logik zum Löschen hier
+        //Todo: Logik zum Löschen
 
         Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
         startActivity(in);
