@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.order.PreOrder;
 
 import java.util.Objects;
@@ -33,8 +34,10 @@ public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dis
         TextView gericht = element.findViewById(R.id.Gericht_textView2);
         int amount = 0;
         for (PreOrder preOrder: preOrders) {
-            if (preOrder.getItems().containsKey(getItem(position))){
-                amount += preOrder.getItems().get(getItem(position));
+            for (DishWrapper dish: preOrder.getItems()){
+                if (dish.getId().equals(Objects.requireNonNull(getItem(position)).getId())) {
+                    amount += dish.getAmount();
+                }
             }
         }
 
