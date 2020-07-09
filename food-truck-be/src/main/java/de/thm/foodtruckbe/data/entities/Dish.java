@@ -1,27 +1,17 @@
 package de.thm.foodtruckbe.data.entities;
 
-import java.util.Map;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyClass;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MapKeyEnumerated;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import de.thm.foodtruckbe.data.dto.DtoDish;
+import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,6 +21,7 @@ public class Dish {
 
     @Id
     @GeneratedValue
+    @Column(name = "dish_id")
     private Long id;
 
     private String name;
@@ -40,16 +31,12 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference
+    @JsonManagedReference(value = "operator")
     private Operator operator;
 
-    @ElementCollection
-    @CollectionTable(name = "ingredient_amount_mapping_dish")
-    @MapKeyEnumerated(EnumType.STRING)
-    @MapKeyClass(Ingredient.class)
-    @MapKeyColumn(name = "ingredient", nullable = false)
-    @Column(name = "amount")
-    private Map<Ingredient, Integer> ingredients;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    @JsonBackReference(value = "ingredients")
+    private List<Ingredient> ingredients;
 
     /**
      * Constructor for {@code Dish}.
@@ -58,7 +45,7 @@ public class Dish {
      * @param basePrice
      * @param ingredients
      */
-    public Dish(String name, Operator operator, double basePrice, Map<Ingredient, Integer> ingredients) {
+    public Dish(String name, Operator operator, double basePrice, List<Ingredient> ingredients) {
         this.name = name;
         this.operator = operator;
         this.basePrice = Math.abs(basePrice);
@@ -82,7 +69,13 @@ public class Dish {
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
-        return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), dtoDish.getIngredients());
+        Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
+        List<Ingredient> ingredients = new ArrayList<>();
+        for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
+            ingredients.add(Ingredient.create(dtoIngredient, dish, operator));
+        }
+        dish.setIngredients(ingredients);
+        return dish;
     }
 
     public Dish merge(Dish dish) {
@@ -92,18 +85,5 @@ public class Dish {
         this.name = dish.name;
         this.rating = rating;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        // TODO add ingredients
-        return name + ": " + basePrice;
-    }
-
-    public enum Ingredient {
-        MEHL, BUTTER, BROT, OEL, POMMES, SALZ, PFEFFER, MAGGI, TOMATEN, EI, REIS, MICLH, NUDELN, REMOULDAE, BOULETTE,
-        BROETCHEN, SALAT, GURKE, KETCHUP, MAYO, SENF, ZUCKER, HONIG, METT, SCHWEINESTEAK, PUTENSTEAK, KARTOFFELN,
-        BLUMENKOHL, HOLLANDAISE, KAESE
-
     }
 }

@@ -21,14 +21,14 @@ public class AdvancedCustomerOrdersAdapter extends ArrayAdapter<Order> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_customer_show_menu_item, null);
+            element = inflater.inflate(R.layout.activity_customer_orders_item, null);
         }
 
         TextView orderNumber = element.findViewById(R.id.show_orders_number_c);
         TextView orderStatus = element.findViewById(R.id.show_orders_status_c);
 
         orderNumber.setText(getItem(position).getId().toString());
-        orderNumber.setText(getItem(position).getStatus().toString());
+        orderStatus.setText(getItem(position).getStatus().toString());
         return element;
     }
 }

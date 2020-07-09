@@ -1,36 +1,27 @@
 package de.thm.foodtruckbe.data.entities.user;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
-import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
 import de.thm.foodtruckbe.data.dto.user.DtoOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.webjars.NotFoundException;
-
-import de.thm.foodtruckbe.data.entities.Dish;
-import de.thm.foodtruckbe.data.entities.Dish.Ingredient;
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.entities.Market;
+import de.thm.foodtruckbe.data.entities.*;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.order.PreOrder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.webjars.NotFoundException;
+
+import javax.persistence.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -47,11 +38,11 @@ public class Operator extends User {
     private Long id;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+    @JsonBackReference(value = "operator")
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+//    @JsonBackReference(value = "operator")
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
@@ -66,13 +57,16 @@ public class Operator extends User {
     @Transient
     private Location initialLocation;
 
-    @ElementCollection
-    @CollectionTable(name = "ingredient_amount_mapping_stock")
-    @MapKeyEnumerated(EnumType.STRING)
-    @MapKeyClass(Ingredient.class)
-    @MapKeyColumn(name = "ingredient", nullable = false)
-    @Column(name = "amount")
-    private Map<Ingredient, Integer> stock;
+    //    @ElementCollection
+//    @CollectionTable(name = "ingredient_amount_mapping_stock")
+//    @MapKeyEnumerated(EnumType.STRING)
+//    @MapKeyClass(Ingredient.class)
+//    @MapKeyColumn(name = "ingredient", nullable = false)
+//    @Column(name = "amount")
+//    private Map<Ingredient, Integer> stock;
+    @OneToMany(mappedBy = "operator")
+    @JsonBackReference
+    private List<Ingredient> stock;
 
     /**
      * Constructor for inital use. Sets the {@code Market} as the operators initial
@@ -186,28 +180,26 @@ public class Operator extends User {
     // shopping
     @JsonIgnore
     // TODO accept Map<Ingredient, Integer>
-    public Map<Ingredient, Integer> getShoppingList() {
-        final EnumMap<Ingredient, Integer> results = new EnumMap<>(Ingredient.class);
+    public ArrayList<Ingredient> getShoppingList() {
+        ArrayList<Ingredient> results = new ArrayList<>();
         for (Location location : route) {
             for (PreOrder preOrder : location.getPreOrders()) {
-                for (final Map.Entry<Dish, Integer> dishEntry : preOrder.getItems().entrySet()) {
-                    for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
-                            .entrySet()) {
-                        if (results.containsKey(ingredientEntry.getKey())) {
-                            results.put(ingredientEntry.getKey(), results.get(ingredientEntry.getKey())
-                                    + (dishEntry.getValue() * ingredientEntry.getValue()));
+                for (DishWrapper dishWrapper : preOrder.getItems()) {
+                    for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                        if (results.contains(ingredient)) {
+                            results.get(results.indexOf(ingredient)).addAmount(ingredient.getAmount() * dishWrapper.getAmount());
                         } else {
-                            results.put(ingredientEntry.getKey(), dishEntry.getValue() * ingredientEntry.getValue());
+                            ingredient.setAmount(ingredient.getAmount() * dishWrapper.getAmount());
                         }
+                        results.add(ingredient);
                     }
-
                 }
             }
         }
         return results;
     }
 
-    public boolean goShopping(final Map<Ingredient, Integer> ingredients) {
+    public boolean goShopping(final List<Ingredient> ingredients) {
         if (currentLocation != initialLocation) {
             return false;
         }
@@ -235,10 +227,9 @@ public class Operator extends User {
     }
 
     public boolean isPossible(Order order) {
-        for (final Map.Entry<Dish, Integer> dishEntry : order.getItems().entrySet()) {
-            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
-                    .entrySet()) {
-                if (dishEntry.getValue() * ingredientEntry.getValue() > stock.get(ingredientEntry.getKey())) {
+        for (DishWrapper dishWrapper : order.getItems()) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()){
                     return false;
                 }
             }
@@ -247,12 +238,10 @@ public class Operator extends User {
     }
 
     public boolean isPossible(final Dish dish) {
-        for (final Map.Entry<Ingredient, Integer> ingredient : dish.getIngredients().entrySet()) {
+        for (Ingredient ingredient : dish.getIngredients()) {
             log.debug("In foreach in isPossible.");
-            log.info("Key: " + ingredient.getKey());
-            log.info("Value: " + ingredient.getValue());
-            if (stock.containsKey(ingredient.getKey())) {
-                if (ingredient.getValue() > stock.get(ingredient.getKey())) {
+            if (stock.contains(ingredient)) {
+                if (ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
                     return false;
                 }
             } else {
@@ -263,20 +252,19 @@ public class Operator extends User {
     }
 
     // interact with stock
-    public boolean addToStock(final Ingredient ingredient, final int amount) {
-        if (stock.containsKey(ingredient)) {
-            stock.replace(ingredient, stock.get(ingredient) + amount);
+    public boolean addToStock(final Ingredient ingredient, int amount) {
+        if (stock.contains(ingredient)) {
+            stock.get(stock.indexOf(ingredient)).addAmount(amount);
         } else {
-            stock.put(ingredient, amount);
+            stock.add(ingredient);
         }
         return true;
     }
 
-    public boolean addToStock(final Map<Dish, Integer> items) {
-        for (final Map.Entry<Dish, Integer> dishEntry : items.entrySet()) {
-            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
-                    .entrySet()) {
-                if (!addToStock(ingredientEntry.getKey(), dishEntry.getValue() * ingredientEntry.getValue())) {
+    public boolean addToStock(List<DishWrapper> items) {
+        for (DishWrapper dishWrapper : items) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (!addToStock(ingredient, dishWrapper.getAmount() * ingredient.getAmount())) {
                     return false;
                 }
             }
@@ -285,19 +273,18 @@ public class Operator extends User {
     }
 
     public boolean removeFromStock(final Ingredient ingredient, final int amount) {
-        if (stock.containsKey(ingredient)) {
-            stock.replace(ingredient, stock.get(ingredient) - amount);
+        if (stock.contains(ingredient)) {
+            stock.get(stock.indexOf(ingredient)).subtractAmount(amount);
         } else {
             return false;
         }
         return true;
     }
 
-    public boolean removeFromStock(final Map<Dish, Integer> items) {
-        for (final Map.Entry<Dish, Integer> dishEntry : items.entrySet()) {
-            for (final Map.Entry<Ingredient, Integer> ingredientEntry : dishEntry.getKey().getIngredients()
-                    .entrySet()) {
-                if (!removeFromStock(ingredientEntry.getKey(), dishEntry.getValue() * ingredientEntry.getValue())) {
+    public boolean removeFromStock(List<DishWrapper> items) {
+        for (DishWrapper dishWrapper : items) {
+            for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
+                if (!removeFromStock(ingredient, dishWrapper.getAmount() * ingredient.getAmount())) {
                     return false;
                 }
             }

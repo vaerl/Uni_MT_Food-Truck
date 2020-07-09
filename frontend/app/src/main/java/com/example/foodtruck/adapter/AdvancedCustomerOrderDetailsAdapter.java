@@ -17,17 +17,19 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.DishWrapper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Map.Entry<Dish, Integer>> {
+public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrapper> {
 
     private String TAG = getClass().getSimpleName();
 
-    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, ArrayList<Map.Entry<Dish, Integer>> objects) {
-        super(context, textviewResourceId, (Map.Entry<Dish, Integer>[]) objects.toArray());
+    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, List<DishWrapper> objects) {
+        super(context, textviewResourceId, (DishWrapper[]) objects.toArray());
     }
 
     @Override
@@ -44,10 +46,11 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<Map.Entry<
 
         View finalElement = element;
         rateButton.setOnClickListener(view -> {
-            postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getKey().getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
+            // TODO if this does not work use .getDish().getId()
+            postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
 
-            dishName.setText(Objects.requireNonNull(getItem(position)).getKey().getName());
-            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getKey().getBasePrice()));
+            dishName.setText(Objects.requireNonNull(getItem(position)).getDish().getName());
+            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getDish().getBasePrice()));
         });
         return element;
     }

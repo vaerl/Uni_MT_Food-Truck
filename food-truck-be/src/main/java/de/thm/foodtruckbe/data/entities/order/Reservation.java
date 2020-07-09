@@ -1,11 +1,15 @@
 package de.thm.foodtruckbe.data.entities.order;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
 
+import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
 import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
 import de.thm.foodtruckbe.data.dto.order.DtoReservation;
+import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Location;
@@ -15,32 +19,36 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Reservation extends Order {
 
-    public Reservation(Customer customer, Location location, Map<Dish, Integer> items) {
+    public Reservation(Customer customer, Location location, List<DishWrapper> items) {
         super(customer, location, items);
     }
 
-    public static Reservation create(DtoReservation dtoPreOrder, Customer customer, Location location){
-        return new Reservation(customer, location, dtoPreOrder.getItems());
+    public static Reservation create(DtoReservation dtoPreOrder, Customer customer, Location location) {
+        List<DishWrapper> dishWrappers = new ArrayList<>();
+        for (DtoDishWrapper dtoDishWrapper : dtoPreOrder.getItems()) {
+            dishWrappers.add(DishWrapper.create(dtoDishWrapper, location.getOperator()));
+        }
+        return new Reservation(customer, location, dishWrappers);
     }
 
     @Override
-    public boolean addItem(Dish dish, int amount) {
-        if (amount <= 0) {
+    public boolean addItem(DishWrapper dishWrapper) {
+        if (dishWrapper.getAmount() <= 0) {
             return false;
         }
         // check if item is already present -> update amount
-        if (items.containsKey(dish)) {
-            items.replace(dish, items.get(dish) + amount);
+        if (items.contains(dishWrapper)) {
+            items.get(items.indexOf(dishWrapper)).setAmount(items.get(items.indexOf(dishWrapper)).getAmount() + dishWrapper.getAmount());
         } else {
-            items.put(dish, amount);
+            items.add(dishWrapper);
         }
-        price += dish.getAdjustedPrice() * amount;
+        price += dishWrapper.getDish().getAdjustedPrice() * dishWrapper.getAmount();
         return true;
     }
 
     @Override
-    public boolean removeItem(Dish dish) {
-        price -= dish.getAdjustedPrice();
-        return items.remove(dish) != null;
+    public boolean removeItem(DishWrapper dishWrapper) {
+        price -= dishWrapper.getDish().getAdjustedPrice();
+        return items.remove(dishWrapper);
     }
 }

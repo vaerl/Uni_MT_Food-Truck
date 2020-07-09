@@ -23,10 +23,12 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerNewOrderMenuAdapter;
 import com.example.foodtruck.adapter.RecyclerViewSelectedOrderItemsAdapter;
 import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.order.PreOrder;
 import com.example.foodtruck.model.order.Reservation;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CustomerNewOrderActivityOne extends AppCompatActivity {
@@ -44,8 +46,8 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
 
     ArrayList<Dish> selectedItems = new ArrayList<>();
 
-    Map<Dish, Integer> selectedDishesReservation;
-    Map<Dish, Integer> selectedDishesPreOrder;
+    List<DishWrapper> selectedDishesReservation;
+    List<DishWrapper> selectedDishesPreOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,16 +149,16 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
 
         for (Dish dish: selectedItems) {
             if (lvReservation.getVisibility() == View.VISIBLE) {
-                if (selectedDishesReservation.containsKey(dish)) {
-                    selectedDishesReservation.put(dish, selectedDishesReservation.get(dish) + 1);
+                if (selectedDishesReservation.contains(dish)) {
+                    selectedDishesReservation.add(new DishWrapper(dish, selectedDishesReservation.get(selectedDishesReservation.indexOf(dish)).getAmount() + 1));
                 } else {
-                    selectedDishesReservation.put(dish, 1);
+                    selectedDishesReservation.add(new DishWrapper(dish, 1));
                 }
             } else {
-                if (selectedDishesPreOrder.containsKey(dish)) {
-                    selectedDishesPreOrder.put(dish, selectedDishesPreOrder.get(dish) + 1);
+                if (selectedDishesPreOrder.contains(dish)) {
+                    selectedDishesPreOrder.add(new DishWrapper(dish, selectedDishesReservation.get(selectedDishesReservation.indexOf(dish)).getAmount() + 1));
                 } else {
-                    selectedDishesPreOrder.put(dish, 1);
+                    selectedDishesPreOrder.add(new DishWrapper(dish, 1));
                 }
             }
         }
