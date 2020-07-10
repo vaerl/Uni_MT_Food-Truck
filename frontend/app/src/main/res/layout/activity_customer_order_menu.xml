@@ -77,9 +77,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="156dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/new_order_list_reservation"
+        app:layout_constraintBottom_toTopOf="@+id/new_order_forward_button_c"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/divider8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout2" />
 
