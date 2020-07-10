@@ -1,7 +1,6 @@
 package de.thm.foodtruckbe.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;

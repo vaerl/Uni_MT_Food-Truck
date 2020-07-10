@@ -19,12 +19,12 @@ public class DtoDish {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-    private List<DtoIngredient> dtoIngredients;
+    private List<DtoIngredient> ingredients;
 
     public DtoDish(String name, double basePrice, List<DtoIngredient> dtoIngredients) {
         this.name = name;
         this.basePrice = Math.abs(basePrice);
-        this.dtoIngredients = dtoIngredients;
+        this.ingredients = dtoIngredients;
     }
 
 }

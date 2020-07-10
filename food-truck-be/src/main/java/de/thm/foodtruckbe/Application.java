@@ -64,29 +64,29 @@ public class Application {
 
 			Dish lasagna = new Dish("Lasagne", operator, 5.50, null);
 			List<Ingredient> lasagnaIngredients = new ArrayList<>();
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.NUDELN, 3, lasagna, operator));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2, lasagna, operator));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.METT, 3, lasagna, operator));
-			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.KAESE, 2, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.NUDELN.toString(), 3, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN.toString(), 2, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.METT.toString(), 3, lasagna, operator));
+			lasagnaIngredients.add(new Ingredient(Ingredient.IngredientName.KAESE.toString(), 2, lasagna, operator));
 			lasagna.setIngredients(lasagnaIngredients);
 
 			Dish burger = new Dish("Burger", operator, 7d, null);
 			List<Ingredient> burgerIngredients = new ArrayList<>();
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN, 2, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.GURKE, 3, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.SALAT, 2, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BROETCHEN, 1, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BOULETTE, 2, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.POMMES, 1, burger, operator));
-			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.KETCHUP, 1, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.TOMATEN.toString(), 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.GURKE.toString(), 3, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.SALAT.toString(), 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BROETCHEN.toString(), 1, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.BOULETTE.toString(), 2, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.POMMES.toString(), 1, burger, operator));
+			burgerIngredients.add(new Ingredient(Ingredient.IngredientName.KETCHUP.toString(), 1, burger, operator));
 			burger.setIngredients(burgerIngredients);
 
 			Dish pancakes = new Dish("Pancakes", operator, 4d, null);
 			List<Ingredient> pancakeIngredients = new ArrayList<>();
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.EI, 3, pancakes, operator));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.MEHL, 2, pancakes, operator));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.SALZ, 1, pancakes, operator));
-			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER, 2, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.EI.toString(), 3, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.MEHL.toString(), 2, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.SALZ.toString(), 1, pancakes, operator));
+			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER.toString(), 2, pancakes, operator));
 			pancakes.setIngredients(pancakeIngredients);
 
 			ArrayList<DishWrapper> itemsManuel =new ArrayList<>();

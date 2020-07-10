@@ -70,16 +70,15 @@ public class Dish {
         return true;
     }
 
-    public static Dish create(DtoDish dtoDish, Operator operator, IngredientRepository ingredientRepository) {
+    public static Dish create(DtoDish dtoDish, Operator operator) {
         Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
         List<Ingredient> ingredients = new ArrayList<>();
-       if(dtoDish.getDtoIngredients() != null){
-           for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
-               Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
-                ingredientRepository.save(i);
-               ingredients.add(i);
-           }
-       }
+        if (dtoDish.getIngredients() != null) {
+            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
+                Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
+                ingredients.add(i);
+            }
+        }
         dish.setIngredients(ingredients);
         return dish;
     }

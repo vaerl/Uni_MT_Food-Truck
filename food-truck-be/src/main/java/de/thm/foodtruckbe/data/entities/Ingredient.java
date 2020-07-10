@@ -20,7 +20,7 @@ public class Ingredient {
     @GeneratedValue
     private Long id;
 
-    private IngredientName name;
+    private String name;
     private int amount;
 
     @ManyToOne
@@ -33,7 +33,7 @@ public class Ingredient {
     @JsonManagedReference
     private Operator operator;
 
-    public Ingredient(IngredientName name, int amount, Dish dish, Operator operator){
+    public Ingredient(String name, int amount, Dish dish, Operator operator){
         this.name = name;
         this.amount = amount;
         this.dish = dish;

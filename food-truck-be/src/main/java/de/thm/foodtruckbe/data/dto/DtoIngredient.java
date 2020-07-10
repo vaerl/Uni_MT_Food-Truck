@@ -16,14 +16,10 @@ import lombok.Setter;
 public class DtoIngredient {
 
     private Long id;
-    private Ingredient.IngredientName name;
+    private String name;
     private int amount;
-    @JsonIgnore
-    private Dish dish;
-    @JsonIgnore
-    private Operator operator;
 
-    public DtoIngredient(Ingredient.IngredientName name, int amount){
+    public DtoIngredient(String name, int amount){
         this.name = name;
         this.amount = amount;
     }

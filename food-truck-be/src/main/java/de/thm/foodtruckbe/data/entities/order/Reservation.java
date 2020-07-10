@@ -13,6 +13,7 @@ import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.repos.IngredientRepository;
 import lombok.NoArgsConstructor;
 
 @Entity
