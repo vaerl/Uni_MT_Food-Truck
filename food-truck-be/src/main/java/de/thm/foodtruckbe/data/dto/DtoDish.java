@@ -19,8 +19,6 @@ public class DtoDish {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-
-    @JsonManagedReference(value = "operator")
     private List<DtoIngredient> dtoIngredients;
 
     public DtoDish(String name, double basePrice, List<DtoIngredient> dtoIngredients) {

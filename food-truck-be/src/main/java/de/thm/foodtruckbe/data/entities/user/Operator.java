@@ -38,11 +38,11 @@ public class Operator extends User {
     private Long id;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference(value = "operator")
+    @JsonBackReference
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
-//    @JsonBackReference(value = "operator")
+    @JsonBackReference
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
@@ -179,7 +179,6 @@ public class Operator extends User {
 
     // shopping
     @JsonIgnore
-    // TODO accept Map<Ingredient, Integer>
     public ArrayList<Ingredient> getShoppingList() {
         ArrayList<Ingredient> results = new ArrayList<>();
         for (Location location : route) {
@@ -229,7 +228,7 @@ public class Operator extends User {
     public boolean isPossible(Order order) {
         for (DishWrapper dishWrapper : order.getItems()) {
             for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
-                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()){
+                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
                     return false;
                 }
             }

@@ -2,6 +2,7 @@ package de.thm.foodtruckbe.data.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Ingredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
@@ -17,8 +18,9 @@ public class DtoIngredient {
     private Long id;
     private Ingredient.IngredientName name;
     private int amount;
-    @JsonBackReference(value = "dtoIngredients")
+    @JsonIgnore
     private Dish dish;
+    @JsonIgnore
     private Operator operator;
 
     public DtoIngredient(Ingredient.IngredientName name, int amount){

@@ -1,32 +1,7 @@
-[
-  {
-    "id": 14,
-    "location": {
-      "id": 3,
-      "name": "THM",
-      "operator": {
-        "id": 1,
-        "name": "Truck-Food",
-        "password": "1234",
-        "initialLocation": null,
-        "stock": {}
-      },
-      "x": 5.0,
-      "y": 7.0,
-      "arrival": "2020-07-08T18:30:20.959587",
-      "departure": "2020-07-08T19:30:20.959587",
-      "status": "OPEN",
-      "duration": null
-    },
-    "items": {
-      "'id': 11'name' : 'Pancakes','basePrice' : 4.0,'ajustedPrice' : 4.0,'rating' : 0.0'operator' : null'ingredients' : null": 4
-    },
-    "customer": {
-      "id": 8,
-      "name": "Lukas",
-      "password": "sakul"
-    },
-    "price": 16.0,
-    "status": "ACCEPTED"
-  }
-]
+{
+  "adjustedPrice": 0.0,
+  "basePrice": 123.0,
+  "ingredients": [],
+  "name": "asdasd",
+  "rating": 0.0
+}

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.repos.DishRepository;
+import de.thm.foodtruckbe.data.repos.IngredientRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,11 +33,11 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference(value = "operator")
+    @JsonManagedReference
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    @JsonBackReference(value = "ingredients")
+    @JsonBackReference
     private List<Ingredient> ingredients;
 
     /**
@@ -68,12 +70,16 @@ public class Dish {
         return true;
     }
 
-    public static Dish create(DtoDish dtoDish, Operator operator) {
+    public static Dish create(DtoDish dtoDish, Operator operator, IngredientRepository ingredientRepository) {
         Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
         List<Ingredient> ingredients = new ArrayList<>();
-        for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
-            ingredients.add(Ingredient.create(dtoIngredient, dish, operator));
-        }
+       if(dtoDish.getDtoIngredients() != null){
+           for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
+               Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
+                ingredientRepository.save(i);
+               ingredients.add(i);
+           }
+       }
         dish.setIngredients(ingredients);
         return dish;
     }
