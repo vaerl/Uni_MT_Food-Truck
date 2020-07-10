@@ -20,7 +20,6 @@ public abstract class DtoOrder {
     private Long id;
     private DtoLocation dtoLocation;
 
-    @JsonManagedReference(value = "dtoItems")
     protected List<DtoDishWrapper> items;
     protected DtoCustomer dtoCustomer;
     protected double price;

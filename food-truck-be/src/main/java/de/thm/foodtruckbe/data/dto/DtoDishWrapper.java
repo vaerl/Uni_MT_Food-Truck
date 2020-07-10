@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class DtoDishWrapper {
 
     private Long id;
-    @JsonBackReference(value = "dtoItems")
     private DtoDish dish;
 
     private int amount;

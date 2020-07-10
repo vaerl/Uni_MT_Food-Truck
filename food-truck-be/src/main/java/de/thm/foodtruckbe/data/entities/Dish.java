@@ -40,7 +40,8 @@ public class Dish {
     @JsonBackReference(value = "dish-ingredient")
     private List<Ingredient> ingredients;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    @OneToMany(mappedBy = "dish")
     @JsonBackReference(value = "dish-dishwrapper")
     private List<DishWrapper> dishWrappers;
 
@@ -67,9 +68,9 @@ public class Dish {
      */
     public boolean addRating(int rating) {
         if (this.rating == 0) {
-            this.rating = 0;
+            this.rating = rating;
         } else {
-            this.rating = (this.rating * rating) / 2;
+            this.rating = (this.rating + rating) / 2;
         }
         return true;
     }

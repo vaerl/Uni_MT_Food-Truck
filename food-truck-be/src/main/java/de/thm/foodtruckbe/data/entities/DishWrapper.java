@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.repos.DishRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -26,7 +28,7 @@ public class DishWrapper {
     @JsonIgnore
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "dish_id", nullable = false)
     @JsonManagedReference(value = "dish-dishwrapper")
     private Dish dish;
@@ -39,7 +41,7 @@ public class DishWrapper {
         this.amount = amount;
     }
 
-    public static DishWrapper create(Order order, DtoDishWrapper dtoDishWrapper, Operator operator) {
-        return new DishWrapper(order, Dish.create(dtoDishWrapper.getDish(), operator), dtoDishWrapper.getAmount());
+    public static DishWrapper create(Order order, DtoDishWrapper dtoDishWrapper, Dish dish) {
+        return new DishWrapper(order, dish, dtoDishWrapper.getAmount());
     }
 }

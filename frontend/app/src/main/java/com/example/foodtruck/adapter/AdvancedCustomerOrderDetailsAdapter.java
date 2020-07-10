@@ -43,14 +43,16 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrappe
         TextView dishName = element.findViewById(R.id.order_details_dish_name_c);
         TextView dishPrice = element.findViewById(R.id.order_details_dish_price_c);
         Button rateButton = element.findViewById(R.id.order_details_dish_rating_button_c);
+        dishName.setText(Objects.requireNonNull(getItem(position)).getDish().getName());
+        dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getDish().getBasePrice()));
 
         View finalElement = element;
         rateButton.setOnClickListener(view -> {
-            // TODO if this does not work use .getDish().getId()
-            postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
-
-            dishName.setText(Objects.requireNonNull(getItem(position)).getDish().getName());
-            dishPrice.setText(Double.toString(Objects.requireNonNull(getItem(position)).getDish().getBasePrice()));
+            String rating = ((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString();
+            if(rating.equals("")){
+                return;
+            }
+            postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getDish().getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));
         });
         return element;
     }
@@ -61,7 +63,7 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrappe
         // Reservation
         // ---------------------------------------------------------------
         Log.d(TAG, "postRating: trying to rate dish.");
-        GsonRequest<Double, Double> requestReservation = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + id + "/rate",rating, Double.class, DataService.getStandardHeader(), response -> {
+        GsonRequest<Double, Double> requestReservation = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + id + "/rate", rating, Double.class, DataService.getStandardHeader(), response -> {
             Log.d(TAG, "postRating: rated dish.");
         }, error -> {
             Log.e(TAG, "Could not rate dish!", error);
