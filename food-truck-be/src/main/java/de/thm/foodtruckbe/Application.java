@@ -3,10 +3,7 @@ package de.thm.foodtruckbe;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.Ingredient;
@@ -89,16 +86,14 @@ public class Application {
 			pancakeIngredients.add(new Ingredient(Ingredient.IngredientName.ZUCKER.toString(), 2, pancakes, operator));
 			pancakes.setIngredients(pancakeIngredients);
 
-			ArrayList<DishWrapper> itemsManuel =new ArrayList<>();
-			itemsManuel.add(new DishWrapper(burger, 1));
-			itemsManuel.add(new DishWrapper(lasagna, 1));
-			Reservation reservationManuel = new Reservation(manuel, tor, itemsManuel);
-			ArrayList<DishWrapper> itemsAlex =new ArrayList<>();
-			itemsAlex.add(new DishWrapper(lasagna, 2));
-			Reservation reservationAlex = new Reservation(alex, tor, itemsAlex);
-			ArrayList<DishWrapper> itemsLukas =new ArrayList<>();
-			itemsLukas.add(new DishWrapper(pancakes, 4));
-			PreOrder preOrderLukas = new PreOrder(lukas, thm, itemsLukas);
+			Reservation reservationManuel = new Reservation(manuel, tor);
+			reservationManuel.addAllItems(Arrays.asList(new DishWrapper(reservationManuel, burger, 1), new DishWrapper(reservationManuel, lasagna, 1)));
+
+			Reservation reservationAlex = new Reservation(alex, tor);
+			reservationAlex.addItem(new DishWrapper(reservationAlex, lasagna, 2));
+
+			PreOrder preOrderLukas = new PreOrder(lukas, thm);
+			preOrderLukas.addItem(new DishWrapper(preOrderLukas, pancakes, 4));
 
 			operatorRepository.save(operator);
 			locationRepository.save(thm);

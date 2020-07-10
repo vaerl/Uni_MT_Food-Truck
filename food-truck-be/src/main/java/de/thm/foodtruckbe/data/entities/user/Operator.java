@@ -46,7 +46,7 @@ public class Operator extends User {
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+    @JsonBackReference(value = "operator-location")
     private List<Location> route;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,15 +57,8 @@ public class Operator extends User {
     @Transient
     private Location initialLocation;
 
-    //    @ElementCollection
-//    @CollectionTable(name = "ingredient_amount_mapping_stock")
-//    @MapKeyEnumerated(EnumType.STRING)
-//    @MapKeyClass(Ingredient.class)
-//    @MapKeyColumn(name = "ingredient", nullable = false)
-//    @Column(name = "amount")
-//    private Map<Ingredient, Integer> stock;
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+    @JsonBackReference(value = "operator-ingredient")
     private List<Ingredient> stock;
 
     /**

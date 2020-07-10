@@ -20,16 +20,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Reservation extends Order {
 
-    public Reservation(Customer customer, Location location, List<DishWrapper> items) {
-        super(customer, location, items);
+    public Reservation(Customer customer, Location location) {
+        super(customer, location);
     }
 
-    public static Reservation create(DtoReservation dtoPreOrder, Customer customer, Location location) {
+    public static Reservation create(DtoReservation dtoReservation, Customer customer, Location location) {
+        Reservation reservation = new Reservation(customer, location);
         List<DishWrapper> dishWrappers = new ArrayList<>();
-        for (DtoDishWrapper dtoDishWrapper : dtoPreOrder.getItems()) {
-            dishWrappers.add(DishWrapper.create(dtoDishWrapper, location.getOperator()));
+        for (DtoDishWrapper dtoDishWrapper : dtoReservation.getItems()) {
+            dishWrappers.add(DishWrapper.create(reservation, dtoDishWrapper, location.getOperator()));
         }
-        return new Reservation(customer, location, dishWrappers);
+        reservation.addAllItems(dishWrappers);
+        return reservation;
     }
 
     @Override

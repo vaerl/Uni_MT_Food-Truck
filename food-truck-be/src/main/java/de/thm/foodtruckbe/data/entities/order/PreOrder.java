@@ -19,16 +19,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PreOrder extends Order {
 
-    public PreOrder(Customer customer, Location location, List<DishWrapper> items) {
-        super(customer, location, items);
+    public PreOrder(Customer customer, Location location) {
+        super(customer, location);
     }
 
     public static PreOrder create(DtoPreOrder dtoPreOrder, Customer customer, Location location) {
+        PreOrder preOrder = new PreOrder(customer, location);
         List<DishWrapper> dishWrappers = new ArrayList<>();
         for (DtoDishWrapper dtoDishWrapper : dtoPreOrder.getItems()) {
-            dishWrappers.add(DishWrapper.create(dtoDishWrapper, location.getOperator()));
+            dishWrappers.add(DishWrapper.create(preOrder, dtoDishWrapper, location.getOperator()));
         }
-        return new PreOrder(customer, location, dishWrappers);
+        preOrder.addAllItems(dishWrappers);
+        return preOrder;
     }
 
     @Override

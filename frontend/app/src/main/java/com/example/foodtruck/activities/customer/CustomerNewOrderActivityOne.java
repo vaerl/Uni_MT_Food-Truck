@@ -100,12 +100,9 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
                 dishesReservation = response;
                 AdvancedCustomerNewOrderMenuAdapter advancedCustomerNewOrderMenuAdapterReservation = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesReservation, "reservation");
                 lvReservation.setAdapter(advancedCustomerNewOrderMenuAdapterReservation);
-                lvReservation.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        selectedItems.add(dishesReservation[position]);
-                        recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
-                    }
+                lvReservation.setOnItemClickListener((parent, view, position, id) -> {
+                    selectedItems.add(dishesReservation[position]);
+                    recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
                 });
             }
         }, error -> {

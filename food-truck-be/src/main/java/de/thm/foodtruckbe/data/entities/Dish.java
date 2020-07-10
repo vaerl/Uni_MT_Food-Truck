@@ -37,8 +37,12 @@ public class Dish {
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    @JsonBackReference
+    @JsonBackReference(value = "dish-ingredient")
     private List<Ingredient> ingredients;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    @JsonBackReference(value = "dish-dishwrapper")
+    private List<DishWrapper> dishWrappers;
 
     /**
      * Constructor for {@code Dish}.

@@ -25,12 +25,12 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
-    @JsonManagedReference(value = "ingredients")
+    @JsonManagedReference(value = "dish-ingredient")
     private Dish dish;
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference
+    @JsonManagedReference(value = "operator-location")
     private Operator operator;
 
     public Ingredient(String name, int amount, Dish dish, Operator operator){

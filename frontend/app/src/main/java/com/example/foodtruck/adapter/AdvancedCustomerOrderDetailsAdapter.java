@@ -28,8 +28,8 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrappe
 
     private String TAG = getClass().getSimpleName();
 
-    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, List<DishWrapper> objects) {
-        super(context, textviewResourceId, (DishWrapper[]) objects.toArray());
+    public AdvancedCustomerOrderDetailsAdapter(Context context, int textviewResourceId, DishWrapper[] dishWrappers) {
+        super(context, textviewResourceId, dishWrappers);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrappe
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_customer_show_menu_item, null);
+            element = inflater.inflate(R.layout.activity_customer_order_details_item, null);
         }
 
         TextView dishName = element.findViewById(R.id.order_details_dish_name_c);
