@@ -3,6 +3,7 @@ package com.example.foodtruck.activities.customer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,14 +40,16 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
             Order order = (Order) intent.getSerializableExtra(EXTRA_PARAMETER);
             orderNumber.setText(order.getId().toString());
             orderStatus.setText(order.getStatus().toString());
-            //TODO: Mapping Dishes in ListAdapter
-            AdvancedCustomerOrderDetailsAdapter advancedToDoAdapterReservation = new AdvancedCustomerOrderDetailsAdapter(this, 0, order.getItems());
-            lvReservation.setAdapter(advancedToDoAdapterReservation);
+            AdvancedCustomerOrderDetailsAdapter advancedCustomerOrderDetailsAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, order.getItems());
+            lvReservation.setAdapter(advancedCustomerOrderDetailsAdapter);
         }
 
     }
 
-
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
+        startActivity(in);
+    }
 
 
 

@@ -16,4 +16,12 @@ public class FormattingHelper {
         }
         return Integer.toString(time);
     }
+
+    public static String getHours(String string) {
+        return string.split(":")[0];
+    }
+
+    public static String getMinutes(String string) {
+        return string.split(":")[1];
+    }
 }

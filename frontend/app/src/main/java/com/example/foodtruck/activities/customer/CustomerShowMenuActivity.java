@@ -1,5 +1,6 @@
 package com.example.foodtruck.activities.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -101,6 +102,11 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
         Log.d(TAG, "setMenuToReservation: changing to reservation");
         lvPreorder.setVisibility(View.GONE);
         lvReservation.setVisibility(View.VISIBLE);
+    }
+
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
+        startActivity(in);
     }
 
 }

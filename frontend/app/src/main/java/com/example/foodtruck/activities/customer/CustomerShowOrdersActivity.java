@@ -58,4 +58,9 @@ public class CustomerShowOrdersActivity extends AppCompatActivity {
         queue.add(requestReservation);
     }
 
+    public void getToHome(View v){
+        Intent in = new Intent(this, CustomerMenuActivity.class);
+        startActivity(in);
+    }
+
 }
