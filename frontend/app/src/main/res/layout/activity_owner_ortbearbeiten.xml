@@ -61,7 +61,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Aufenthaltsdauer [min]"
+        android:hint="Abfahrtszeit"
         android:inputType="time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ankunft_editTextTime" />
@@ -130,7 +130,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:onClick="löscheStandort"
+        android:onClick="deleteLocation"
         android:text="Standort entfernen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

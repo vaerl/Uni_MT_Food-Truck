@@ -103,7 +103,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
                 queue.add(requestGerichte);
             }
         } else {
-            Log.e(TAG, "onActivityResult: resultCode != 0");
+            Log.e(TAG, "onActivityResult: resultCode != OK");
         }
     }
 }

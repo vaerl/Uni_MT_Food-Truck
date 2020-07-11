@@ -8,6 +8,7 @@ import de.thm.foodtruckbe.data.dto.user.DtoOperator;
 import de.thm.foodtruckbe.data.entities.*;
 import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.repos.LocationRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -113,31 +114,33 @@ public class Operator extends User {
 
     // locations
     // methods for adding/removing locations from route
-    public boolean addLocation(final Location location) {
-        return route.add(location);
+    public Location addLocation(final Location location) {
+        route.add(location);
+        return location;
     }
 
-    public boolean addLocations(final List<DtoLocation> dtoLocations) {
+    public List<Location> addLocations(final List<DtoLocation> dtoLocations) {
+        List<Location> result = new ArrayList<>();
         for (DtoLocation dtoLocation : dtoLocations) {
-            if (addLocation(Location.create(dtoLocation, this, route.get(route.size() - 1)))) {
-                return false;
-            }
+            result.add(Location.create(dtoLocation, this, routeTail()));
         }
-        return true;
+        return result;
     }
 
-    public boolean removeLocation(final DtoLocation dtoLocation) {
+    public boolean removeLocation(final DtoLocation dtoLocation, LocationRepository locationRepository) {
         for (Location location : route) {
             if (dtoLocation.getName().equalsIgnoreCase(location.getName())) {
+                locationRepository.findById(location.getId()).ifPresent(locationRepository::delete);
+                locationRepository.delete(location);
                 return route.remove(location);
             }
         }
         return false;
     }
 
-    public boolean removeLocations(final List<DtoLocation> dtoLocations) {
+    public boolean removeLocations(final List<DtoLocation> dtoLocations, LocationRepository locationRepository) {
         for (DtoLocation dtoLocation : dtoLocations) {
-            if (removeLocation(dtoLocation)) {
+            if (removeLocation(dtoLocation, locationRepository)) {
                 return false;
             }
         }
@@ -145,13 +148,52 @@ public class Operator extends User {
     }
 
     // get location
-    public Location getLocation(Location location) {
+    public Location getLocationFromRoute(Location location) {
         for (Location l : route) {
             if (l.equals(location)) {
                 return l;
             }
         }
         throw new NotFoundException("Location " + location.getName() + "does not belong to this operator.");
+    }
+
+    public Location getLocationFromRoute(Long id) {
+        for (Location l : route) {
+            if (l.getId() == id) {
+                return l;
+            }
+        }
+        throw new NotFoundException("Location with id " + id + "does not belong to this operator.");
+    }
+
+    public Location routeTail() {
+        return route.get(route.size() - 1);
+    }
+
+    public Location updateRoute(Location updatedLocation, LocationRepository locationRepository) {
+        ArrayList<Location> routeOld = new ArrayList<>(route);
+        route.clear();
+        int index = 0;
+        for (; index < routeOld.size(); index++) {
+            if (!routeOld.get(index).getName().equals(updatedLocation.getName())) {
+                route.add(routeOld.get(index));
+            } else {
+                if (index == 0) {
+                    updatedLocation = Location.create(updatedLocation, this);
+                } else {
+                    updatedLocation = Location.create(updatedLocation, this, route.get(index - 1));
+                }
+                route.add(updatedLocation);
+                break;
+            }
+        }
+        index++;
+        for (; index < routeOld.size(); index++) {
+            Location location = routeOld.get(index).merge(Location.create(routeOld.get(index), this, route.get(index - 1)));
+            route.add(location);
+            locationRepository.save(location);
+        }
+        return updatedLocation;
     }
 
     // methods for changing locations
@@ -191,10 +233,10 @@ public class Operator extends User {
         return results;
     }
 
-    public boolean goShopping(final List<Ingredient> ingredients) {
-        if (currentLocation != initialLocation) {
-            return false;
-        }
+    public List<Ingredient> goShopping(final List<Ingredient> ingredients) {
+//        if (currentLocation != initialLocation) {
+//            return null;
+//        }
         // get available ingredients
         stock = Market.buyIngredients(ingredients);
         // check possible orders and adjust each status
@@ -215,7 +257,7 @@ public class Operator extends User {
             }
         });
         moveToNextLocation();
-        return true;
+        return stock;
     }
 
     public boolean isPossible(Order order) {

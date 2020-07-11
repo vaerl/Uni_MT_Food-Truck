@@ -11,6 +11,7 @@ import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -47,13 +48,16 @@ public class Location {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
     private Duration duration;
 
     @OneToMany(mappedBy = "location")
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     @JsonBackReference
     private List<PreOrder> preOrders;
 
     @OneToMany(mappedBy = "location")
+    @Cascade(value = org.hibernate.annotations.CascadeType.DELETE)
     @JsonBackReference
     private List<Reservation> reservations;
 
@@ -102,11 +106,15 @@ public class Location {
      * @param y
      * @param duration the duration the food-truck stays
      */
-    public Location(final String name, final Operator operator, final double x, final double y, final Location previous,
+    public Location(final String name, final Operator operator, final double x, final double y, LocalDateTime arrival, final Location previous,
                     final Duration duration) {
         this(name, operator, x, y);
-        this.arrival = previous.getDeparture().plus(previous.calculateTravelTime(this));
-        this.departure = arrival.plus(duration);
+        if (arrival == null || arrival.isBefore(previous.getDeparture().plus(previous.calculateTravelTime(this)))) {
+            this.arrival = previous.getDeparture().plus(previous.calculateTravelTime(this));
+        } else {
+            this.arrival = arrival;
+        }
+        this.departure = this.arrival.plus(duration);
     }
 
     // methods for setting delays
@@ -293,7 +301,38 @@ public class Location {
     }
 
     public static Location create(DtoLocation dtoLocation, Operator operator, Location location) {
-        return new Location(dtoLocation.getName(), operator, dtoLocation.getX(), dtoLocation.getY(), location, dtoLocation.getDuration());
+        return new Location(dtoLocation.getName(), operator, dtoLocation.getX(), dtoLocation.getY(), dtoLocation.getArrival(), location, dtoLocation.getDuration());
+    }
+
+    public static Location create(Location location, Operator operator, Location previous) {
+        return new Location(location.getName(), operator, location.getX(), location.getY(),location.getArrival(), previous, location.getDuration());
+    }
+
+    public static Location create(Location location, Operator operator) {
+        return new Location(location.getName(), operator, location.getX(), location.getY(),location.getArrival(), location.getDuration());
+    }
+
+    @JsonIgnore
+    public Duration getDuration(){
+        return Duration.between(arrival, departure);
+    }
+
+    public Location merge(Location location) {
+        this.name = location.name;
+        this.x = location.x;
+        this.y = location.y;
+        this.arrival = location.arrival;
+        this.departure = location.departure;
+        return this;
+    }
+
+    public Location merge(DtoLocation dtoLocation) {
+        this.name = dtoLocation.getName();
+        this.x = dtoLocation.getX();
+        this.y = dtoLocation.getY();
+        this.arrival = dtoLocation.getArrival();
+        this.departure = dtoLocation.getDeparture();
+        return this;
     }
 
     @Override

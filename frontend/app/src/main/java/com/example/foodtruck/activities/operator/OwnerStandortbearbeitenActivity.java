@@ -1,41 +1,41 @@
 package com.example.foodtruck.activities.operator;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.EditText;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
-        import com.android.volley.Request;
-        import com.android.volley.RequestQueue;
-        import com.android.volley.toolbox.Volley;
-        import com.example.foodtruck.DataService;
-        import com.example.foodtruck.GsonRequest;
-        import com.example.foodtruck.R;
-        import com.example.foodtruck.model.Location;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.foodtruck.DataService;
+import com.example.foodtruck.GsonRequest;
+import com.example.foodtruck.R;
+import com.example.foodtruck.model.Location;
 
-        import java.time.Duration;
-        import java.time.LocalDate;
-        import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-        import static com.example.foodtruck.FormattingHelper.getHours;
-        import static com.example.foodtruck.FormattingHelper.getMinutes;
-        import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
+import static com.example.foodtruck.FormattingHelper.getHours;
+import static com.example.foodtruck.FormattingHelper.getMinutes;
+import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
 
 public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
-    String EXTRA_PARAMETER = "standort";
+    private EditText standortName;
+    private EditText standortX;
+    private EditText standortY;
+    private EditText standortAnkunft;
+    private EditText standortAufenthaltsdauer;
 
-    EditText standortName;
-    EditText standortX;
-    EditText standortY;
-    EditText standortAnkunft;
-    EditText standortAufenthaltsdauer;
+    private Long id;
 
-    Long id;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,30 +48,60 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
         standortAnkunft = findViewById(R.id.ankunft_editTextTime);
         standortAufenthaltsdauer = findViewById(R.id.aufenthaltsdauer_editTextTime);
 
-        if(getIntent().hasExtra(EXTRA_PARAMETER)){
+        if (getIntent().hasExtra(OwnerRoutebearbeitenActivity.INTENT_EDIT_LOCATION)) {
             Intent intent = getIntent();
-            Location standort = (Location) intent.getSerializableExtra(EXTRA_PARAMETER);
-            standortName.setText(standort.getName());
-            standortX.setText(Double.toString(standort.getX()));
-            standortY.setText(Double.toString(standort.getY()));
-            standortAnkunft.setText(localDateTimeFormatter(standort.getArrival()));
-            standortAufenthaltsdauer.setText(String.valueOf(standort.getDuration().getSeconds() / 60));
-            id = standort.getId();
+            location = (Location) intent.getSerializableExtra(OwnerRoutebearbeitenActivity.INTENT_EDIT_LOCATION);
+            standortName.setText(location.getName());
+            standortX.setText(Double.toString(location.getX()));
+            standortY.setText(Double.toString(location.getY()));
+            standortAnkunft.setText(localDateTimeFormatter(location.getArrival()));
+            standortAufenthaltsdauer.setText(localDateTimeFormatter(location.getDeparture()));
         }
     }
 
 
-
-    public void speicherStandort(View v){
-        Location location = createLocation();
+    public void speicherStandort(View v) {
+        if (standortName.getText().toString().equals("")) {
+            standortName.setError("Name fehlt!");
+            return;
+        }
+        if (standortX.getText().toString().equals("")) {
+            standortX.setError("X-Koordinate fehlt!");
+            return;
+        }
+        if (standortY.getText().toString().equals("")) {
+            standortY.setError("Y-Koordinate fehlt!");
+            return;
+        }
+        if (standortAnkunft.getText().toString().equals("")) {
+            standortAnkunft.setError("Ankunftzeit fehlt!");
+            return;
+        }
+        if (standortAufenthaltsdauer.getText().toString().equals("")) {
+            standortAufenthaltsdauer.setError("Abfahrtzeit fehlt!");
+            return;
+        }
+        LocalDateTime arrival = LocalDate.now().atTime(getHours(standortAnkunft.getText().toString()), getMinutes(standortAnkunft.getText().toString()));
+        LocalDateTime departure = LocalDate.now().atTime(getHours(standortAufenthaltsdauer.getText().toString()), getMinutes(standortAufenthaltsdauer.getText().toString()));
+        if(departure.isBefore(arrival)){
+            standortAufenthaltsdauer.setError("Abfahrt muss nach Ankunft erfolgen!");
+            return;
+        }
+        location.setName(standortName.getText().toString());
+        location.setX(Double.parseDouble(standortX.getText().toString()));
+        location.setY(Double.parseDouble(standortY.getText().toString()));
+        location.setArrival(arrival);
+        location.setDeparture(departure);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         Log.d(TAG, "post location: try to update location");
 
         // TODO: Endpunkt muss im Backend noch erstellt werden
-        GsonRequest<Location, Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/location/" + id , location, Boolean.class, DataService.getStandardHeader(), response -> {
-            Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-            startActivity(in);
+        GsonRequest<Location, Location> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route/update", location, Location.class, DataService.getStandardHeader(), response -> {
+            if (response == null) {
+                Log.e(TAG, "speicherStandort: something went wrong!");
+            }
+            done();
         }, error -> {
             Log.e(TAG, "Could not update location!", error);
         });
@@ -79,44 +109,28 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
 
     }
 
-    public void löscheStandort(View v){
-        Location location = createLocation();
-
+    public void deleteLocation(View v) {
         RequestQueue queue = Volley.newRequestQueue(this);
         Log.d(TAG, "delete location: try to delete location");
-
-        GsonRequest<Location[], Boolean> request = new GsonRequest<>(Request.Method.DELETE, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", new Location[]{location}, Boolean.class, DataService.getStandardHeader(), response -> {
-            Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-            startActivity(in);
+        GsonRequest<Location[], Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route/delete", new Location[]{location}, Boolean.class, DataService.getStandardHeader(), response -> {
+            done();
         }, error -> {
             Log.e(TAG, "Could not delete location!", error);
         });
         queue.add(request);
+    }
 
-        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-        startActivity(in);
+    public void done(){
+        setResult(Activity.RESULT_OK, new Intent());
+        finish();
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerRoutebearbeitenActivity.class);
-        startActivity(in);
+        startActivity(new Intent(this, OwnerRoutebearbeitenActivity.class));
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
-        startActivity(in);
-    }
-
-    public Location createLocation(){
-        String name = standortName.getText().toString();
-        double X = Double.parseDouble(standortX.getText().toString());
-        double Y = Double.parseDouble(standortY.getText().toString());
-
-        LocalDateTime ankunft = LocalDate.now().atTime(Integer.getInteger(getHours(standortAnkunft.getText().toString())), Integer.getInteger(getMinutes(standortAnkunft.getText().toString())));
-        long aufenthaltsdauer = Long.getLong(standortAufenthaltsdauer.getText().toString());
-        Duration duration = Duration.ofMinutes(aufenthaltsdauer);
-
-        return new Location(name, X, Y, ankunft, duration);
+        startActivity(new Intent(this, OwnerMenuActivity.class));
     }
 
 }

@@ -44,6 +44,10 @@ public class DtoLocation {
         this.departure = arrival.plus(duration);
     }
 
+    public Duration getDuration(){
+        return Duration.between(arrival, departure);
+    }
+
     @Override
     public String toString() {
         return name + "(" + x + ", " + y + "): from " + arrival + " until " + departure;

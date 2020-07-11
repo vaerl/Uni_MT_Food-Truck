@@ -12,11 +12,16 @@ import com.example.foodtruck.model.Dish;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map;
 
 public class GsonRequest<E, T> extends Request<T> {
@@ -24,12 +29,19 @@ public class GsonRequest<E, T> extends Request<T> {
     private String TAG = getClass().getSimpleName();
 
     private final Gson gson = new GsonBuilder().registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json, type, jsonDeserializationContext) -> {
-        Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.parse(json.getAsJsonPrimitive().getAsString()).toString());
-        return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString());
+        int year = Integer.parseInt(json.getAsJsonArray().get(0).toString());
+        int month = Integer.parseInt(json.getAsJsonArray().get(1).toString());
+        int day = Integer.parseInt(json.getAsJsonArray().get(2).toString());
+        int hour = Integer.parseInt(json.getAsJsonArray().get(3).toString());
+        int minute = Integer.parseInt(json.getAsJsonArray().get(4).toString());
+        Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.of(year, month, day, hour, minute).toString());
+        return LocalDateTime.of(year, month, day, hour, minute);
     }).registerTypeAdapter(Duration.class, (JsonDeserializer<Duration>) (json, type, jsonDeserializationContext) -> {
         Log.d(TAG, "deserialized Duration " + Duration.parse(json.getAsJsonPrimitive().getAsString()).toString());
         return Duration.parse(json.getAsJsonPrimitive().getAsString());
-    }).create();
+    }).registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .create();
     private final Class<T> clazz;
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
