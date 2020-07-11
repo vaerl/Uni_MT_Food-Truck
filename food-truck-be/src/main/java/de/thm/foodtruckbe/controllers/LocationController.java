@@ -1,21 +1,14 @@
 package de.thm.foodtruckbe.controllers;
 
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.repos.LocationRepository;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import de.thm.foodtruckbe.data.dto.DtoLocation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
-import de.thm.foodtruckbe.data.repos.LocationRepository;
 
 @RestController
 @RequestMapping("/api/location")
@@ -58,12 +51,43 @@ public class LocationController {
     }
 
     @PostMapping(path = "/{id}/leave")
-    public boolean leaveLocaiton(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
-        return getLocation(id).setLeaving(duration);
+    public Duration leaveLocation(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
+        Location currentLocation = getLocation(id);
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        currentLocation.getOperator().moveToNextLocation();
+                    }
+                },
+                duration.toMillis()
+        );
+        Location nextLocation = currentLocation.getOperator().getRoute().get(0);
+        nextLocation.setArriving(duration.plus(currentLocation.calculateTravelTime(nextLocation)));
+        locationRepository.save(nextLocation);
+        currentLocation.setLeaving(duration);
+        locationRepository.save(currentLocation);
+        return duration;
     }
 
     @PostMapping(path = "/{id}/arrive")
-    public boolean arriveAtLocation(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
-        return getLocation(id).setArriving(duration);
+    public Duration arriveAtLocation(@RequestBody Duration duration, @PathVariable(value = "id") Long id) {
+        Location nextLocation = getLocation(id);
+        Location currentLocation = nextLocation.getOperator().getCurrentLocation();
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        currentLocation.getOperator().moveToNextLocation();
+                    }
+                },
+                duration.toMillis()
+        );
+        nextLocation.setArriving(duration);
+        locationRepository.save(nextLocation);
+        Duration leave = duration.minus(currentLocation.calculateTravelTime(nextLocation));
+        currentLocation.setLeaving(leave);
+        locationRepository.save(currentLocation);
+        return leave;
     }
 }

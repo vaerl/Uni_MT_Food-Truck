@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumber3"
+        android:id="@+id/gericht_zuschlag_edittext"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -43,6 +43,6 @@
         android:text="Bestellungen"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber3"
+        app:layout_constraintEnd_toStartOf="@+id/gericht_zuschlag_edittext"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

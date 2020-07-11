@@ -35,18 +35,12 @@ public class OwnerBestellungenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_bestellungen);
 
         ListView lv = findViewById(R.id.bestellungen_ListView);
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("Content-Type", "application/json");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String operatorId = "1";
-
-
         // Bestellungen laden
 
         Log.d(TAG, "show menu: try to get Bestellungen");
 
-        GsonRequest<Order[], Order[]> requestOrders = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/orders", Order[].class, params, response -> {
+        GsonRequest<Order[], Order[]> requestOrders = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/orders", Order[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 orders = response;
                 AdvancedOwnerBestellungenAdapter advancedToDoAdapter = new AdvancedOwnerBestellungenAdapter(this, 0, orders);

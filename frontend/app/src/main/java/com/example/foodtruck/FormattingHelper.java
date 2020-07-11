@@ -17,11 +17,11 @@ public class FormattingHelper {
         return Integer.toString(time);
     }
 
-    public static String getHours(String string) {
-        return string.split(":")[0];
+    public static int getHours(String string) {
+        return Integer.parseInt(string.split(":")[0]);
     }
 
-    public static String getMinutes(String string) {
-        return string.split(":")[1];
+    public static int getMinutes(String string) {
+        return Integer.parseInt(string.split(":")[1]);
     }
 }

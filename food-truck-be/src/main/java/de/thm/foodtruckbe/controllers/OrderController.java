@@ -51,7 +51,10 @@ public class OrderController {
     }
 
     @PostMapping(path = "/{id}/status")
-    public void setOrderStatusById(@PathVariable(value = "id") Long id, @RequestBody Status status) {
-        getOrder(id).setStatus(status);
+    public boolean setOrderStatusById(@PathVariable(value = "id") Long id, @RequestBody Status status) {
+        Order order = getOrder(id);
+        order.setStatus(status);
+        orderRepository.save(order);
+        return true;
     }
 }

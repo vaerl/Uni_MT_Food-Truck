@@ -2,6 +2,7 @@ package de.thm.foodtruckbe.controllers;
 
 import de.thm.foodtruckbe.Application;
 import de.thm.foodtruckbe.data.dto.DtoDish;
+import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
 import de.thm.foodtruckbe.data.dto.order.DtoReservation;
@@ -22,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,15 +39,17 @@ public class OperatorController {
     private LocationRepository locationRepository;
     private DishRepository dishRepository;
     private OrderRepository orderRepository;
+    private IngredientRepository ingredientRepository;
 
     @Autowired
     public OperatorController(OperatorRepository operatorRepository, LocationRepository locationRepository,
-                              DishRepository dishRepository, OrderRepository orderRepository, CustomerRepository customerRespository) {
+                              DishRepository dishRepository, OrderRepository orderRepository, CustomerRepository customerRespository, IngredientRepository ingredientRepository) {
         this.operatorRepository = operatorRepository;
         this.locationRepository = locationRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.customerRespository = customerRespository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     public Operator getOperator(Long id) {
@@ -111,14 +116,17 @@ public class OperatorController {
     }
 
     @PostMapping(path = "/{id}/shopping")
-    public boolean goShopping(@PathVariable(value = "id") Long id, @RequestBody List<Ingredient> ingredients) {
-        return getOperator(id).goShopping(ingredients);
+    public List<Ingredient> goShopping(@PathVariable(value = "id") Long id, @RequestBody List<Ingredient> ingredients) {
+        Operator operator = getOperator(id);
+        List<Ingredient> stock = operator.goShopping(ingredients);
+        operatorRepository.save(operator);
+        return stock;
     }
 
     @GetMapping(path = "/{id}/orders/{locationId}")
     public List<Order> getAllOrdersForLocationByOperatorIdAndLocationId(@PathVariable(value = "id") Long operatorId,
                                                                         @PathVariable(value = "locationId") Long locationId) {
-        return getOperator(operatorId).getLocation(getLocation(locationId)).getAllOrders();
+        return getOperator(operatorId).getLocationFromRoute(getLocation(locationId)).getAllOrders();
     }
 
     @GetMapping(path = "/{id}/orders")
@@ -136,7 +144,7 @@ public class OperatorController {
                                                                              @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
         for (DtoPreOrder dtoPreOrder : dtoPreOrders) {
             PreOrder preOrder = PreOrder.create(dtoPreOrder, getCustomer(customerId), getLocation(locationId), dishRepository);
-            getOperator(operatorId).getLocation(getLocation(locationId)).addPreOrder(preOrder);
+            getOperator(operatorId).getLocationFromRoute(getLocation(locationId)).addPreOrder(preOrder);
             orderRepository.save(preOrder);
         }
         return true;
@@ -147,16 +155,24 @@ public class OperatorController {
                                                                                  @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
         for (DtoReservation dtoReservation : dtoReservations) {
             Reservation reservation = Reservation.create(dtoReservation, getCustomer(customerId), getLocation(locationId), dishRepository);
-            getOperator(operatorId).getLocation(getLocation(locationId)).addReservation(reservation);
+            getOperator(operatorId).getLocationFromRoute(getLocation(locationId)).addReservation(reservation);
             orderRepository.save(reservation);
         }
         return true;
     }
 
     @PostMapping(path = "/{id}/route")
-    public boolean addLocationsToRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
-                                                   @PathVariable(value = "id") Long id) {
-        return getOperator(id).addLocations(dtoLocations);
+    public List<Location> addLocationsToRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
+                                                          @PathVariable(value = "id") Long id) {
+        return locationRepository.saveAll(getOperator(id).addLocations(dtoLocations));
+    }
+
+    @PostMapping(path = "/{id}/route/update")
+    public Location updateLocation(@RequestBody DtoLocation dtoLocation, @PathVariable(value = "id") Long id) {
+        Operator operator = getOperator(id);
+        Location location = getLocation(dtoLocation.getId()).merge(dtoLocation);
+        location = getLocation(dtoLocation.getId()).merge(operator.updateRoute(location, locationRepository));
+        return locationRepository.save(location);
     }
 
     @PostMapping(path = "/{id}/route/next")
@@ -164,10 +180,14 @@ public class OperatorController {
         return getOperator(id).moveToNextLocation();
     }
 
-    @DeleteMapping(path = "/{id}/route")
+    @PostMapping(path = "/{id}/route/delete")
     public boolean removeLocationsFromRouteByOperatorId(@RequestBody List<DtoLocation> dtoLocations,
                                                         @PathVariable(value = "id") Long id) {
-        return getOperator(id).removeLocations(dtoLocations);
+        Operator operator = getOperator(id);
+        operator.removeLocations(dtoLocations, locationRepository);
+        operator.updateRoute(operator.getCurrentLocation(), locationRepository);
+        operatorRepository.save(operator);
+        return true;
     }
 
     @DeleteMapping(path = "/{id}/menu")
@@ -212,7 +232,16 @@ public class OperatorController {
                            @PathVariable(value = "dishId") Long dishId, @RequestBody DtoDish dtoDish) {
         Operator operator = getOperator(operatorId);
         Dish dish = operator.getDishFromMenu(getDish(dishId));
-        dish = dish.merge(Dish.create(dtoDish, operator));
+        dish = dishRepository.save(dish.merge(Dish.create(dtoDish, operator)));
+        List<Ingredient> ingredients = new ArrayList<>();
+        if (dtoDish.getIngredients() != null) {
+            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
+                Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
+                ingredientRepository.save(i);
+                ingredients.add(i);
+            }
+        }
+        dish.setIngredients(ingredients);
         operator.updateMenu(dish);
         return dishRepository.save(dish);
     }
@@ -239,6 +268,15 @@ public class OperatorController {
         Operator operator = getOperator(operatorId);
         Dish savedDish = dishRepository.save(Dish.create(dtoDish, operator));
         operator.addDishToMenu(savedDish);
-        return savedDish;
+        List<Ingredient> ingredients = new ArrayList<>();
+        if (dtoDish.getIngredients() != null) {
+            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
+                Ingredient i = Ingredient.create(dtoIngredient, savedDish, operator);
+                ingredientRepository.save(i);
+                ingredients.add(i);
+            }
+        }
+        savedDish.setIngredients(ingredients);
+        return dishRepository.save(savedDish);
     }
 }

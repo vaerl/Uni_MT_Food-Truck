@@ -37,10 +37,9 @@ public class Dish {
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    @JsonBackReference(value = "dish-ingredient")
+//    @JsonBackReference(value = "dish-ingredient")
     private List<Ingredient> ingredients;
 
-    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
     @OneToMany(mappedBy = "dish")
     @JsonBackReference(value = "dish-dishwrapper")
     private List<DishWrapper> dishWrappers;
@@ -76,24 +75,15 @@ public class Dish {
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
-        Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
-        List<Ingredient> ingredients = new ArrayList<>();
-        if (dtoDish.getIngredients() != null) {
-            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
-                Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
-                ingredients.add(i);
-            }
-        }
-        dish.setIngredients(ingredients);
-        return dish;
+        return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
     }
 
     public Dish merge(Dish dish) {
         this.adjustedPrice = dish.adjustedPrice;
-        this.basePrice = this.basePrice;
+        this.basePrice = dish.basePrice;
         this.ingredients = dish.ingredients;
         this.name = dish.name;
-        this.rating = rating;
+        this.rating = dish.rating;
         return this;
     }
 }
