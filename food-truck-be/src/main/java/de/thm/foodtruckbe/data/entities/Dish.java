@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.repos.DishRepository;
+import de.thm.foodtruckbe.data.repos.IngredientRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,12 +33,17 @@ public class Dish {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference(value = "operator")
+    @JsonManagedReference
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-    @JsonBackReference(value = "ingredients")
+    @JsonBackReference(value = "dish-ingredient")
     private List<Ingredient> ingredients;
+
+    //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+    @OneToMany(mappedBy = "dish")
+    @JsonBackReference(value = "dish-dishwrapper")
+    private List<DishWrapper> dishWrappers;
 
     /**
      * Constructor for {@code Dish}.
@@ -61,9 +68,9 @@ public class Dish {
      */
     public boolean addRating(int rating) {
         if (this.rating == 0) {
-            this.rating = 0;
+            this.rating = rating;
         } else {
-            this.rating = (this.rating * rating) / 2;
+            this.rating = (this.rating + rating) / 2;
         }
         return true;
     }
@@ -71,8 +78,11 @@ public class Dish {
     public static Dish create(DtoDish dtoDish, Operator operator) {
         Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
         List<Ingredient> ingredients = new ArrayList<>();
-        for (DtoIngredient dtoIngredient : dtoDish.getDtoIngredients()) {
-            ingredients.add(Ingredient.create(dtoIngredient, dish, operator));
+        if (dtoDish.getIngredients() != null) {
+            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
+                Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
+                ingredients.add(i);
+            }
         }
         dish.setIngredients(ingredients);
         return dish;

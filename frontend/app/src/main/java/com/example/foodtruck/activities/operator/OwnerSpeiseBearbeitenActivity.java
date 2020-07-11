@@ -92,12 +92,7 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
             if (requestCode == RC_NEW_INGREDIENT && data.hasExtra(INTENT_NEW_INGREDIENT) && data.hasExtra(INTENT_NEW_AMOUNT)) {
                 String ingredient = (String) data.getSerializableExtra(INTENT_NEW_INGREDIENT);
                 int amount = data.getIntExtra(INTENT_NEW_AMOUNT, 1);
-                // TODO improve
-                for (Ingredient.IngredientName ingredientEnum : Ingredient.IngredientName.class.getEnumConstants()) {
-                    if (ingredientEnum.toString().equalsIgnoreCase(ingredient)) {
-                        ingredients.add(new Ingredient(ingredientEnum, amount));
-                    }
-                }
+                ingredients.add(new Ingredient(ingredient, amount));
 
             }
         } else {
