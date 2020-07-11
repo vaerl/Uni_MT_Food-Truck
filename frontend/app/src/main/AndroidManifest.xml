@@ -24,6 +24,7 @@
         <activity android:name=".activities.customer.CustomerShowRouteActivity"/>
         <activity android:name=".activities.customer.CustomerShowMenuActivity"/>
         <activity android:name=".activities.customer.CustomerShowOrdersActivity"/>
+        <activity android:name=".activities.customer.CustomerShowOrderDetailsActivity"/>
         <activity android:name=".activities.customer.CustomerNewOrderActivityOne"/>
         <activity android:name=".activities.customer.CustomerNewOrderActivityTwo"/>
         <activity android:name=".activities.customer.CustomerThankYouActivity"/>

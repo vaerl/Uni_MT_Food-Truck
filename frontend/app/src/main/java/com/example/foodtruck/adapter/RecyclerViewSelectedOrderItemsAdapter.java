@@ -1,6 +1,5 @@
 package com.example.foodtruck.adapter;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,8 +55,7 @@ public class RecyclerViewSelectedOrderItemsAdapter extends RecyclerView.Adapter<
         // create a new view
         LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_customer_order_selection_item, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -71,6 +69,6 @@ public class RecyclerViewSelectedOrderItemsAdapter extends RecyclerView.Adapter<
 
     @Override
     public int getItemCount() {
-        return selectedItems.size() - 1;
+        return selectedItems.size();
     }
 }

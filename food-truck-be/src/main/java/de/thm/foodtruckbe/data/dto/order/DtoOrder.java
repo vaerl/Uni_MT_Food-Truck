@@ -1,6 +1,7 @@
 package de.thm.foodtruckbe.data.dto.order;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
 import de.thm.foodtruckbe.data.dto.DtoLocation;
 import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
@@ -18,6 +19,7 @@ public abstract class DtoOrder {
 
     private Long id;
     private DtoLocation dtoLocation;
+
     protected List<DtoDishWrapper> items;
     protected DtoCustomer dtoCustomer;
     protected double price;
