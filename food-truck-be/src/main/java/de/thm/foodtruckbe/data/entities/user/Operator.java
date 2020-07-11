@@ -38,15 +38,15 @@ public class Operator extends User {
     private Long id;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+    @JsonBackReference(value = "operator")
     private List<Dish> preOrderMenu;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference
+//    @JsonBackReference(value = "operator")
     private List<Dish> reservationMenu;
 
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference(value = "operator-location")
+    @JsonBackReference
     private List<Location> route;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -57,8 +57,15 @@ public class Operator extends User {
     @Transient
     private Location initialLocation;
 
+    //    @ElementCollection
+//    @CollectionTable(name = "ingredient_amount_mapping_stock")
+//    @MapKeyEnumerated(EnumType.STRING)
+//    @MapKeyClass(Ingredient.class)
+//    @MapKeyColumn(name = "ingredient", nullable = false)
+//    @Column(name = "amount")
+//    private Map<Ingredient, Integer> stock;
     @OneToMany(mappedBy = "operator")
-    @JsonBackReference(value = "operator-ingredient")
+    @JsonBackReference
     private List<Ingredient> stock;
 
     /**
@@ -172,6 +179,7 @@ public class Operator extends User {
 
     // shopping
     @JsonIgnore
+    // TODO accept Map<Ingredient, Integer>
     public ArrayList<Ingredient> getShoppingList() {
         ArrayList<Ingredient> results = new ArrayList<>();
         for (Location location : route) {
@@ -221,7 +229,7 @@ public class Operator extends User {
     public boolean isPossible(Order order) {
         for (DishWrapper dishWrapper : order.getItems()) {
             for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
-                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
+                if (dishWrapper.getAmount() * ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()){
                     return false;
                 }
             }

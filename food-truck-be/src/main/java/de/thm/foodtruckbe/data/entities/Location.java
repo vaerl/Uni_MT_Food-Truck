@@ -37,7 +37,7 @@ public class Location {
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference(value = "operator-location")
+    @JsonManagedReference
     private Operator operator;
     // Values in kilometers
     private double x;

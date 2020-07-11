@@ -8,7 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,6 +29,7 @@ import com.example.foodtruck.model.order.Reservation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CustomerNewOrderActivityOne extends AppCompatActivity {
 
@@ -48,8 +53,6 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_order_menu);
-        selectedDishesReservation = new ArrayList<>();
-        selectedDishesPreOrder = new ArrayList<>();
 
         lvReservation = findViewById(R.id.new_order_list_reservation);
         lvPreorder = findViewById(R.id.new_order_list_preorder);
@@ -61,7 +64,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         selected_items.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        RecyclerViewSelectedOrderItemsAdapter  recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
+        RecyclerView.Adapter  recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
         selected_items.setAdapter(recyclerViewSelectedOrderItemsAdapter);
 
         TabLayout tabs = findViewById(R.id.tabLayout2);
@@ -91,15 +94,18 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
 
         // Reservation
         // ---------------------------------------------------------------
-        Log.d(TAG, "show route: try to get reservation menu");
+        Log.d(TAG, "show route: try to get reservation manu");
         GsonRequest<Dish[], Dish[]> requestReservation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/menu/reservation", Dish[].class, DataService.getStandardHeader(), response -> {
             if (response != null) {
                 dishesReservation = response;
                 AdvancedCustomerNewOrderMenuAdapter advancedCustomerNewOrderMenuAdapterReservation = new AdvancedCustomerNewOrderMenuAdapter(this, 0, dishesReservation, "reservation");
                 lvReservation.setAdapter(advancedCustomerNewOrderMenuAdapterReservation);
-                lvReservation.setOnItemClickListener((parent, view, position, id) -> {
-                    selectedItems.add(dishesReservation[position]);
-                    recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
+                lvReservation.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        selectedItems.add(dishesReservation[position]);
+                        recyclerViewSelectedOrderItemsAdapter.notifyDataSetChanged();
+                    }
                 });
             }
         }, error -> {

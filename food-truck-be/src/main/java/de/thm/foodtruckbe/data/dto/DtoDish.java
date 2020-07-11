@@ -19,12 +19,14 @@ public class DtoDish {
     private double basePrice;
     private double adjustedPrice;
     private double rating;
-    private List<DtoIngredient> ingredients;
+
+    @JsonManagedReference(value = "operator")
+    private List<DtoIngredient> dtoIngredients;
 
     public DtoDish(String name, double basePrice, List<DtoIngredient> dtoIngredients) {
         this.name = name;
         this.basePrice = Math.abs(basePrice);
-        this.ingredients = dtoIngredients;
+        this.dtoIngredients = dtoIngredients;
     }
 
 }

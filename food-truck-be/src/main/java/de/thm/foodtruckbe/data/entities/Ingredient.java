@@ -20,20 +20,20 @@ public class Ingredient {
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private IngredientName name;
     private int amount;
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
-    @JsonManagedReference(value = "dish-ingredient")
+    @JsonManagedReference(value = "ingredients")
     private Dish dish;
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-    @JsonManagedReference(value = "operator-location")
+    @JsonManagedReference
     private Operator operator;
 
-    public Ingredient(String name, int amount, Dish dish, Operator operator){
+    public Ingredient(IngredientName name, int amount, Dish dish, Operator operator){
         this.name = name;
         this.amount = amount;
         this.dish = dish;

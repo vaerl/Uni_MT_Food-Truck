@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerOrderDetailsAdapter;
 import com.example.foodtruck.model.Dish;
-import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.order.Order;
 
 import java.util.ArrayList;
@@ -30,22 +29,18 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_order_details);
+        setContentView(R.layout.activity_customer_show_menu);
 
         orderNumber = findViewById(R.id.order_details_number_c);
         orderStatus = findViewById(R.id.order_details_status_c);
-        lvReservation = findViewById(R.id.customer_order_details_list);
+        lvReservation = findViewById(R.id.customer_show_menu_reservation_list);
 
         if(getIntent().hasExtra(EXTRA_PARAMETER)){
             Intent intent = getIntent();
             Order order = (Order) intent.getSerializableExtra(EXTRA_PARAMETER);
             orderNumber.setText(order.getId().toString());
             orderStatus.setText(order.getStatus().toString());
-            DishWrapper[] dishWrappers = new DishWrapper[order.getItems().size()];
-            for (int i = 0; i < order.getItems().size(); i++) {
-                dishWrappers[i] = order.getItems().get(i);
-            }
-            AdvancedCustomerOrderDetailsAdapter advancedCustomerOrderDetailsAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, dishWrappers);
+            AdvancedCustomerOrderDetailsAdapter advancedCustomerOrderDetailsAdapter = new AdvancedCustomerOrderDetailsAdapter(this, 0, order.getItems());
             lvReservation.setAdapter(advancedCustomerOrderDetailsAdapter);
         }
 

@@ -12,26 +12,22 @@ import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.repos.DishRepository;
-import de.thm.foodtruckbe.data.repos.IngredientRepository;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 public class PreOrder extends Order {
 
-    public PreOrder(Customer customer, Location location) {
-        super(customer, location);
+    public PreOrder(Customer customer, Location location, List<DishWrapper> items) {
+        super(customer, location, items);
     }
 
-    public static PreOrder create(DtoPreOrder dtoPreOrder, Customer customer, Location location, DishRepository dishRepository) {
-        PreOrder preOrder = new PreOrder(customer, location);
+    public static PreOrder create(DtoPreOrder dtoPreOrder, Customer customer, Location location) {
         List<DishWrapper> dishWrappers = new ArrayList<>();
         for (DtoDishWrapper dtoDishWrapper : dtoPreOrder.getItems()) {
-            dishWrappers.add(DishWrapper.create(preOrder, dtoDishWrapper, getDish(dtoDishWrapper.getDish().getId(), dishRepository)));
+            dishWrappers.add(DishWrapper.create(dtoDishWrapper, location.getOperator()));
         }
-        preOrder.addAllItems(dishWrappers);
-        return preOrder;
+        return new PreOrder(customer, location, dishWrappers);
     }
 
     @Override

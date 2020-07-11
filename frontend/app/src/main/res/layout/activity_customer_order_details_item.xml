@@ -46,22 +46,23 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="5dp"
         android:ems="10"
-        android:hint="Bewertung"
         android:inputType="number"
+        android:text="Bewertung"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView18"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/order_details_dish_rating_button_c"
-        android:layout_width="53dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="2dp"
-        android:text="✔"
+        android:text="Button"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/order_details_dish_rating_c"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bewerten" />
 </android.support.constraint.ConstraintLayout>

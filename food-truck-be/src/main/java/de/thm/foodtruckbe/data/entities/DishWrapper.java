@@ -1,15 +1,12 @@
 package de.thm.foodtruckbe.data.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import de.thm.foodtruckbe.data.dto.DtoDish;
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
-import de.thm.foodtruckbe.data.entities.order.Order;
 import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.data.repos.DishRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -25,23 +22,17 @@ public class DishWrapper {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
-    @JsonIgnore
-    private Order order;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "dish_id", nullable = false)
-    @JsonManagedReference(value = "dish-dishwrapper")
+    @JsonManagedReference
     private Dish dish;
 
     private int amount;
 
-    public DishWrapper(Order order, Dish dish, int amount) {
-        this.order = order;
+    public DishWrapper(Dish dish, int amount) {
         this.dish = dish;
         this.amount = amount;
     }
 
-    public static DishWrapper create(Order order, DtoDishWrapper dtoDishWrapper, Dish dish) {
-        return new DishWrapper(order, dish, dtoDishWrapper.getAmount());
+    public static DishWrapper create(DtoDishWrapper dtoDishWrapper, Operator operator){
+        return new DishWrapper(Dish.create(dtoDishWrapper.getDish(), operator), dtoDishWrapper.getAmount());
     }
 }

@@ -2,7 +2,6 @@ package de.thm.foodtruckbe.data.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Ingredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
@@ -16,10 +15,13 @@ import lombok.Setter;
 public class DtoIngredient {
 
     private Long id;
-    private String name;
+    private Ingredient.IngredientName name;
     private int amount;
+    @JsonBackReference(value = "dtoIngredients")
+    private Dish dish;
+    private Operator operator;
 
-    public DtoIngredient(String name, int amount){
+    public DtoIngredient(Ingredient.IngredientName name, int amount){
         this.name = name;
         this.amount = amount;
     }

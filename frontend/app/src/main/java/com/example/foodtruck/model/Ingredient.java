@@ -15,12 +15,12 @@ import lombok.Setter;
 public class Ingredient implements Serializable {
 
     private Long id;
-    private String name;
+    private Ingredient.IngredientName name;
     private int amount;
     private Dish dish;
     private Operator operator;
 
-    public Ingredient(String name, int amount) {
+    public Ingredient(Ingredient.IngredientName name, int amount) {
         this.name = name;
         this.amount = amount;
     }

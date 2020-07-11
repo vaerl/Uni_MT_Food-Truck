@@ -135,7 +135,7 @@ public class OperatorController {
     public boolean addPreOrderForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoPreOrder> dtoPreOrders,
                                                                              @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
         for (DtoPreOrder dtoPreOrder : dtoPreOrders) {
-            PreOrder preOrder = PreOrder.create(dtoPreOrder, getCustomer(customerId), getLocation(locationId), dishRepository);
+            PreOrder preOrder = PreOrder.create(dtoPreOrder, getCustomer(customerId), getLocation(locationId));
             getOperator(operatorId).getLocation(getLocation(locationId)).addPreOrder(preOrder);
             orderRepository.save(preOrder);
         }
@@ -146,7 +146,7 @@ public class OperatorController {
     public boolean addReservationsForLocationByOperatorIdLocationidAndCustomerId(@RequestBody List<DtoReservation> dtoReservations,
                                                                                  @PathVariable(value = "id") Long operatorId, @PathVariable(value = "locationId") Long locationId, @PathVariable(value = "customerId") Long customerId) {
         for (DtoReservation dtoReservation : dtoReservations) {
-            Reservation reservation = Reservation.create(dtoReservation, getCustomer(customerId), getLocation(locationId), dishRepository);
+            Reservation reservation = Reservation.create(dtoReservation, getCustomer(customerId), getLocation(locationId));
             getOperator(operatorId).getLocation(getLocation(locationId)).addReservation(reservation);
             orderRepository.save(reservation);
         }
@@ -201,10 +201,8 @@ public class OperatorController {
 
     @PostMapping(path = "/{id}/dishes/{dishId}/rate")
     public void addDishRatingByDishIdAndOperatorId(@PathVariable(value = "id") Long operatorId,
-                                                   @PathVariable(value = "dishId") Long dishId, @RequestBody Integer rating) {
-        Dish dish = getOperator(operatorId).getDishFromMenu(getDish(dishId));
-        dish.addRating(rating);
-        dishRepository.save(dish);
+                                                   @PathVariable(value = "dishId") Long dishId, @RequestParam(value = "rating") Integer rating) {
+        getOperator(operatorId).getDishFromMenu(getDish(dishId)).addRating(rating);
     }
 
     @PostMapping(path = "/{id}/dishes/{dishId}/update")
