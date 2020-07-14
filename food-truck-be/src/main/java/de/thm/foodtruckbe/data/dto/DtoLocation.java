@@ -31,20 +31,7 @@ public class DtoLocation {
         this.status = Location.Status.OPEN;
     }
 
-    public DtoLocation(final String name, final double x, final double y,
-                       final Duration duration) {
-        this(name, x, y);
-        this.departure = arrival.plus(duration);
-    }
-
-    public DtoLocation(final String name, final double x, final double y,
-                       final LocalDateTime arrival, final Duration duration) {
-        this(name, x, y);
-        this.arrival = arrival;
-        this.departure = arrival.plus(duration);
-    }
-
-    public Duration getDuration(){
+    public Duration getDuration() {
         return Duration.between(arrival, departure);
     }
 

@@ -24,6 +24,11 @@ public abstract class User {
     protected String name;
     protected String password;
 
+    /**
+     * Abstract superclass for Customer and Operator.
+     * @param name
+     * @param password
+     */
     public User(String name, String password) {
         this();
         this.name = name;

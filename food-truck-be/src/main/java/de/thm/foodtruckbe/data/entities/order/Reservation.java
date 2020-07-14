@@ -1,21 +1,16 @@
 package de.thm.foodtruckbe.data.entities.order;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.Entity;
-
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
-import de.thm.foodtruckbe.data.dto.order.DtoPreOrder;
 import de.thm.foodtruckbe.data.dto.order.DtoReservation;
 import de.thm.foodtruckbe.data.entities.DishWrapper;
-import de.thm.foodtruckbe.data.entities.user.Customer;
-import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.repos.DishRepository;
-import de.thm.foodtruckbe.data.repos.IngredientRepository;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor

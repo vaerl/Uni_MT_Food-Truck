@@ -1,21 +1,16 @@
 package de.thm.foodtruckbe.data.entities.user;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-
 import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
 import de.thm.foodtruckbe.data.entities.Location;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.Entity;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -27,6 +22,14 @@ public class Customer extends User {
         super(name, password);
     }
 
+    /**
+     * Get the nearest locations of the truck based on the user's coordinates.
+     *
+     * @param operator
+     * @param x
+     * @param y
+     * @return
+     */
     public List<Location> getNearestLocations(Operator operator, double x, double y) {
         return operator.getRoute().stream()
                 .collect(Collectors.toMap(Function.identity(), e -> e.calculateDistance(x, y))).entrySet().stream()

@@ -44,7 +44,7 @@ public abstract class Order {
     @Enumerated(EnumType.STRING)
     protected Status status;
 
-    public Order(){
+    public Order() {
         this.items = new ArrayList<>();
     }
 
@@ -58,9 +58,9 @@ public abstract class Order {
 
     public abstract boolean addItem(DishWrapper dishWrapper);
 
-    public boolean addAllItems(List<DishWrapper> dishWrappers){
-        for (DishWrapper dishWrapper:dishWrappers) {
-            if(!this.addItem(dishWrapper)){
+    public boolean addAllItems(List<DishWrapper> dishWrappers) {
+        for (DishWrapper dishWrapper : dishWrappers) {
+            if (!this.addItem(dishWrapper)) {
                 return false;
             }
         }
@@ -69,9 +69,9 @@ public abstract class Order {
 
     public abstract boolean removeItem(DishWrapper dishWrapper);
 
-    public boolean removeAllItems(List<DishWrapper> dishWrappers){
-        for (DishWrapper dishWrapper:dishWrappers) {
-            if(!this.removeItem(dishWrapper)){
+    public boolean removeAllItems(List<DishWrapper> dishWrappers) {
+        for (DishWrapper dishWrapper : dishWrappers) {
+            if (!this.removeItem(dishWrapper)) {
                 return false;
             }
         }

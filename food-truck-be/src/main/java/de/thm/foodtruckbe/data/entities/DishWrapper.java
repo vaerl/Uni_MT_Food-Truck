@@ -4,12 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDishWrapper;
 import de.thm.foodtruckbe.data.entities.order.Order;
-import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.data.repos.DishRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -35,6 +32,13 @@ public class DishWrapper {
 
     private int amount;
 
+    /**
+     * Wrapper, combines a dish with an amount.
+     *
+     * @param order
+     * @param dish
+     * @param amount
+     */
     public DishWrapper(Order order, Dish dish, int amount) {
         this.order = order;
         this.dish = dish;

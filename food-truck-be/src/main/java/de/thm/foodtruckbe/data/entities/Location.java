@@ -220,6 +220,12 @@ public class Location {
     }
 
     // preOrders
+
+    /**
+     * Adds PreOrder if before the next day and the location is available.
+     * @param preOrder
+     * @return
+     */
     public boolean addPreOrder(final PreOrder preOrder) {
         if (isBeforeNextDay() || status == Status.CLOSED || status == Status.LEAVING) {
             return false;
@@ -227,15 +233,11 @@ public class Location {
         return preOrders.add(preOrder);
     }
 
-    public boolean addAllPreOrders(final List<PreOrder> preOrders) {
-        for (final PreOrder preOrder : preOrders) {
-            if (!addPreOrder(preOrder)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    /**
+     * Removes the given preorder.
+     * @param preOrder
+     * @return
+     */
     public boolean removePreOrder(final PreOrder preOrder) {
         if (isBeforeNextDay()) {
             return false;
@@ -244,6 +246,12 @@ public class Location {
     }
 
     // reservations
+
+    /**
+     * Adds the Reservation if it is possible and the location is available.
+     * @param reservation
+     * @return
+     */
     public boolean addReservation(final Reservation reservation) {
         if (!isPossible(reservation) || status == Status.CLOSED || status == Status.LEAVING) {
             return false;
@@ -251,16 +259,11 @@ public class Location {
         return this.reservations.add(reservation);
     }
 
-    public boolean addAllReservations(final List<Reservation> reservations) {
-        for (final Reservation reservation : reservations) {
-            if (!addReservation(reservation)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // remove reservation
+    /**
+     * Removes the given reservation and updates the operators stock.
+     * @param reservation
+     * @return
+     */
     public boolean removeReservation(final Reservation reservation) {
         // remove reservation
         if (this.reservations.remove(reservation)) {
@@ -272,7 +275,11 @@ public class Location {
         }
     }
 
-    // check orders
+    /**
+     * Checks if the given order is possible with the current stock of ingredients.
+     * @param order
+     * @return
+     */
     private boolean isPossible(final Order order) {
         for (DishWrapper dishWrapper : order.getItems()) {
             for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
@@ -285,16 +292,10 @@ public class Location {
         return true;
     }
 
-    private boolean isPossible(final Dish dish) {
-        for (Ingredient ingredient : dish.getIngredients()) {
-            if (ingredient.getAmount() > operator.getStock()
-                    .get(operator.getStock().indexOf(ingredient)).getAmount()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    /**
+     * Checks if the current time is before the next location's day.
+     * @return
+     */
     @JsonIgnore
     public boolean isBeforeNextDay() {
         return LocalDateTime.now().isBefore(LocalDateTime.of(arrival.toLocalDate().plusDays(1), LocalTime.of(7, 0, 0)));

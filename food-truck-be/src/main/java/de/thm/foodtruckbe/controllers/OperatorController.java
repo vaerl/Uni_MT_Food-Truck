@@ -52,6 +52,7 @@ public class OperatorController {
         this.ingredientRepository = ingredientRepository;
     }
 
+    // helper-methods for accessing the repositories
     public Operator getOperator(Long id) {
         Optional<Operator> operator = operatorRepository.findById(id);
         if (operator.isPresent()) {

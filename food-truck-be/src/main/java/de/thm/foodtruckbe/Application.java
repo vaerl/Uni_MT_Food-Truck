@@ -1,31 +1,28 @@
 package de.thm.foodtruckbe;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.*;
-
+import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.DishWrapper;
 import de.thm.foodtruckbe.data.entities.Ingredient;
+import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.order.PreOrder;
+import de.thm.foodtruckbe.data.entities.order.Reservation;
+import de.thm.foodtruckbe.data.entities.user.Customer;
+import de.thm.foodtruckbe.data.entities.user.Operator;
+import de.thm.foodtruckbe.data.repos.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import de.thm.foodtruckbe.data.entities.user.Customer;
-import de.thm.foodtruckbe.data.entities.Dish;
-import de.thm.foodtruckbe.data.entities.Location;
-import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.data.entities.order.PreOrder;
-import de.thm.foodtruckbe.data.entities.order.Reservation;
-import de.thm.foodtruckbe.data.repos.CustomerRepository;
-import de.thm.foodtruckbe.data.repos.DishRepository;
-import de.thm.foodtruckbe.data.repos.LocationRepository;
-import de.thm.foodtruckbe.data.repos.OperatorRepository;
-import de.thm.foodtruckbe.data.repos.OrderRepository;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication
 public class Application {
@@ -113,7 +110,6 @@ public class Application {
         };
     }
 
-    // TODO figure out how to check if the container already exists
     public static void createMySQLContainer(String containerName, String databasePassword, String databaseName) {
         try {
             log.info("Checking if container {} exists.", containerName);

@@ -9,7 +9,5 @@ import de.thm.foodtruckbe.data.entities.user.Operator;
 
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
-    List<Operator> findByName(String name);
-
     Optional<Operator> findById(Long id);
 }

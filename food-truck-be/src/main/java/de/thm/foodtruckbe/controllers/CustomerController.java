@@ -1,28 +1,20 @@
 package de.thm.foodtruckbe.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
 import de.thm.foodtruckbe.data.dto.user.DtoCustomer;
-import de.thm.foodtruckbe.data.entities.order.Order;
-import de.thm.foodtruckbe.data.repos.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.entities.Location;
+import de.thm.foodtruckbe.data.entities.order.Order;
+import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.entities.user.Operator;
-import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
 import de.thm.foodtruckbe.data.repos.CustomerRepository;
 import de.thm.foodtruckbe.data.repos.OperatorRepository;
+import de.thm.foodtruckbe.data.repos.OrderRepository;
+import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customer")
