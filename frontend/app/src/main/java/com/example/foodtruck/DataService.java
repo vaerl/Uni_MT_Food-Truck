@@ -21,7 +21,7 @@ public class DataService {
     private static SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-//    public static String BACKEND_URL = "http://192.168.54.225:8080/api";
+    //    public static String BACKEND_URL = "http://192.168.54.225:8080/api";
     public static String BACKEND_URL = "http://192.168.0.115:8080/api";
     public static String USER_TYPE_TAG = "user_type";
     public static String USER_ID_TAG = "user_id";
@@ -65,7 +65,7 @@ public class DataService {
         return preferences.getString(tag, "getEntry-Default");
     }
 
-    public boolean isPresent(String tag){
+    public boolean isPresent(String tag) {
         return !preferences.getString(tag, "getEntry-Default").equals("getEntry-Default");
     }
 
@@ -81,20 +81,20 @@ public class DataService {
         }
     }
 
-    public boolean setUserId(Long id){
+    public boolean setUserId(Long id) {
         return setEntry(USER_ID_TAG, String.valueOf(id));
     }
 
-    public String getUserId(){
+    public String getUserId() {
         return getEntry(USER_ID_TAG);
     }
 
 
-    public boolean setLocationId(Long id){
+    public boolean setLocationId(Long id) {
         return setEntry(Location_ID_TAG, String.valueOf(id));
     }
 
-    public String getLocationId(){
+    public String getLocationId() {
         return getEntry(Location_ID_TAG);
     }
 
@@ -102,14 +102,20 @@ public class DataService {
         CUSTOMER, OPERATOR
     }
 
-    public static String translate(Order.Status status){
-        switch (status){
-            case DONE: return "Fertig";
-            case STARTED: return "Begonnen";
-            case ACCEPTED: return "Akzeptiert";
-            case CONFIRMED: return "Bestätigt";
-            case NOT_POSSIBLE: return "Nicht möglich";
-            default: return "ERROR";
+    public static String translate(Order.Status status) {
+        switch (status) {
+            case DONE:
+                return "Fertig";
+            case STARTED:
+                return "Begonnen";
+            case ACCEPTED:
+                return "Akzeptiert";
+            case CONFIRMED:
+                return "Bestätigt";
+            case NOT_POSSIBLE:
+                return "Nicht möglich";
+            default:
+                return "ERROR";
         }
     }
 }

@@ -16,12 +16,12 @@ public class CustomerThankYouActivity extends AppCompatActivity {
     }
 
 
-    public void showOrders(View v){
+    public void showOrders(View v) {
         Intent in = new Intent(this, CustomerShowOrdersActivity.class);
         startActivity(in);
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

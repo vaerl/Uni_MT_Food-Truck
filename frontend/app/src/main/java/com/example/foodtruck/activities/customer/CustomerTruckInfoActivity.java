@@ -38,10 +38,10 @@ public class CustomerTruckInfoActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         String operatorId = "1";
 
-        TextView currentLocation =  findViewById(R.id.current_truck_location);
+        TextView currentLocation = findViewById(R.id.current_truck_location);
 
         GsonRequest<Location, Location> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + operatorId + "/location", Location.class, params, response -> {
-            if (response!= null) {
+            if (response != null) {
                 currentLocation.setText(response.getName());
             }
         }, error -> {
@@ -50,17 +50,17 @@ public class CustomerTruckInfoActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    public void showRoute(View v){
+    public void showRoute(View v) {
         Intent in = new Intent(this, CustomerShowRouteActivity.class);
         startActivity(in);
     }
 
-    public void showMenu(View v){
+    public void showMenu(View v) {
         Intent in = new Intent(this, CustomerShowMenuActivity.class);
         startActivity(in);
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -16,9 +15,6 @@ import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerOrdersAdapter;
 import com.example.foodtruck.model.order.Order;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CustomerShowOrdersActivity extends AppCompatActivity {
 
@@ -58,7 +54,7 @@ public class CustomerShowOrdersActivity extends AppCompatActivity {
         queue.add(requestReservation);
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

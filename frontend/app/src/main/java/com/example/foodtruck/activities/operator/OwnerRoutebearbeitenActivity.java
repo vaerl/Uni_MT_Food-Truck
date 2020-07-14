@@ -16,9 +16,6 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedOwnerRoutebearbeitenAdapter;
 import com.example.foodtruck.model.Location;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
@@ -42,11 +39,11 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       if(resultCode == RESULT_OK){
-           if (requestCode == RC_EDIT_LOCATION || requestCode == RC_ADD_LOCATION) {
-               updateLocations();
-           }
-       }
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RC_EDIT_LOCATION || requestCode == RC_ADD_LOCATION) {
+                updateLocations();
+            }
+        }
     }
 
     public void updateLocations() {

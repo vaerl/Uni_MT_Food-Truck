@@ -83,7 +83,7 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
         }
         LocalDateTime arrival = LocalDate.now().atTime(getHours(standortAnkunft.getText().toString()), getMinutes(standortAnkunft.getText().toString()));
         LocalDateTime departure = LocalDate.now().atTime(getHours(standortAufenthaltsdauer.getText().toString()), getMinutes(standortAufenthaltsdauer.getText().toString()));
-        if(departure.isBefore(arrival)){
+        if (departure.isBefore(arrival)) {
             standortAufenthaltsdauer.setError("Abfahrt muss nach Ankunft erfolgen!");
             return;
         }
@@ -120,7 +120,7 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    public void done(){
+    public void done() {
         setResult(Activity.RESULT_OK, new Intent());
         finish();
     }

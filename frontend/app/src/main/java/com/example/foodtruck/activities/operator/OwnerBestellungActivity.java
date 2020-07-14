@@ -1,6 +1,5 @@
 package com.example.foodtruck.activities.operator;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
-import com.example.foodtruck.model.Location;
 import com.example.foodtruck.model.order.Order;
 
 public class OwnerBestellungActivity extends AppCompatActivity {
@@ -86,11 +84,11 @@ public class OwnerBestellungActivity extends AppCompatActivity {
         startActivity(in);
     }
 
-    public void updateStatus(){
-        if(order.getStatus() == Order.Status.STARTED){
+    public void updateStatus() {
+        if (order.getStatus() == Order.Status.STARTED) {
             findViewById(R.id.beginnen_button2).setVisibility(View.INVISIBLE);
         }
-        if(order.getStatus() == Order.Status.DONE){
+        if (order.getStatus() == Order.Status.DONE) {
             findViewById(R.id.beginnen_button2).setVisibility(View.INVISIBLE);
             findViewById(R.id.abschliessen_button2).setVisibility(View.INVISIBLE);
         }

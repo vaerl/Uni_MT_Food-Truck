@@ -89,7 +89,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
                     Log.e(TAG, "Could not save Dish!", error);
                 });
                 queue.add(requestGerichte);
-            } else if(requestCode == RC_EDIT_DISH && data.hasExtra(INTENT_EDIT_DISH)){
+            } else if (requestCode == RC_EDIT_DISH && data.hasExtra(INTENT_EDIT_DISH)) {
                 Dish dish = (Dish) data.getSerializableExtra(INTENT_EDIT_DISH);
                 // save dish
                 GsonRequest<Dish, Dish> requestGerichte = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/dishes/" + dish.getId() + "/update", dish, Dish.class, DataService.getStandardHeader(), response -> {

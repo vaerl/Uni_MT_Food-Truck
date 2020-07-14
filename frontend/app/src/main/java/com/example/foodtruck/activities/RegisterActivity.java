@@ -32,12 +32,12 @@ public class RegisterActivity extends Activity {
             String password = ((EditText) findViewById(R.id.passwort_editText)).getText().toString();
             String passwordRepeat = ((EditText) findViewById(R.id.passwort2_editText)).getText().toString();
             // check passwords
-            if(!password.equals(passwordRepeat)){
+            if (!password.equals(passwordRepeat)) {
                 ((EditText) findViewById(R.id.passwort2_editText)).setError("Die Passwörter stimmen nicht überein!");
                 return;
             }
             RequestQueue queue = Volley.newRequestQueue(this);
-            if(DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER){
+            if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
                 GsonRequest<Customer, Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/customer", new Customer(name, password), Customer.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
                         DataService.getInstance(this).setUserId(response.getId());

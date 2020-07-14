@@ -8,17 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.android.volley.Request;
-import com.example.foodtruck.DataService;
-import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Ingredient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OwnerSpeiseNeuActivity extends AppCompatActivity {
 

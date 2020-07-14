@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.foodtruck.R;
@@ -19,7 +17,7 @@ public class AdvancedCustomerNewOrderMenuAdapter extends ArrayAdapter<Dish> {
     TextView dishName;
     TextView dishPrice;
 
-    public AdvancedCustomerNewOrderMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
+    public AdvancedCustomerNewOrderMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type) {
         super(context, textviewResourceId, objects);
         this.type = type;
     }

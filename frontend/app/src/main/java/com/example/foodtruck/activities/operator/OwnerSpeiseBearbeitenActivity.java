@@ -1,22 +1,19 @@
-
 package com.example.foodtruck.activities.operator;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.EditText;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
-        import com.example.foodtruck.R;
-        import com.example.foodtruck.model.Dish;
-        import com.example.foodtruck.model.Ingredient;
+import com.example.foodtruck.R;
+import com.example.foodtruck.model.Dish;
+import com.example.foodtruck.model.Ingredient;
 
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.List;
-        import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
 
@@ -40,7 +37,7 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
         gerichtName = findViewById(R.id.bearb_name_input);
         gerichtPreis = findViewById(R.id.bearb_preis_input);
 
-        if(getIntent().hasExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH)){
+        if (getIntent().hasExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH)) {
             dish = (Dish) getIntent().getSerializableExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH);
             gerichtName.setText(dish.getName());
             gerichtPreis.setText(Double.toString(dish.getBasePrice()));
@@ -50,12 +47,12 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
     public void bearbAbschliessen(View v) {
         String name = gerichtName.getText().toString();
         String preisString = gerichtPreis.getText().toString();
-        if(name.equals("")){
+        if (name.equals("")) {
             gerichtName.setError("Name fehlt");
             name = dish.getName();
         }
         double preis;
-        if(preisString.equals("")){
+        if (preisString.equals("")) {
             gerichtPreis.setError("Preis fehlt");
             preis = dish.getBasePrice();
         } else {

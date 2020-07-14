@@ -38,8 +38,8 @@ public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dis
         }
         TextView gericht = element.findViewById(R.id.Gericht_textView2);
         int amount = 0;
-        for (PreOrder preOrder: preOrders) {
-            for (DishWrapper dishWrapper: preOrder.getItems()){
+        for (PreOrder preOrder : preOrders) {
+            for (DishWrapper dishWrapper : preOrder.getItems()) {
                 Dish dish = getItem(position);
                 if (dishWrapper.getDish().getId().equals(dish.getId())) {
                     amount = dishWrapper.getAmount();
@@ -59,15 +59,15 @@ public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dis
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0){
+                if (s.length() > 0) {
                     boolean found = false;
-                    for (DishWrapper dishWrapper:dishWrappers) {
-                        if(dishWrapper.getDish().getName().equals(Objects.requireNonNull(getItem(position)).getName())){
+                    for (DishWrapper dishWrapper : dishWrappers) {
+                        if (dishWrapper.getDish().getName().equals(Objects.requireNonNull(getItem(position)).getName())) {
                             found = true;
                             dishWrapper.setAmount(dishWrapper.getAmount() + Integer.parseInt(s.toString()));
                         }
                     }
-                    if(!found){
+                    if (!found) {
                         dishWrappers.add(new DishWrapper(getItem(position), Integer.parseInt(s.toString())));
                     }
                 }

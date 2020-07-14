@@ -15,9 +15,6 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.Location;
-import com.example.foodtruck.model.user.Customer;
-
-import java.util.List;
 
 public class CustomerLocationActivity extends AppCompatActivity {
 
