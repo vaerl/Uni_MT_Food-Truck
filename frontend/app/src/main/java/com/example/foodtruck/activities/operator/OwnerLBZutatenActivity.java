@@ -22,7 +22,7 @@ public class OwnerLBZutatenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_owner_lebensmittelbestellung_zutaten);
         if(getIntent().hasExtra(INTENT_STOCK)){
             ingredients = (Ingredient[]) getIntent().getSerializableExtra(INTENT_STOCK);
-            ListView lv = (ListView) findViewById(R.id.alleZutaten_ListView);
+            ListView lv = findViewById(R.id.alleZutaten_ListView);
             AdvancedStockAdapter advancedStockAdapter = new AdvancedStockAdapter(this, 0, ingredients);
             lv.setAdapter(advancedStockAdapter);
         }

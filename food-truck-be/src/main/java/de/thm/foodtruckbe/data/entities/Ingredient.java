@@ -26,13 +26,11 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
-//    @JsonManagedReference(value = "dish-ingredient")
     @JsonIgnore
     private Dish dish;
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-//    @JsonManagedReference(value = "operator-location")
     @JsonIgnore
     private Operator operator;
 

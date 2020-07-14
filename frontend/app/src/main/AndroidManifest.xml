@@ -30,19 +30,16 @@
         <activity android:name=".activities.customer.CustomerThankYouActivity"/>
         <activity android:name=".activities.customer.CustomerLocationActivity"/>
         <activity android:name=".activities.operator.OwnerMenuActivity" />
-        <activity android:name=".activities.operator.OwnerRoutenplanungActivity" />
         <activity android:name=".activities.operator.OwnerSpeisekarteActivity" />
         <activity android:name=".activities.operator.OwnerBestellungenActivity" />
         <activity android:name=".activities.operator.OwnerLebensmittelbestellungActivity" />
         <activity android:name=".activities.operator.OwnerAktuellerstandortActivity" />
-        <activity android:name=".activities.operator.OwnerNeuerouteActivity" />
         <activity android:name=".activities.operator.OwnerRoutebearbeitenActivity" />
         <activity android:name=".activities.operator.OwnerAddstandortActivity" />
         <activity android:name=".activities.operator.OwnerStandortbearbeitenActivity" />
         <activity android:name=".activities.operator.OwnerSpeiseBearbeitenActivity" />
         <activity android:name=".activities.operator.OwnerSpeiseNeuActivity" />
         <activity android:name=".activities.operator.OwnerAddzutatActivity" />
-        <activity android:name=".activities.operator.OwnerAddzutatBearbActivity" />
         <activity android:name=".activities.operator.OwnerBestellungActivity" />
         <activity android:name=".activities.operator.OwnerLBZutatenActivity" />
 

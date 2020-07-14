@@ -85,8 +85,8 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/{id}")
-    public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody Customer customer) {
-        return getCustomer(id).merge(customer);
+    public Customer updateCustomer(@PathVariable(value = "id") Long id, @RequestBody DtoCustomer dtoCustomer) {
+        return getCustomer(id).merge(Customer.create(dtoCustomer));
     }
 
 }

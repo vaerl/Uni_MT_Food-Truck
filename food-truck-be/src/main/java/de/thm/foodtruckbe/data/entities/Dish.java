@@ -37,7 +37,6 @@ public class Dish {
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-//    @JsonBackReference(value = "dish-ingredient")
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "dish")

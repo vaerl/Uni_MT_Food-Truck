@@ -1,6 +1,5 @@
 package de.thm.foodtruckbe.data.entities.order;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.DishWrapper;
@@ -9,7 +8,6 @@ import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.repos.DishRepository;
 import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
