@@ -22,7 +22,7 @@ public class AdvancedStockAdapter extends ArrayAdapter<Ingredient> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_lebensmittelbestellung_zutaten_item, null);
+            element = inflater.inflate(R.layout.activity_operator_lebensmittelbestellung_zutaten_item, null);
         }
 
         ((TextView) element.findViewById(R.id.zutat_textView2)).setText(getItem(position).getName());

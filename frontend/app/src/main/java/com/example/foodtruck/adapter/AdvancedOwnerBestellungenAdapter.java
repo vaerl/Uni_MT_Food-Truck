@@ -22,7 +22,7 @@ public class AdvancedOwnerBestellungenAdapter extends ArrayAdapter<Order> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_bestellungen_item, null);
+            element = inflater.inflate(R.layout.activity_operator_bestellungen_item, null);
         }
 
         TextView id_textView5 = element.findViewById(R.id.id_textView5);

@@ -23,13 +23,13 @@ import java.time.LocalDateTime;
 import static com.example.foodtruck.FormattingHelper.getHours;
 import static com.example.foodtruck.FormattingHelper.getMinutes;
 
-public class OwnerAddstandortActivity extends AppCompatActivity {
+public class OperatorAddstandortActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_addstandort);
+        setContentView(R.layout.activity_operator_addstandort);
     }
 
     public void standortAnlegen(View v) {
@@ -78,7 +78,7 @@ public class OwnerAddstandortActivity extends AppCompatActivity {
     }
 
     public void ownerHome(View v) {
-        startActivity(new Intent(this, OwnerMenuActivity.class));
+        startActivity(new Intent(this, OperatorMenuActivity.class));
     }
 
 

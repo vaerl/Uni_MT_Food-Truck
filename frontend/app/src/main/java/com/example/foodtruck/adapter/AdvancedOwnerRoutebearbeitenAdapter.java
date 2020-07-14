@@ -23,7 +23,7 @@ public class AdvancedOwnerRoutebearbeitenAdapter extends ArrayAdapter<Location> 
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_routebearbeiten_item, null);
+            element = inflater.inflate(R.layout.activity_operator_routebearbeiten_item, null);
         }
 
         TextView standort_textView = element.findViewById(R.id.standort_textView);

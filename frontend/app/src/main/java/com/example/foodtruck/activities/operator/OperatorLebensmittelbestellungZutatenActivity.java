@@ -10,7 +10,7 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedStockAdapter;
 import com.example.foodtruck.model.Ingredient;
 
-public class OwnerLBZutatenActivity extends AppCompatActivity {
+public class OperatorLebensmittelbestellungZutatenActivity extends AppCompatActivity {
 
     private Ingredient[] ingredients;
     public static String INTENT_STOCK = "stock";
@@ -18,7 +18,7 @@ public class OwnerLBZutatenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_lebensmittelbestellung_zutaten);
+        setContentView(R.layout.activity_operator_lebensmittelbestellung_zutaten);
         if (getIntent().hasExtra(INTENT_STOCK)) {
             ingredients = (Ingredient[]) getIntent().getSerializableExtra(INTENT_STOCK);
             ListView lv = findViewById(R.id.alleZutaten_ListView);
@@ -29,12 +29,12 @@ public class OwnerLBZutatenActivity extends AppCompatActivity {
 
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerLebensmittelbestellungActivity.class);
+        Intent in = new Intent(this, OperatorLebensmittelbestellungActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

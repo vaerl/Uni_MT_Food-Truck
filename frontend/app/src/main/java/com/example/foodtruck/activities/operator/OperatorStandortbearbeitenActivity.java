@@ -23,7 +23,7 @@ import static com.example.foodtruck.FormattingHelper.getHours;
 import static com.example.foodtruck.FormattingHelper.getMinutes;
 import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
 
-public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
+public class OperatorStandortbearbeitenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -40,7 +40,7 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_ortbearbeiten);
+        setContentView(R.layout.activity_operator_ortbearbeiten);
 
         standortName = findViewById(R.id.standortname_editText);
         standortX = findViewById(R.id.breitengradx_editTextNumberDecimal);
@@ -48,9 +48,9 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
         standortAnkunft = findViewById(R.id.ankunft_editTextTime);
         standortAufenthaltsdauer = findViewById(R.id.aufenthaltsdauer_editTextTime);
 
-        if (getIntent().hasExtra(OwnerRoutebearbeitenActivity.INTENT_EDIT_LOCATION)) {
+        if (getIntent().hasExtra(OperatorRoutebearbeitenActivity.INTENT_EDIT_LOCATION)) {
             Intent intent = getIntent();
-            location = (Location) intent.getSerializableExtra(OwnerRoutebearbeitenActivity.INTENT_EDIT_LOCATION);
+            location = (Location) intent.getSerializableExtra(OperatorRoutebearbeitenActivity.INTENT_EDIT_LOCATION);
             standortName.setText(location.getName());
             standortX.setText(Double.toString(location.getX()));
             standortY.setText(Double.toString(location.getY()));
@@ -126,11 +126,11 @@ public class OwnerStandortbearbeitenActivity extends AppCompatActivity {
     }
 
     public void backButton(View v) {
-        startActivity(new Intent(this, OwnerRoutebearbeitenActivity.class));
+        startActivity(new Intent(this, OperatorRoutebearbeitenActivity.class));
     }
 
     public void ownerHome(View v) {
-        startActivity(new Intent(this, OwnerMenuActivity.class));
+        startActivity(new Intent(this, OperatorMenuActivity.class));
     }
 
 }

@@ -16,7 +16,7 @@ import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.model.order.Order;
 
-public class OwnerBestellungActivity extends AppCompatActivity {
+public class OperatorBestellungActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     String EXTRA_PARAMETER = "order";
@@ -32,7 +32,7 @@ public class OwnerBestellungActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_bestellung);
+        setContentView(R.layout.activity_operator_bestellung);
         orderTime = findViewById(R.id.setUhrzeit);
         orderNumber = findViewById(R.id.setId);
         orderLocation = findViewById(R.id.setOrt);
@@ -75,12 +75,12 @@ public class OwnerBestellungActivity extends AppCompatActivity {
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerBestellungenActivity.class);
+        Intent in = new Intent(this, OperatorBestellungenActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

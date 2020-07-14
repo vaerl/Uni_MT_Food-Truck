@@ -15,7 +15,7 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.activities.customer.CustomerMenuActivity;
-import com.example.foodtruck.activities.operator.OwnerMenuActivity;
+import com.example.foodtruck.activities.operator.OperatorMenuActivity;
 import com.example.foodtruck.model.user.User;
 
 public class MainActivity extends Activity {
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
                 if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
                     startActivity(new Intent(this, CustomerMenuActivity.class));
                 } else {
-                    startActivity(new Intent(this, OwnerMenuActivity.class));
+                    startActivity(new Intent(this, OperatorMenuActivity.class));
                 }
             } else {
                 showLoginError();

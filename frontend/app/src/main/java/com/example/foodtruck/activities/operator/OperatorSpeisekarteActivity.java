@@ -16,7 +16,7 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedOwnerSpeisekarteAdapter;
 import com.example.foodtruck.model.Dish;
 
-public class OwnerSpeisekarteActivity extends AppCompatActivity {
+public class OperatorSpeisekarteActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     private static int RC_NEW_DISH = 1;
@@ -32,7 +32,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_speisekarte);
+        setContentView(R.layout.activity_operator_speisekarte);
         queue = Volley.newRequestQueue(this);
         loadDishes();
     }
@@ -49,7 +49,7 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
                 lv.setAdapter(advancedToDoAdapter);
                 lv.setOnItemClickListener((parent, view, lv_position, id) -> {
                     // get id von Gericht, übergebe id in nächste activity, lese in nächster activity mit id aus
-                    Intent intent = new Intent(this, OwnerSpeiseBearbeitenActivity.class);
+                    Intent intent = new Intent(this, OperatorSpeiseBearbeitenActivity.class);
                     intent.putExtra(INTENT_EDIT_DISH, gerichte[lv_position]);
                     startActivityForResult(intent, RC_EDIT_DISH);
                 });
@@ -61,16 +61,16 @@ public class OwnerSpeisekarteActivity extends AppCompatActivity {
     }
 
     public void openSpeiseNeu(View v) {
-        startActivityForResult(new Intent(this, OwnerSpeiseNeuActivity.class), RC_NEW_DISH);
+        startActivityForResult(new Intent(this, OperatorSpeiseNeuActivity.class), RC_NEW_DISH);
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        startActivity(new Intent(this, OwnerMenuActivity.class));
+        startActivity(new Intent(this, OperatorMenuActivity.class));
     }
 
     @Override

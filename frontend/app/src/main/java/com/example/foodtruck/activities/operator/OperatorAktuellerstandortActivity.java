@@ -18,7 +18,7 @@ import com.example.foodtruck.model.Location;
 
 import java.time.Duration;
 
-public class OwnerAktuellerstandortActivity extends AppCompatActivity {
+public class OperatorAktuellerstandortActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -31,7 +31,7 @@ public class OwnerAktuellerstandortActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_aktuellerstandort);
+        setContentView(R.layout.activity_operator_aktuellerstandort);
         annahmeEditText = findViewById(R.id.reservierungsannahme_number);
         schlussEditText = findViewById(R.id.reservierungsschluss_number);
         locationStatus = findViewById(R.id.location_status_textview);
@@ -87,12 +87,12 @@ public class OwnerAktuellerstandortActivity extends AppCompatActivity {
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

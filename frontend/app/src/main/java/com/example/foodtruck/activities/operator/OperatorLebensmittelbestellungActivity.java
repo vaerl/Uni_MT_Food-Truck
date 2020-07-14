@@ -21,7 +21,7 @@ import com.example.foodtruck.model.order.PreOrder;
 
 import java.util.ArrayList;
 
-public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
+public class OperatorLebensmittelbestellungActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
     Dish[] menu;
@@ -32,7 +32,7 @@ public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_lebensmittelbestellung);
+        setContentView(R.layout.activity_operator_lebensmittelbestellung);
         ListView lv = (ListView) findViewById(R.id.lebensmittelbestellung_ListView);
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -60,8 +60,8 @@ public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
     }
 
     public void zeigeZutaten(View v) {
-        Intent intent = new Intent(this, OwnerLBZutatenActivity.class);
-        intent.putExtra(OwnerLBZutatenActivity.INTENT_STOCK, stock);
+        Intent intent = new Intent(this, OperatorLebensmittelbestellungZutatenActivity.class);
+        intent.putExtra(OperatorLebensmittelbestellungZutatenActivity.INTENT_STOCK, stock);
         startActivity(intent);
     }
 
@@ -101,12 +101,12 @@ public class OwnerLebensmittelbestellungActivity extends AppCompatActivity {
 
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

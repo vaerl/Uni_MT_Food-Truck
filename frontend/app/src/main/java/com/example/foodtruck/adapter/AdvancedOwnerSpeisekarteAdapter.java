@@ -22,7 +22,7 @@ public class AdvancedOwnerSpeisekarteAdapter extends ArrayAdapter<Dish> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_speisekarte_item, null);
+            element = inflater.inflate(R.layout.activity_operator_speisekarte_item, null);
         }
 
         TextView gericht = element.findViewById(R.id.gericht_textView3);

@@ -15,7 +15,7 @@ import com.example.foodtruck.model.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
+public class OperatorSpeiseBearbeitenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -32,13 +32,13 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_speisebearbeiten);
+        setContentView(R.layout.activity_operator_speisebearbeiten);
 
         gerichtName = findViewById(R.id.bearb_name_input);
         gerichtPreis = findViewById(R.id.bearb_preis_input);
 
-        if (getIntent().hasExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH)) {
-            dish = (Dish) getIntent().getSerializableExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH);
+        if (getIntent().hasExtra(OperatorSpeisekarteActivity.INTENT_EDIT_DISH)) {
+            dish = (Dish) getIntent().getSerializableExtra(OperatorSpeisekarteActivity.INTENT_EDIT_DISH);
             gerichtName.setText(dish.getName());
             gerichtPreis.setText(Double.toString(dish.getBasePrice()));
         }
@@ -62,23 +62,23 @@ public class OwnerSpeiseBearbeitenActivity extends AppCompatActivity {
         Dish newDish = new Dish(name, preis, ingredients);
         newDish.setId(dish.getId());
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(OwnerSpeisekarteActivity.INTENT_EDIT_DISH, newDish);
+        returnIntent.putExtra(OperatorSpeisekarteActivity.INTENT_EDIT_DISH, newDish);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
 
     public void openAddzutatBearb(View v) {
-        startActivityForResult(new Intent(this, OwnerAddzutatActivity.class), RC_NEW_INGREDIENT);
+        startActivityForResult(new Intent(this, OperatorAddzutatActivity.class), RC_NEW_INGREDIENT);
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
+        Intent in = new Intent(this, OperatorSpeisekarteActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

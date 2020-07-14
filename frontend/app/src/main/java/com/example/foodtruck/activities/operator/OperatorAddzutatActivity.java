@@ -9,12 +9,12 @@ import android.widget.EditText;
 
 import com.example.foodtruck.R;
 
-public class OwnerAddzutatActivity extends AppCompatActivity {
+public class OperatorAddzutatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_addzutat);
+        setContentView(R.layout.activity_operator_addzutat);
     }
 
     public void zutatAnlegen(View v) {
@@ -30,20 +30,20 @@ public class OwnerAddzutatActivity extends AppCompatActivity {
         }
 
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(OwnerSpeiseNeuActivity.INTENT_NEW_INGREDIENT, ingredient);
-        returnIntent.putExtra(OwnerSpeiseNeuActivity.INTENT_NEW_AMOUNT, Integer.valueOf(amount));
+        returnIntent.putExtra(OperatorSpeiseNeuActivity.INTENT_NEW_INGREDIENT, ingredient);
+        returnIntent.putExtra(OperatorSpeiseNeuActivity.INTENT_NEW_AMOUNT, Integer.valueOf(amount));
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerSpeiseNeuActivity.class);
+        Intent in = new Intent(this, OperatorSpeiseNeuActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

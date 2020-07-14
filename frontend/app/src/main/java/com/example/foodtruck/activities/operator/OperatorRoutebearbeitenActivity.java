@@ -16,7 +16,7 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedOwnerRoutebearbeitenAdapter;
 import com.example.foodtruck.model.Location;
 
-public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
+public class OperatorRoutebearbeitenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
     private static int RC_EDIT_LOCATION = 1;
@@ -31,7 +31,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_routebearbeiten);
+        setContentView(R.layout.activity_operator_routebearbeiten);
         lv = findViewById(R.id.routebearbeiten_ListView);
         updateLocations();
     }
@@ -55,7 +55,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
                 AdvancedOwnerRoutebearbeitenAdapter advancedToDoAdapter = new AdvancedOwnerRoutebearbeitenAdapter(this, 0, standorte);
                 lv.setAdapter(advancedToDoAdapter);
                 lv.setOnItemClickListener((parent, view, lv_position, id) -> {
-                    Intent intent = new Intent(this, OwnerStandortbearbeitenActivity.class);
+                    Intent intent = new Intent(this, OperatorStandortbearbeitenActivity.class);
                     intent.putExtra(INTENT_EDIT_LOCATION, standorte[lv_position]);
                     startActivityForResult(intent, RC_EDIT_LOCATION);
                 });
@@ -67,7 +67,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
     }
 
     public void openAddstandort(View v) {
-        startActivityForResult(new Intent(this, OwnerAddstandortActivity.class), RC_EDIT_LOCATION);
+        startActivityForResult(new Intent(this, OperatorAddstandortActivity.class), RC_EDIT_LOCATION);
     }
 
     public void routeBearbAbschliessen(View v) {
@@ -79,7 +79,7 @@ public class OwnerRoutebearbeitenActivity extends AppCompatActivity {
     }
 
     public void ownerHome(View v) {
-        startActivity(new Intent(this, OwnerMenuActivity.class));
+        startActivity(new Intent(this, OperatorMenuActivity.class));
     }
 
 

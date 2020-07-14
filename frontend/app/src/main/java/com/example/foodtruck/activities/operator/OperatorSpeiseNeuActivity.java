@@ -15,7 +15,7 @@ import com.example.foodtruck.model.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OwnerSpeiseNeuActivity extends AppCompatActivity {
+public class OperatorSpeiseNeuActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -27,7 +27,7 @@ public class OwnerSpeiseNeuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_speiseneu);
+        setContentView(R.layout.activity_operator_speiseneu);
     }
 
     public void speiseAnlegen(View v) {
@@ -43,22 +43,22 @@ public class OwnerSpeiseNeuActivity extends AppCompatActivity {
         double basePrice = Double.parseDouble(((EditText) findViewById(R.id.neu_preis_input)).getText().toString());
         Dish dish = new Dish(name, basePrice, ingredients);
         Intent returnIntent = new Intent();
-        returnIntent.putExtra(OwnerSpeisekarteActivity.INTENT_NEW_DISH, dish);
+        returnIntent.putExtra(OperatorSpeisekarteActivity.INTENT_NEW_DISH, dish);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
     public void openAddzutat(View v) {
-        startActivityForResult(new Intent(this, OwnerAddzutatActivity.class), RC_NEW_INGREDIENT);
+        startActivityForResult(new Intent(this, OperatorAddzutatActivity.class), RC_NEW_INGREDIENT);
     }
 
     public void backButton(View v) {
-        Intent in = new Intent(this, OwnerSpeisekarteActivity.class);
+        Intent in = new Intent(this, OperatorSpeisekarteActivity.class);
         startActivity(in);
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 

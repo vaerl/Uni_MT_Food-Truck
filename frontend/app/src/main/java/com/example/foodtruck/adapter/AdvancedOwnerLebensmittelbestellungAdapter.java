@@ -34,7 +34,7 @@ public class AdvancedOwnerLebensmittelbestellungAdapter extends ArrayAdapter<Dis
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_lebensmittelbestellung_item, null);
+            element = inflater.inflate(R.layout.activity_operator_lebensmittelbestellung_item, null);
         }
         TextView gericht = element.findViewById(R.id.Gericht_textView2);
         int amount = 0;

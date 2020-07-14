@@ -14,7 +14,7 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.activities.customer.CustomerLocationActivity;
-import com.example.foodtruck.activities.operator.OwnerMenuActivity;
+import com.example.foodtruck.activities.operator.OperatorMenuActivity;
 import com.example.foodtruck.model.user.Customer;
 import com.example.foodtruck.model.user.Operator;
 
@@ -54,7 +54,7 @@ public class RegisterActivity extends Activity {
                 GsonRequest<Operator, Operator> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator", new Operator(name, password), Operator.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
                         DataService.getInstance(this).setUserId(response.getId());
-                        startActivity(new Intent(this, OwnerMenuActivity.class));
+                        startActivity(new Intent(this, OperatorMenuActivity.class));
                     } else {
                         showRegistrationError();
                     }

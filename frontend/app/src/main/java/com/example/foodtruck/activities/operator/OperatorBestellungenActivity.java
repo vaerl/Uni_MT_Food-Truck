@@ -16,7 +16,7 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedOwnerBestellungenAdapter;
 import com.example.foodtruck.model.order.Order;
 
-public class OwnerBestellungenActivity extends AppCompatActivity {
+public class OperatorBestellungenActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -27,7 +27,7 @@ public class OwnerBestellungenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner_bestellungen);
+        setContentView(R.layout.activity_operator_bestellungen);
 
         ListView lv = findViewById(R.id.bestellungen_ListView);
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -42,7 +42,7 @@ public class OwnerBestellungenActivity extends AppCompatActivity {
                 lv.setAdapter(advancedToDoAdapter);
 
                 lv.setOnItemClickListener((parent, view, lv_position, id) -> {
-                    Intent intent = new Intent(OwnerBestellungenActivity.this, OwnerBestellungActivity.class);
+                    Intent intent = new Intent(OperatorBestellungenActivity.this, OperatorBestellungActivity.class);
                     intent.putExtra(EXTRA_PARAMETER, orders[lv_position]);
                     startActivity(intent);
                 });
@@ -55,7 +55,7 @@ public class OwnerBestellungenActivity extends AppCompatActivity {
     }
 
     public void ownerHome(View v) {
-        Intent in = new Intent(this, OwnerMenuActivity.class);
+        Intent in = new Intent(this, OperatorMenuActivity.class);
         startActivity(in);
     }
 
