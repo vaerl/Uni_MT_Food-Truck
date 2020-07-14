@@ -3,12 +3,16 @@ package de.thm.foodtruckbe.data.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoDish;
+import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,6 +37,7 @@ public class Dish {
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
+//    @NotFound(action = NotFoundAction.IGNORE)
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "dish")
@@ -70,15 +75,30 @@ public class Dish {
     }
 
     public static Dish create(DtoDish dtoDish, Operator operator) {
-        return new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
+        Dish dish = new Dish(dtoDish.getName(), operator, dtoDish.getBasePrice(), null);
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
+            ingredients.add(Ingredient.create(dtoIngredient, dish, operator));
+        }
+        dish.setIngredients(ingredients);
+        return dish;
     }
 
     public Dish merge(Dish dish) {
         this.adjustedPrice = dish.adjustedPrice;
-        this.basePrice = dish.basePrice;
         this.ingredients = dish.ingredients;
+        this.basePrice = dish.basePrice;
         this.name = dish.name;
         this.rating = dish.rating;
+        return this;
+    }
+    public Dish merge(DtoDish dtoDish) {
+        this.adjustedPrice = dtoDish.getAdjustedPrice();
+        this.basePrice = dtoDish.getBasePrice();
+        for (DtoIngredient dtoIngredient:dtoDish.getIngredients()) {
+            this.ingredients.add(Ingredient.create(dtoIngredient, this, this.operator));
+        }
+        this.name = dtoDish.getName();
         return this;
     }
 }

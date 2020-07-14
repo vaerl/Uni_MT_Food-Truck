@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.foodtruck.R;
+import com.example.foodtruck.adapter.AdvancedIngredientsAdapter;
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Ingredient;
 
@@ -23,11 +25,14 @@ public class OperatorSpeiseNeuActivity extends AppCompatActivity {
     private static int RC_NEW_INGREDIENT = 1;
     public static String INTENT_NEW_INGREDIENT = "new_ingredient";
     public static String INTENT_NEW_AMOUNT = "new_amount";
+    ListView lv;
+    AdvancedIngredientsAdapter advancedIngredientsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_speiseneu);
+        lv = findViewById(R.id.new_dish_ingredients);
     }
 
     public void speiseAnlegen(View v) {
@@ -70,7 +75,9 @@ public class OperatorSpeiseNeuActivity extends AppCompatActivity {
                 String ingredient = (String) data.getSerializableExtra(INTENT_NEW_INGREDIENT);
                 int amount = data.getIntExtra(INTENT_NEW_AMOUNT, 1);
                 ingredients.add(new Ingredient(ingredient, amount));
-
+                Ingredient[] ingredientsArray = new Ingredient[ingredients.size()];
+                advancedIngredientsAdapter = new AdvancedIngredientsAdapter(this, 0, ingredients.toArray(ingredientsArray));
+                lv.setAdapter(advancedIngredientsAdapter);
             }
         } else {
             Log.e(TAG, "onActivityResult: resultCode != 0");

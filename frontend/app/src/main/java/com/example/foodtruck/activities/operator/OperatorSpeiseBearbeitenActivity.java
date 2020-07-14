@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.foodtruck.R;
+import com.example.foodtruck.adapter.AdvancedIngredientsAdapter;
 import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Ingredient;
 
@@ -28,11 +30,14 @@ public class OperatorSpeiseBearbeitenActivity extends AppCompatActivity {
 
     EditText gerichtName;
     EditText gerichtPreis;
+    ListView lv;
+    AdvancedIngredientsAdapter advancedIngredientsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_operator_speisebearbeiten);
+        lv = findViewById(R.id.edit_dish_ingredients);
 
         gerichtName = findViewById(R.id.bearb_name_input);
         gerichtPreis = findViewById(R.id.bearb_preis_input);
@@ -41,6 +46,10 @@ public class OperatorSpeiseBearbeitenActivity extends AppCompatActivity {
             dish = (Dish) getIntent().getSerializableExtra(OperatorSpeisekarteActivity.INTENT_EDIT_DISH);
             gerichtName.setText(dish.getName());
             gerichtPreis.setText(Double.toString(dish.getBasePrice()));
+            ingredients = dish.getIngredients();
+            Ingredient[] ingredients = new Ingredient[dish.getIngredients().size()];
+            advancedIngredientsAdapter = new AdvancedIngredientsAdapter(this, 0, dish.getIngredients().toArray(ingredients));
+            lv.setAdapter(advancedIngredientsAdapter);
         }
     }
 
@@ -58,7 +67,6 @@ public class OperatorSpeiseBearbeitenActivity extends AppCompatActivity {
         } else {
             preis = Double.parseDouble(preisString);
         }
-        ingredients.addAll(dish.getIngredients());
         Dish newDish = new Dish(name, preis, ingredients);
         newDish.setId(dish.getId());
         Intent returnIntent = new Intent();

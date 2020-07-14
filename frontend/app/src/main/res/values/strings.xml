@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">FoodTruck</string>
+    <string name="app_name">Peters FoodTruck</string>
+    <string name="my_location">Mein Standort:</string>
+    <string name="x_coordinate">x</string>
+    <string name="y_coordinate">y</string>
+    <string name="suggest_location">Standorte vorschlagen</string>
+    <string name="no_location">Ohne Standort fortfahren</string>
+    <string name="new_order">Bestellung aufgeben</string>
+    <string name="show_orders">Bestellungen ansehen</string>
+    <string name="order_id">Bestellnummer:</string>
+    <string name="order_status">Bestellstatus:</string>
+    <string name="dishes">Gerichte:</string>
+    <string name="truck_info">Truck-Informationen</string>
 </resources>

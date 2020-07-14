@@ -297,14 +297,18 @@ public class Operator extends User {
      * @return
      */
     public boolean isPossible(final Dish dish) {
-        for (Ingredient ingredient : dish.getIngredients()) {
-            log.debug("In foreach in isPossible.");
-            if (stock.contains(ingredient)) {
-                if (ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
+        if (dish.getIngredients() == null) {
+            throw new RuntimeException("Dish has no ingredients!");
+        } else {
+            for (Ingredient ingredient : dish.getIngredients()) {
+                log.debug("In foreach in isPossible.");
+                if (stock.contains(ingredient)) {
+                    if (ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
+                        return false;
+                    }
+                } else {
                     return false;
                 }
-            } else {
-                return false;
             }
         }
         return true;
