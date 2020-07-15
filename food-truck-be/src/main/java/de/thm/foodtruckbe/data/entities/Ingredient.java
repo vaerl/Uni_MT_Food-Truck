@@ -2,7 +2,6 @@ package de.thm.foodtruckbe.data.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.dto.DtoIngredient;
 import de.thm.foodtruckbe.data.entities.user.Operator;
 import lombok.Getter;
@@ -26,13 +25,11 @@ public class Ingredient {
 
     @ManyToOne
     @JoinColumn(name = "dish_id", nullable = false)
-//    @JsonManagedReference(value = "dish-ingredient")
     @JsonIgnore
     private Dish dish;
 
     @ManyToOne
     @JoinColumn(name = "operator_id", nullable = false)
-//    @JsonManagedReference(value = "operator-location")
     @JsonIgnore
     private Operator operator;
 

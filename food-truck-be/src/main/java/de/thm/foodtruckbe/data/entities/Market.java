@@ -1,14 +1,13 @@
 package de.thm.foodtruckbe.data.entities;
 
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor
 public class Market {
-
-    private Market() {
-
-    }
 
     /**
      * Generates new Coordinates in the range [0 - 9).

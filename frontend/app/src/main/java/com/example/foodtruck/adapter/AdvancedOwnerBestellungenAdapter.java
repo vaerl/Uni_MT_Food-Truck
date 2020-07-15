@@ -1,21 +1,19 @@
 package com.example.foodtruck.adapter;
 
-        import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ArrayAdapter;
-        import android.widget.TextView;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-        import com.example.foodtruck.R;
-        import com.example.foodtruck.model.order.Order;
-
-        import java.util.Objects;
+import com.example.foodtruck.R;
+import com.example.foodtruck.model.order.Order;
 
 
 public class AdvancedOwnerBestellungenAdapter extends ArrayAdapter<Order> {
 
-    public AdvancedOwnerBestellungenAdapter(Context context, int textviewResourceId, Order[] objects){
+    public AdvancedOwnerBestellungenAdapter(Context context, int textviewResourceId, Order[] objects) {
         super(context, textviewResourceId, objects);
     }
 
@@ -24,7 +22,7 @@ public class AdvancedOwnerBestellungenAdapter extends ArrayAdapter<Order> {
         View element = convertView;
         if (element == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            element = inflater.inflate(R.layout.activity_owner_bestellungen_item, null);
+            element = inflater.inflate(R.layout.activity_operator_bestellungen_item, null);
         }
 
         TextView id_textView5 = element.findViewById(R.id.id_textView5);

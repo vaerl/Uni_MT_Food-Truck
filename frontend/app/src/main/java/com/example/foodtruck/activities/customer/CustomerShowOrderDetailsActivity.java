@@ -13,9 +13,6 @@ import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.order.Order;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
@@ -36,7 +33,7 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
         orderStatus = findViewById(R.id.order_details_status_c);
         lvReservation = findViewById(R.id.customer_order_details_list);
 
-        if(getIntent().hasExtra(EXTRA_PARAMETER)){
+        if (getIntent().hasExtra(EXTRA_PARAMETER)) {
             Intent intent = getIntent();
             Order order = (Order) intent.getSerializableExtra(EXTRA_PARAMETER);
             orderNumber.setText(order.getId().toString());
@@ -51,11 +48,10 @@ public class CustomerShowOrderDetailsActivity extends AppCompatActivity {
 
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }
-
 
 
 }

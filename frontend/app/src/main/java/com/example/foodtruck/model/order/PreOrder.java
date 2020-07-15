@@ -2,9 +2,9 @@ package com.example.foodtruck.model.order;
 
 import com.example.foodtruck.model.DishWrapper;
 
-import lombok.NoArgsConstructor;
-
 import java.util.List;
+
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class PreOrder extends Order {

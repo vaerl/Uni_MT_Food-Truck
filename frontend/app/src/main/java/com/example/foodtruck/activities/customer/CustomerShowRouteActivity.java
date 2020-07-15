@@ -16,9 +16,6 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerShowRouteAdapter;
 import com.example.foodtruck.model.Location;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CustomerShowRouteActivity extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
@@ -36,7 +33,7 @@ public class CustomerShowRouteActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         GsonRequest<Location[], Location[]> request = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", Location[].class, DataService.getStandardHeader(), response -> {
-            if (response!= null) {
+            if (response != null) {
                 locations = response;
                 AdvancedCustomerShowRouteAdapter advancedToDoAdapter = new AdvancedCustomerShowRouteAdapter(this, 0, locations);
                 lv.setAdapter(advancedToDoAdapter);
@@ -48,7 +45,7 @@ public class CustomerShowRouteActivity extends AppCompatActivity {
 
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

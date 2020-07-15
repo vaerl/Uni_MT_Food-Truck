@@ -14,7 +14,7 @@ public class AdvancedCustomerShowMenuAdapter extends ArrayAdapter<Dish> {
 
     String type;
 
-    public AdvancedCustomerShowMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type){
+    public AdvancedCustomerShowMenuAdapter(Context context, int textviewResourceId, Dish[] objects, String type) {
         super(context, textviewResourceId, objects);
         this.type = type;
     }
@@ -34,9 +34,9 @@ public class AdvancedCustomerShowMenuAdapter extends ArrayAdapter<Dish> {
         dishName.setText(getItem(position).getName());
 
         if (type.equals("reservation")) {
-                dishPrice.setText(Double.toString(getItem(position).getAdjustedPrice()));
-            } else {
-                dishPrice.setText(Double.toString(getItem(position).getBasePrice()));
+            dishPrice.setText(Double.toString(getItem(position).getAdjustedPrice()));
+        } else {
+            dishPrice.setText(Double.toString(getItem(position).getBasePrice()));
         }
         dishRating.setText(Double.toString(getItem(position).getRating()));
         return element;

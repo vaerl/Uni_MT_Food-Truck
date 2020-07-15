@@ -16,12 +16,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
-import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.DishWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrapper> {
@@ -49,7 +45,7 @@ public class AdvancedCustomerOrderDetailsAdapter extends ArrayAdapter<DishWrappe
         View finalElement = element;
         rateButton.setOnClickListener(view -> {
             String rating = ((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString();
-            if(rating.equals("")){
+            if (rating.equals("")) {
                 return;
             }
             postRating(rateButton.getContext(), Objects.requireNonNull(getItem(position)).getDish().getId(), Double.valueOf(((EditText) finalElement.findViewById(R.id.order_details_dish_rating_c)).getText().toString()));

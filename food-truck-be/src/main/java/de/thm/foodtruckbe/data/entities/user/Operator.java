@@ -63,7 +63,7 @@ public class Operator extends User {
     private List<Ingredient> stock;
 
     /**
-     * Constructor for inital use. Sets the {@code Market} as the operators initial
+     * Constructor for initial use. Sets the {@code Market} as the operators initial
      * location with its start at 7AM and a duration of 30 minutes.
      *
      * @param name
@@ -78,9 +78,6 @@ public class Operator extends User {
                 LocalDateTime.of(LocalDate.now(), LocalTime.of(7, 0, 0)), Duration.ofMinutes(30));
         this.initialLocation = this.currentLocation;
     }
-
-    // TODO check whether removing/adding works correctly - maybe i need Log.d(TAG, "parseNetworkResponse: response: " + response.toString());orkwokto
-    // TODO implement the respective equals-methods
 
     // methods for adding/removing dishes from menu
     public boolean addDishToMenu(final Dish dish) {
@@ -159,7 +156,7 @@ public class Operator extends User {
 
     public Location getLocationFromRoute(Long id) {
         for (Location l : route) {
-            if (l.getId() == id) {
+            if (l.getId().equals(id)) {
                 return l;
             }
         }
@@ -170,6 +167,13 @@ public class Operator extends User {
         return route.get(route.size() - 1);
     }
 
+    /**
+     * Updates the route with the given location. Also adjusts the arrival- and departure-times of succeeding locations.
+     *
+     * @param updatedLocation
+     * @param locationRepository
+     * @return
+     */
     public Location updateRoute(Location updatedLocation, LocationRepository locationRepository) {
         ArrayList<Location> routeOld = new ArrayList<>(route);
         route.clear();
@@ -213,6 +217,12 @@ public class Operator extends User {
     }
 
     // shopping
+
+    /**
+     * Get the shopping-list based only on preorders.
+     *
+     * @return
+     */
     @JsonIgnore
     public ArrayList<Ingredient> getShoppingList() {
         ArrayList<Ingredient> results = new ArrayList<>();
@@ -233,10 +243,13 @@ public class Operator extends User {
         return results;
     }
 
+    /**
+     * Go shopping with a list of ingredients(including preorders as well as extra portions).
+     *
+     * @param ingredients
+     * @return
+     */
     public List<Ingredient> goShopping(final List<Ingredient> ingredients) {
-//        if (currentLocation != initialLocation) {
-//            return null;
-//        }
         // get available ingredients
         stock = Market.buyIngredients(ingredients);
         // check possible orders and adjust each status
@@ -260,6 +273,12 @@ public class Operator extends User {
         return stock;
     }
 
+    /**
+     * Check if the given order is possible with the current stock.
+     *
+     * @param order
+     * @return
+     */
     public boolean isPossible(Order order) {
         for (DishWrapper dishWrapper : order.getItems()) {
             for (Ingredient ingredient : dishWrapper.getDish().getIngredients()) {
@@ -271,15 +290,25 @@ public class Operator extends User {
         return true;
     }
 
+    /**
+     * Check if the given dish is possible with the current stock.
+     *
+     * @param dish
+     * @return
+     */
     public boolean isPossible(final Dish dish) {
-        for (Ingredient ingredient : dish.getIngredients()) {
-            log.debug("In foreach in isPossible.");
-            if (stock.contains(ingredient)) {
-                if (ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
+        if (dish.getIngredients() == null) {
+            throw new RuntimeException("Dish has no ingredients!");
+        } else {
+            for (Ingredient ingredient : dish.getIngredients()) {
+                log.debug("In foreach in isPossible.");
+                if (stock.contains(ingredient)) {
+                    if (ingredient.getAmount() > stock.get(stock.indexOf(ingredient)).getAmount()) {
+                        return false;
+                    }
+                } else {
                     return false;
                 }
-            } else {
-                return false;
             }
         }
         return true;
@@ -346,7 +375,6 @@ public class Operator extends User {
         return new Operator(dtoOperator.getName(), dtoOperator.getPassword());
     }
 
-    // TODO check whether doing this here is appropriate!
     @Override
     public boolean equals(final Object obj) {
         if (obj instanceof Operator) {

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,21 +15,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
-import com.example.foodtruck.adapter.AdvancedCustomerOrderDetailsAdapter;
-import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
-import com.example.foodtruck.adapter.AdvancedCustomerShowRouteAdapter;
-import com.example.foodtruck.model.Dish;
 import com.example.foodtruck.model.Location;
-import com.example.foodtruck.model.order.Order;
 import com.example.foodtruck.model.order.PreOrder;
 import com.example.foodtruck.model.order.Reservation;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
+public class CustomerNewOrderActivityTwo extends AppCompatActivity {
 
     private String TAG = getClass().getSimpleName();
 
@@ -58,7 +49,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
         locationSpinner = findViewById(R.id.new_order_location_spinner);
         totalCost = findViewById(R.id.order_payment_price);
 
-        if(getIntent().hasExtra(EXTRA_PARAMETER)){
+        if (getIntent().hasExtra(EXTRA_PARAMETER)) {
             Intent intent = getIntent();
             type = intent.getStringExtra(EXTRA_PARAMETER2);
             if (type.equals("reservation")) {
@@ -74,10 +65,10 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
 
         Log.d(TAG, "get locations: try to get route");
         GsonRequest<Location[], Location[]> requestRoute = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/route", Location[].class, DataService.getStandardHeader(), response -> {
-            if (response!= null) {
+            if (response != null) {
                 locations = response;
 
-                for (Location location: locations) {
+                for (Location location : locations) {
                     if (location.getStatus().equals(Location.Status.ARRIVING) || location.getStatus().equals(Location.Status.CURRENT) || location.getStatus().equals(Location.Status.OPEN)) {
                         activeLocations.add(location);
                         activeLocationsNames.add(location.getName());
@@ -86,7 +77,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
                 ArrayAdapter<Object> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, activeLocationsNames.toArray());
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
                 locationSpinner.setAdapter(adapter);
-                if(DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
+                if (DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
                     locationSpinner.setSelection(adapter.getPosition(customerLocation.getName()));
                 }
             }
@@ -95,7 +86,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
         });
 
         String id = DataService.getInstance(this).getLocationId();
-        if(DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
+        if (DataService.getInstance(this).isPresent(DataService.Location_ID_TAG)) {
             Log.d(TAG, "get location: try to get customer location");
             GsonRequest<Location, Location> requestCustomerLocation = new GsonRequest<>(Request.Method.GET, DataService.BACKEND_URL + "/location/" + DataService.getInstance(this).getLocationId(), Location.class, DataService.getStandardHeader(), response -> {
                 if (response != null) {
@@ -111,16 +102,14 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
         }
 
 
-
-
     }
 
     public void forwardNewOrderActivityTwo(View v) {
         String selectedLocationName = locationSpinner.getSelectedItem().toString();
         String selectedLocationId = "";
 
-        for (Location location: activeLocations) {
-            if (location.getName().equals(selectedLocationName)){
+        for (Location location : activeLocations) {
+            if (location.getName().equals(selectedLocationName)) {
                 selectedLocationId = location.getId().toString();
                 break;
             }
@@ -129,7 +118,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         Log.d(TAG, "post order: try to post order");
         if (type.equals("reservation")) {
-            GsonRequest<Reservation[], Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID  + "/orders/" + selectedLocationId + "/" + DataService.getInstance(this).getUserId() + "/reservation", new Reservation[]{reservation}, Boolean.class, DataService.getStandardHeader(), response -> {
+            GsonRequest<Reservation[], Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/orders/" + selectedLocationId + "/" + DataService.getInstance(this).getUserId() + "/reservation", new Reservation[]{reservation}, Boolean.class, DataService.getStandardHeader(), response -> {
                 Intent in = new Intent(this, CustomerThankYouActivity.class);
                 startActivity(in);
             }, error -> {
@@ -137,7 +126,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
             });
             queue.add(request);
         } else {
-            GsonRequest<PreOrder[], Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID  + "/orders/" + selectedLocationId + "/" + DataService.getInstance(this).getUserId() + "/preorders", new PreOrder[]{preOrder}, Boolean.class, DataService.getStandardHeader(), response -> {
+            GsonRequest<PreOrder[], Boolean> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator/" + DataService.OPERATOR_ID + "/orders/" + selectedLocationId + "/" + DataService.getInstance(this).getUserId() + "/preorders", new PreOrder[]{preOrder}, Boolean.class, DataService.getStandardHeader(), response -> {
                 Intent in = new Intent(this, CustomerThankYouActivity.class);
                 startActivity(in);
             }, error -> {
@@ -147,7 +136,7 @@ public class CustomerNewOrderActivityTwo  extends AppCompatActivity {
         }
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

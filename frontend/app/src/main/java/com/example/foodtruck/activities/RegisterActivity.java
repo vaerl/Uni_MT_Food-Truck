@@ -14,7 +14,7 @@ import com.example.foodtruck.DataService;
 import com.example.foodtruck.GsonRequest;
 import com.example.foodtruck.R;
 import com.example.foodtruck.activities.customer.CustomerLocationActivity;
-import com.example.foodtruck.activities.operator.OwnerMenuActivity;
+import com.example.foodtruck.activities.operator.OperatorMenuActivity;
 import com.example.foodtruck.model.user.Customer;
 import com.example.foodtruck.model.user.Operator;
 
@@ -32,12 +32,12 @@ public class RegisterActivity extends Activity {
             String password = ((EditText) findViewById(R.id.passwort_editText)).getText().toString();
             String passwordRepeat = ((EditText) findViewById(R.id.passwort2_editText)).getText().toString();
             // check passwords
-            if(!password.equals(passwordRepeat)){
+            if (!password.equals(passwordRepeat)) {
                 ((EditText) findViewById(R.id.passwort2_editText)).setError("Die Passwörter stimmen nicht überein!");
                 return;
             }
             RequestQueue queue = Volley.newRequestQueue(this);
-            if(DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER){
+            if (DataService.getInstance(this).getUserType() == DataService.UserType.CUSTOMER) {
                 GsonRequest<Customer, Customer> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/customer", new Customer(name, password), Customer.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
                         DataService.getInstance(this).setUserId(response.getId());
@@ -54,7 +54,7 @@ public class RegisterActivity extends Activity {
                 GsonRequest<Operator, Operator> request = new GsonRequest<>(Request.Method.POST, DataService.BACKEND_URL + "/operator", new Operator(name, password), Operator.class, DataService.getStandardHeader(), response -> {
                     if (response.getName().equalsIgnoreCase(name)) {
                         DataService.getInstance(this).setUserId(response.getId());
-                        startActivity(new Intent(this, OwnerMenuActivity.class));
+                        startActivity(new Intent(this, OperatorMenuActivity.class));
                     } else {
                         showRegistrationError();
                     }

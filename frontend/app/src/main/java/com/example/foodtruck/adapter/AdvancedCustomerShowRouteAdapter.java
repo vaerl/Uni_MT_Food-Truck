@@ -16,7 +16,7 @@ import static com.example.foodtruck.FormattingHelper.localDateTimeFormatter;
 
 public class AdvancedCustomerShowRouteAdapter extends ArrayAdapter<Location> {
 
-    public AdvancedCustomerShowRouteAdapter(Context context, int textviewResourceId, Location[] objects){
+    public AdvancedCustomerShowRouteAdapter(Context context, int textviewResourceId, Location[] objects) {
         super(context, textviewResourceId, objects);
     }
 

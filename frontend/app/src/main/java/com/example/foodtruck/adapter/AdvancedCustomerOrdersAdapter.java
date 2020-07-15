@@ -12,7 +12,7 @@ import com.example.foodtruck.model.order.Order;
 
 public class AdvancedCustomerOrdersAdapter extends ArrayAdapter<Order> {
 
-    public AdvancedCustomerOrdersAdapter(Context context, int textviewResourceId, Order[] objects){
+    public AdvancedCustomerOrdersAdapter(Context context, int textviewResourceId, Order[] objects) {
         super(context, textviewResourceId, objects);
     }
 

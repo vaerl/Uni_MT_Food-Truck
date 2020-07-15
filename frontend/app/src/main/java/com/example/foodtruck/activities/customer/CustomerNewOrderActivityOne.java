@@ -61,14 +61,14 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         selected_items.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        RecyclerViewSelectedOrderItemsAdapter  recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
+        RecyclerViewSelectedOrderItemsAdapter recyclerViewSelectedOrderItemsAdapter = new RecyclerViewSelectedOrderItemsAdapter(selectedItems);
         selected_items.setAdapter(recyclerViewSelectedOrderItemsAdapter);
 
         TabLayout tabs = findViewById(R.id.tabLayout2);
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == 0){
+                if (tab.getPosition() == 0) {
                     setOrderMenuToReservation(tabs);
                 } else {
                     setOrderMenuToPreorder(tabs);
@@ -141,7 +141,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
 
     public void forwardNewOrderActivityOne(View v) {
 
-        for (Dish dish: selectedItems) {
+        for (Dish dish : selectedItems) {
             if (lvReservation.getVisibility() == View.VISIBLE) {
                 if (selectedDishesReservation.contains(dish)) {
                     selectedDishesReservation.add(new DishWrapper(dish, selectedDishesReservation.get(selectedDishesReservation.indexOf(dish)).getAmount() + 1));
@@ -170,7 +170,7 @@ public class CustomerNewOrderActivityOne extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

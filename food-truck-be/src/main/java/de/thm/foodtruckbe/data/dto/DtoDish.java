@@ -1,8 +1,5 @@
 package de.thm.foodtruckbe.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import de.thm.foodtruckbe.data.entities.Ingredient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -17,9 +17,6 @@ import com.example.foodtruck.R;
 import com.example.foodtruck.adapter.AdvancedCustomerShowMenuAdapter;
 import com.example.foodtruck.model.Dish;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CustomerShowMenuActivity extends AppCompatActivity {
     private String TAG = getClass().getSimpleName();
 
@@ -44,11 +41,11 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d(TAG, "onTabSelected: position" + tab.getPosition());
-               if(tab.getPosition() == 0){
-                   setMenuToReservation(tabs);
-               } else {
-                   setMenuToPreorder(tabs);
-               }
+                if (tab.getPosition() == 0) {
+                    setMenuToReservation(tabs);
+                } else {
+                    setMenuToPreorder(tabs);
+                }
             }
 
             @Override
@@ -92,19 +89,19 @@ public class CustomerShowMenuActivity extends AppCompatActivity {
 
     }
 
-    public void setMenuToPreorder(View v){
+    public void setMenuToPreorder(View v) {
         Log.d(TAG, "setMenuToPreorder: changing to preorder");
         lvReservation.setVisibility(View.GONE);
         lvPreorder.setVisibility(View.VISIBLE);
     }
 
-    public void setMenuToReservation(View v){
+    public void setMenuToReservation(View v) {
         Log.d(TAG, "setMenuToReservation: changing to reservation");
         lvPreorder.setVisibility(View.GONE);
         lvReservation.setVisibility(View.VISIBLE);
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }

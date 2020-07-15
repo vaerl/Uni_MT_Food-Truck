@@ -1,6 +1,5 @@
 package de.thm.foodtruckbe.data.entities.order;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import de.thm.foodtruckbe.data.entities.Dish;
 import de.thm.foodtruckbe.data.entities.DishWrapper;
@@ -9,7 +8,6 @@ import de.thm.foodtruckbe.data.entities.user.Customer;
 import de.thm.foodtruckbe.data.repos.DishRepository;
 import de.thm.foodtruckbe.exceptions.EntityNotFoundException;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -46,7 +44,7 @@ public abstract class Order {
     @Enumerated(EnumType.STRING)
     protected Status status;
 
-    public Order(){
+    public Order() {
         this.items = new ArrayList<>();
     }
 
@@ -60,9 +58,9 @@ public abstract class Order {
 
     public abstract boolean addItem(DishWrapper dishWrapper);
 
-    public boolean addAllItems(List<DishWrapper> dishWrappers){
-        for (DishWrapper dishWrapper:dishWrappers) {
-            if(!this.addItem(dishWrapper)){
+    public boolean addAllItems(List<DishWrapper> dishWrappers) {
+        for (DishWrapper dishWrapper : dishWrappers) {
+            if (!this.addItem(dishWrapper)) {
                 return false;
             }
         }
@@ -71,9 +69,9 @@ public abstract class Order {
 
     public abstract boolean removeItem(DishWrapper dishWrapper);
 
-    public boolean removeAllItems(List<DishWrapper> dishWrappers){
-        for (DishWrapper dishWrapper:dishWrappers) {
-            if(!this.removeItem(dishWrapper)){
+    public boolean removeAllItems(List<DishWrapper> dishWrappers) {
+        for (DishWrapper dishWrapper : dishWrappers) {
+            if (!this.removeItem(dishWrapper)) {
                 return false;
             }
         }

@@ -52,6 +52,7 @@ public class OperatorController {
         this.ingredientRepository = ingredientRepository;
     }
 
+    // helper-methods for accessing the repositories
     public Operator getOperator(Long id) {
         Optional<Operator> operator = operatorRepository.findById(id);
         if (operator.isPresent()) {
@@ -232,16 +233,7 @@ public class OperatorController {
                            @PathVariable(value = "dishId") Long dishId, @RequestBody DtoDish dtoDish) {
         Operator operator = getOperator(operatorId);
         Dish dish = operator.getDishFromMenu(getDish(dishId));
-        dish = dishRepository.save(dish.merge(Dish.create(dtoDish, operator)));
-        List<Ingredient> ingredients = new ArrayList<>();
-        if (dtoDish.getIngredients() != null) {
-            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
-                Ingredient i = Ingredient.create(dtoIngredient, dish, operator);
-                ingredientRepository.save(i);
-                ingredients.add(i);
-            }
-        }
-        dish.setIngredients(ingredients);
+        dish = dishRepository.save(dish.merge(dtoDish));
         operator.updateMenu(dish);
         return dishRepository.save(dish);
     }
@@ -268,15 +260,6 @@ public class OperatorController {
         Operator operator = getOperator(operatorId);
         Dish savedDish = dishRepository.save(Dish.create(dtoDish, operator));
         operator.addDishToMenu(savedDish);
-        List<Ingredient> ingredients = new ArrayList<>();
-        if (dtoDish.getIngredients() != null) {
-            for (DtoIngredient dtoIngredient : dtoDish.getIngredients()) {
-                Ingredient i = Ingredient.create(dtoIngredient, savedDish, operator);
-                ingredientRepository.save(i);
-                ingredients.add(i);
-            }
-        }
-        savedDish.setIngredients(ingredients);
         return dishRepository.save(savedDish);
     }
 }

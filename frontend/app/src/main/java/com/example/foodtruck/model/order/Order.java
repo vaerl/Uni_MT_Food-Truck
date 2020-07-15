@@ -5,12 +5,12 @@ import com.example.foodtruck.model.DishWrapper;
 import com.example.foodtruck.model.Location;
 import com.example.foodtruck.model.user.Customer;
 
+import java.io.Serializable;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter

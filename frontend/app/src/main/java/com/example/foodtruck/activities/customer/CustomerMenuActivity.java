@@ -15,25 +15,25 @@ public class CustomerMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customer_menu);
     }
 
-    public void openTruckInfos(View v){
+    public void openTruckInfos(View v) {
         Intent in = new Intent(this, CustomerTruckInfoActivity.class);
         startActivity(in);
     }
 
-    public void newOrder(View v){
+    public void newOrder(View v) {
         Intent in = new Intent(this, CustomerNewOrderActivityOne.class);
         startActivity(in);
     }
 
-    public void showOrders(View v){
+    public void showOrders(View v) {
         startActivity(new Intent(this, CustomerShowOrdersActivity.class));
     }
 
-    public void openLocationSuggestion(View v){
+    public void openLocationSuggestion(View v) {
         startActivity(new Intent(this, CustomerLocationActivity.class));
     }
 
-    public void getToHome(View v){
+    public void getToHome(View v) {
         Intent in = new Intent(this, CustomerMenuActivity.class);
         startActivity(in);
     }
