@@ -141,12 +141,13 @@
 
     <TextView
         android:id="@+id/location_status_textview"
-        android:layout_width="300dp"
-        android:layout_height="70dp"
+        android:layout_width="305dp"
+        android:layout_height="121dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="400dp"
         android:layout_marginEnd="32dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
