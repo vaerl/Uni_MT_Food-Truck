@@ -37,7 +37,6 @@ public class Dish {
     private Operator operator;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dish")
-//    @NotFound(action = NotFoundAction.IGNORE)
     private List<Ingredient> ingredients;
 
     @OneToMany(mappedBy = "dish")
@@ -96,7 +95,17 @@ public class Dish {
         this.adjustedPrice = dtoDish.getAdjustedPrice();
         this.basePrice = dtoDish.getBasePrice();
         for (DtoIngredient dtoIngredient:dtoDish.getIngredients()) {
-            this.ingredients.add(Ingredient.create(dtoIngredient, this, this.operator));
+            boolean contained = false;
+            for (Ingredient ingredient:this.ingredients) {
+                if(ingredient.getName().equalsIgnoreCase(dtoIngredient.getName())){
+                    ingredient.setAmount(dtoIngredient.getAmount());
+                    contained = true;
+                    break;
+                }
+            }
+            if(!contained){
+                this.ingredients.add(Ingredient.create(dtoIngredient, this, this.operator));
+            }
         }
         this.name = dtoDish.getName();
         return this;
