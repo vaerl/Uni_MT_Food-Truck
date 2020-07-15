@@ -31,8 +31,8 @@ public class GsonRequest<E, T> extends Request<T> {
         Log.d(TAG, "deserialized LocalDateTime " + LocalDateTime.of(year, month, day, hour, minute).toString());
         return LocalDateTime.of(year, month, day, hour, minute);
     }).registerTypeAdapter(Duration.class, (JsonDeserializer<Duration>) (json, type, jsonDeserializationContext) -> {
-        Log.d(TAG, "deserialized Duration " + Duration.parse(json.getAsJsonPrimitive().getAsString()).toString());
-        return Duration.parse(json.getAsJsonPrimitive().getAsString());
+        Log.d(TAG, "deserialized Duration " + Duration.ofSeconds(json.getAsJsonPrimitive().getAsInt()));
+        return Duration.ofSeconds(json.getAsJsonPrimitive().getAsInt());
     }).registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .registerTypeAdapter(Duration.class, new DurationAdapter())
             .create();
