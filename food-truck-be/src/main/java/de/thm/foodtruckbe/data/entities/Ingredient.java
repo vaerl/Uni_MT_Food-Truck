@@ -61,7 +61,7 @@ public class Ingredient {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Ingredient) {
-            return name.equals(((Ingredient) obj).name);
+            return name.equalsIgnoreCase(((Ingredient) obj).name);
         } else {
             return super.equals(obj);
         }

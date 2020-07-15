@@ -98,7 +98,9 @@ public class OperatorSpeiseBearbeitenActivity extends AppCompatActivity {
                 String ingredient = (String) data.getSerializableExtra(INTENT_NEW_INGREDIENT);
                 int amount = data.getIntExtra(INTENT_NEW_AMOUNT, 1);
                 ingredients.add(new Ingredient(ingredient, amount));
-
+                Ingredient[] ingredients = new Ingredient[dish.getIngredients().size()];
+                advancedIngredientsAdapter = new AdvancedIngredientsAdapter(this, 0, dish.getIngredients().toArray(ingredients));
+                lv.setAdapter(advancedIngredientsAdapter);
             }
         } else {
             Log.e(TAG, "onActivityResult: resultCode != 0");

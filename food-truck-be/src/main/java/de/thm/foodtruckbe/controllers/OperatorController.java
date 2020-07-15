@@ -233,6 +233,7 @@ public class OperatorController {
                            @PathVariable(value = "dishId") Long dishId, @RequestBody DtoDish dtoDish) {
         Operator operator = getOperator(operatorId);
         Dish dish = operator.getDishFromMenu(getDish(dishId));
+        dish = dishRepository.save(dish);
         dish = dishRepository.save(dish.merge(dtoDish));
         operator.updateMenu(dish);
         return dishRepository.save(dish);
